@@ -154,7 +154,7 @@
                     android:paddingBottom="120dp"
                     android:verticalSpacing="10dp"
                     tools:listitem="@layout/loading_poster_dynamic" />
-            </com.google.android.material.shimmer.ShimmerFrameLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
         </LinearLayout>
 
     </FrameLayout>
