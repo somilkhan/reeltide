@@ -12,6 +12,8 @@
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:src="@drawable/default_cover"
-            android:background="?attr/primaryGrayBackground"
+            android:background="@drawable/rt_card_bg"
+            android:clipToOutline="true"
+            android:outlineProvider="background"
             android:contentDescription="@string/poster_image" />
 </LinearLayout>
