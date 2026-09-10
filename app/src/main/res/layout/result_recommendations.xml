@@ -1,37 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingBottom="96dp">
 
     <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/result_padding"
+        android:paddingEnd="@dimen/result_padding">
 
         <com.google.android.material.button.MaterialButton
-                style="@style/BlackButton"
-                android:layout_gravity="center_vertical|end"
-                android:text="GogoAnime"
-                android:id="@+id/result_recommendations_filter_button"
-                android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="0dp"
-                app:layout_constraintBottom_toTopOf="@id/result_recommendations_list" />
+            android:id="@+id/result_recommendations_filter_button"
+            style="@style/BlackButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:text="GogoAnime"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toTopOf="@id/result_recommendations_list" />
 
         <com.lagradost.cloudstream3.ui.AutofitRecyclerView
-                android:descendantFocusability="afterDescendants"
-
-                android:background="?attr/primaryBlackBackground"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                app:spanCount="3"
-                android:id="@+id/result_recommendations_list"
-                tools:listitem="@layout/search_result_grid"
-                android:orientation="vertical" />
+            android:id="@+id/result_recommendations_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/primaryBlackBackground"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingBottom="16dp"
+            android:descendantFocusability="afterDescendants"
+            app:spanCount="3"
+            tools:listitem="@layout/search_result_grid" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
