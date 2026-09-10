@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Bingr-inspired dark foundation. Only the default night palette is overridden; custom themes keep their own tokens. -->
+    <color name="colorPrimary">#F5F5F5</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#F5F5F5</color>
+    <color name="colorSearch">#15151B</color>
+    <color name="primaryGrayBackground">#15151B</color>
+    <color name="primaryBlackBackground">#000000</color>
+    <color name="iconGrayBackground">#101014</color>
+    <color name="boxItemBackground">#111116</color>
+    <color name="textColor">#F5F5F5</color>
+    <color name="grayTextColor">#8F8F98</color>
+    <color name="iconColor">#A8A8B0</color>
+    <color name="searchColorTransparent">#1AFFFFFF</color>
+</resources>
