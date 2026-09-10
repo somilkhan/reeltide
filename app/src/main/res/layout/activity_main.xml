@@ -38,6 +38,7 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/rt_nav_bg"
             android:elevation="8dp"
+            app:itemBackground="@drawable/rt_nav_item_bg"
             app:itemIconTint="@color/item_select_color"
             app:itemTextColor="@color/item_select_color"
             app:labelVisibilityMode="unlabeled"
