@@ -122,7 +122,7 @@
             android:paddingStart="12dp"
             android:paddingTop="6dp"
             android:paddingEnd="12dp"
-            android:paddingBottom="8dp"
+            android:paddingBottom="96dp"
             android:visibility="gone"
             app:spanCount="3"
             tools:listitem="@layout/search_result_grid" />
@@ -132,10 +132,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?attr/primaryBlackBackground"
+            android:clipToPadding="false"
             android:descendantFocusability="afterDescendants"
             android:nextFocusLeft="@id/nav_rail_view"
             android:nextFocusUp="@id/tvtypes_chips"
-            android:paddingBottom="12dp"
+            android:paddingBottom="96dp"
             android:visibility="gone"
             tools:listitem="@layout/homepage_parent" />
 
@@ -148,7 +149,7 @@
             android:descendantFocusability="afterDescendants"
             android:nextFocusLeft="@id/nav_rail_view"
             android:nextFocusUp="@id/tvtypes_chips"
-            android:paddingBottom="12dp"
+            android:paddingBottom="96dp"
             android:visibility="visible"
             tools:listitem="@layout/search_history_item" />
     </LinearLayout>
