@@ -10,12 +10,10 @@
     android:foreground="@drawable/outline_drawable"
     app:cardCornerRadius="@dimen/rounded_image_radius"
     app:cardElevation="0dp">
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
         <androidx.cardview.widget.CardView
             android:id="@+id/background_card"
             android:layout_width="150dp"
@@ -23,7 +21,6 @@
             android:elevation="0dp"
             app:cardBackgroundColor="?attr/primaryGrayBackground"
             app:cardCornerRadius="@dimen/rounded_image_radius">
-
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
@@ -33,33 +30,27 @@
                 android:foreground="?android:attr/selectableItemBackgroundBorderless"
                 android:scaleType="centerCrop"
                 tools:src="@drawable/example_poster" />
-
             <TextView
                 android:id="@+id/text_quality"
                 style="@style/TypeButton" />
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
                 android:orientation="vertical">
-
                 <TextView
                     android:id="@+id/text_is_dub"
                     style="@style/DubButton"
                     android:layout_gravity="end" />
-
                 <TextView
                     android:id="@+id/text_is_sub"
                     style="@style/SubButton"
                     android:layout_gravity="end" />
-
                 <TextView
                     android:id="@+id/text_rating"
                     style="@style/RatingButton"
                     android:layout_gravity="end"
                     tools:text="7.7" />
-
                 <TextView
                     android:id="@+id/text_flag"
                     style="@style/SearchBox"
@@ -70,7 +61,6 @@
                     tools:text="🇸🇪"
                     tools:visibility="visible" />
             </LinearLayout>
-
             <FrameLayout
                 android:id="@+id/watch_progress_container"
                 android:layout_width="wrap_content"
@@ -84,17 +74,15 @@
                     style="@style/HomeCircularProgress"
                     tools:progress="50" />
             </FrameLayout>
-
             <TextView
                 android:id="@+id/episode_text"
                 style="@style/EpisodeTextButton"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="6dp" />
         </androidx.cardview.widget.CardView>
-
         <TextView
             android:id="@+id/imageText"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="start"
