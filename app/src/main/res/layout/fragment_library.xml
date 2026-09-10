@@ -154,7 +154,7 @@
                     android:paddingBottom="120dp"
                     android:verticalSpacing="10dp"
                     tools:listitem="@layout/loading_poster_dynamic" />
-            </com.facebook.shimmer.ShimmerFrameLayout>
+            </com.google.android.material.shimmer.ShimmerFrameLayout>
         </LinearLayout>
 
     </FrameLayout>
@@ -162,7 +162,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="40dp">
+        android:layout_marginBottom="126dp">
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/library_random"
