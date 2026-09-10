@@ -32,4 +32,21 @@
     <dimen name="continue_watching_progress_size">25dp</dimen>
     <dimen name="circular_progress_thickness">2dp</dimen>
     <dimen name="download_header_progress_size">35dp</dimen>
+
+    <!-- Reeltide spacing -->
+    <dimen name="rt_space_1">4dp</dimen>
+    <dimen name="rt_space_2">8dp</dimen>
+    <dimen name="rt_space_3">12dp</dimen>
+    <dimen name="rt_space_4">16dp</dimen>
+    <dimen name="rt_space_5">20dp</dimen>
+    <dimen name="rt_space_6">32dp</dimen>
+
+    <!-- Reeltide radius scale -->
+    <dimen name="rt_radius_xs">2dp</dimen>
+    <dimen name="rt_radius_sm">4dp</dimen>
+    <dimen name="rt_radius_md">6dp</dimen>
+    <dimen name="rt_radius_lg">8dp</dimen>
+    <dimen name="rt_radius_xl">12dp</dimen>
+    <dimen name="rt_radius_2xl">16dp</dimen>
+    <dimen name="rt_radius_full">999dp</dimen>
 </resources>
