@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_root"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
@@ -79,14 +78,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/result_padding"
                     android:layout_marginTop="@dimen/result_padding"
-
                     android:layout_marginEnd="@dimen/result_padding"
                     android:orientation="vertical">
 
                     <include layout="@layout/loading_list" />
-
                     <include layout="@layout/loading_list" />
-
                     <include layout="@layout/loading_list" />
                 </LinearLayout>
             </LinearLayout>
@@ -150,7 +146,6 @@
 
             <ImageView
                 android:id="@+id/home_switch_account"
-
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
@@ -174,9 +169,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/home_reload_connectionerror"
             style="@style/WhiteButton"
-
             android:layout_width="wrap_content"
-
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:minWidth="200dp"
@@ -186,9 +179,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/home_reload_connection_open_in_browser"
             style="@style/BlackButton"
-
             android:layout_width="wrap_content"
-
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:minWidth="200dp"
@@ -198,9 +189,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/home_reload_connection_go_to_downloads"
             style="@style/BlackButton"
-
             android:layout_width="wrap_content"
-
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:minWidth="200dp"
@@ -221,17 +210,19 @@
         android:id="@+id/home_master_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
         android:descendantFocusability="afterDescendants"
         android:nextFocusLeft="@id/nav_rail_view"
+        android:paddingBottom="96dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/homepage_parent"
         tools:visibility="gone" />
 
     <TextClock
-            android:id="@+id/home_clock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+        android:id="@+id/home_clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/home_api_fab"
@@ -254,14 +245,12 @@
         tools:ignore="ContentDescription"
         tools:visibility="visible" />
 
-    <!-- Placeholder for TV layout random button - always hidden on phone -->
     <ImageView
         android:id="@+id/home_random_button_tv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone" />
 
-    <!-- Placeholder for TV layout settings button - always hidden on phone -->
     <ImageView
         android:id="@+id/home_preview_settings_button"
         android:layout_width="0dp"
