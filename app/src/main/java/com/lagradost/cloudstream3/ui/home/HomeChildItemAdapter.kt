@@ -138,10 +138,10 @@ open class HomeChildItemAdapter(
         fun updatePosterSize(context: Context, value: Int? = null) {
             val scale = value ?: PreferenceManager.getDefaultSharedPreferences(context)
                 ?.getInt(context.getString(R.string.poster_size_key), 0) ?: 0
-            // Keep the preference behavior, but move the default toward Bingr's larger mobile cards.
+            // Match the compact three-column mobile rhythm used by the Bingr reference.
             val mul = 1.0f + scale * 0.1f
-            minPosterSize = (150.toPx.toFloat() * mul).toInt()
-            maxPosterSize = (225.toPx.toFloat() * mul).toInt()
+            minPosterSize = (124.toPx.toFloat() * mul).toInt()
+            maxPosterSize = (186.toPx.toFloat() * mul).toInt()
         }
 
         fun updateLayoutParms(layout: FrameLayout, width: Int, height: Int) {
