@@ -27,15 +27,11 @@ import com.lagradost.cloudstream3.utils.UIHelper.isBottomLayout
 import com.lagradost.cloudstream3.utils.UIHelper.toPx
 
 class HomeScrollViewHolderState(view: ViewBinding) : ViewHolderState<Boolean>(view) {
-    // very shitty that we cant store the state when the view clears,
-    // but this is because the focus clears before the view is removed
-    // so we have to manually store it
     var wasFocused: Boolean = false
     override fun save(): Boolean = wasFocused
     override fun restore(state: Boolean) {
         if (state) {
             wasFocused = false
-            // only refocus if tv
             if (isLayout(TV)) {
                 itemView.requestFocus()
             }
@@ -54,7 +50,6 @@ class ResumeItemAdapter(
     nextFocusDown = nextFocusDown,
     clickCallback = clickCallback
 ) {
-    // As there is no popup on TV we instead use the footer to clear
     override val footers = if (isLayout(TV or EMULATOR)) 1 else 0
 
     override fun onCreateFooter(parent: ViewGroup): ViewHolderState<Boolean> {
@@ -69,33 +64,22 @@ class ResumeItemAdapter(
     }
 
     override fun onClearView(holder: ViewHolderState<Boolean>) {
-        // Clear the image, idk if this saves ram or not, but I guess?
         clearImage(holder.view.root.findViewById(R.id.imageView))
     }
 
     override fun onBindFooter(holder: ViewHolderState<Boolean>) {
         this.applyBinding(holder, false)
         when (val binding = holder.view) {
-            is HomeRemoveGridBinding -> {
-                updateLayoutParms(binding.backgroundCard, setWidth, setHeight)
-            }
-
-            is HomeRemoveGridExpandedBinding -> {
-                updateLayoutParms(binding.backgroundCard, setWidth, setHeight)
-            }
+            is HomeRemoveGridBinding -> updateLayoutParms(binding.backgroundCard, setWidth, setHeight)
+            is HomeRemoveGridExpandedBinding -> updateLayoutParms(binding.backgroundCard, setWidth, setHeight)
         }
         holder.itemView.apply {
             if (isLayout(TV)) {
                 isFocusableInTouchMode = true
                 isFocusable = true
             }
-            nextFocusUp?.let {
-                nextFocusUpId = it
-            }
-            nextFocusDown?.let {
-                nextFocusDownId = it
-            }
-
+            nextFocusUp?.let { nextFocusUpId = it }
+            nextFocusDown?.let { nextFocusDownId = it }
             setOnClickListener { v ->
                 removeCallback.invoke(v ?: return@setOnClickListener)
             }
@@ -103,8 +87,6 @@ class ResumeItemAdapter(
     }
 }
 
-/** Remember to set `updatePosterSize` to cache the poster size,
- * otherwise the width and height is unset */
 open class HomeChildItemAdapter(
     id: Int,
     var nextFocusUp: Int? = null,
@@ -113,12 +95,9 @@ open class HomeChildItemAdapter(
 ) :
     BaseAdapter<SearchResponse, Boolean>(
         id, diffCallback = BaseDiffCallback(
-            itemSame = { a, b ->
-                a.url == b.url && a.name == b.name
-            },
-            contentSame = { a, b ->
-                a == b
-            })
+            itemSame = { a, b -> a.url == b.url && a.name == b.name },
+            contentSame = { a, b -> a == b }
+        )
     ) {
     var hasNext: Boolean = false
     var isHorizontal: Boolean = false
@@ -128,16 +107,8 @@ open class HomeChildItemAdapter(
         }
 
     private fun updateCachedPosterSize() {
-        setWidth = if (!isHorizontal) {
-            minPosterSize
-        } else {
-            maxPosterSize
-        }
-        setHeight = if (!isHorizontal) {
-            maxPosterSize
-        } else {
-            minPosterSize
-        }
+        setWidth = if (!isHorizontal) minPosterSize else maxPosterSize
+        setHeight = if (!isHorizontal) maxPosterSize else minPosterSize
     }
 
     init {
@@ -159,10 +130,7 @@ open class HomeChildItemAdapter(
     }
 
     companion object {
-        // The vast majority of the lag comes from creating the view
-        // This simply shares the views between all HomeChildItemAdapter
-        val sharedPool =
-            newSharedPool { setMaxRecycledViews(CONTENT, 20) }
+        val sharedPool = newSharedPool { setMaxRecycledViews(CONTENT, 20) }
 
         var minPosterSize: Int = 0
         var maxPosterSize: Int = 0
@@ -170,35 +138,27 @@ open class HomeChildItemAdapter(
         fun updatePosterSize(context: Context, value: Int? = null) {
             val scale = value ?: PreferenceManager.getDefaultSharedPreferences(context)
                 ?.getInt(context.getString(R.string.poster_size_key), 0) ?: 0
-            // Scale by +10% per step
+            // Keep the preference behavior, but move the default toward Bingr's larger mobile cards.
             val mul = 1.0f + scale * 0.1f
-            minPosterSize = (114.toPx.toFloat() * mul).toInt()
-            maxPosterSize = (180.toPx.toFloat() * mul).toInt()
+            minPosterSize = (150.toPx.toFloat() * mul).toInt()
+            maxPosterSize = (225.toPx.toFloat() * mul).toInt()
         }
 
         fun updateLayoutParms(layout: FrameLayout, width: Int, height: Int) {
             val params = layout.layoutParams
             if (params.height == height && params.width == width) return
-
             params.width = width
             params.height = height
-
             layout.layoutParams = params
         }
     }
 
     protected fun applyBinding(holder: ViewHolderState<Boolean>, isFirstItem: Boolean) {
         when (val binding = holder.view) {
-            is HomeResultGridBinding -> {
-                updateLayoutParms(binding.backgroundCard, setWidth, setHeight)
-            }
-
+            is HomeResultGridBinding -> updateLayoutParms(binding.backgroundCard, setWidth, setHeight)
             is HomeResultGridExpandedBinding -> {
                 updateLayoutParms(binding.backgroundCard, setWidth, setHeight)
-
-                if (isFirstItem) { // to fix tv
-                    binding.backgroundCard.nextFocusLeftId = R.id.nav_rail_view
-                }
+                if (isFirstItem) binding.backgroundCard.nextFocusLeftId = R.id.nav_rail_view
             }
         }
     }
@@ -209,10 +169,8 @@ open class HomeChildItemAdapter(
         position: Int
     ) {
         applyBinding(holder, position == 0)
-
         SearchResultBuilder.bind(
             clickCallback = { click ->
-                // ok, so here we hijack the callback to fix the focus
                 when (click.action) {
                     SEARCH_ACTION_LOAD -> (holder as? HomeScrollViewHolderState)?.wasFocused = true
                 }
@@ -224,7 +182,6 @@ open class HomeChildItemAdapter(
             nextFocusUp,
             nextFocusDown
         )
-
         holder.itemView.tag = position
     }
 }
