@@ -21,10 +21,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
             android:maxLines="1"
             android:textColor="?attr/textColor"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:textSize="17sp"
             tools:text="Trending Right Now" />
 
         <TextView
