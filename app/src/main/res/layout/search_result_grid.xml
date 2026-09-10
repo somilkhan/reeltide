@@ -29,16 +29,6 @@
             android:foreground="?android:attr/selectableItemBackgroundBorderless"
             android:scaleType="centerCrop" />
 
-        <ImageView
-            android:id="@+id/title_shadow"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/title_shadow"
-            tools:ignore="ContentDescription" />
-
         <TextView
             android:id="@+id/text_quality"
             style="@style/TypeButton" />
@@ -89,35 +79,30 @@
             tools:progress="50"
             tools:visibility="visible" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/episode_text"
+            style="@style/EpisodeTextButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="vertical"
-            android:paddingBottom="7dp">
-
-            <TextView
-                android:id="@+id/episode_text"
-                style="@style/EpisodeTextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-
-            <TextView
-                android:id="@+id/imageText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:paddingStart="7dp"
-                android:paddingEnd="7dp"
-                android:textColor="@color/textColor"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                tools:text="The Perfect Run" />
-        </LinearLayout>
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="7dp" />
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/imageText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:maxLines="2"
+        android:paddingStart="4dp"
+        android:paddingTop="7dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="4dp"
+        android:textColor="?attr/textColor"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        tools:text="The Perfect Run" />
 
 </LinearLayout>
