@@ -65,7 +65,6 @@
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
             android:paddingBottom="8dp"
-            android:width="match_parent"
             android:layout_width="match_parent"
             android:layout_height="56dp">
 
