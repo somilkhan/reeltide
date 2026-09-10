@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="rt_view_all">View All</string>
+    <string name="rt_see_more">See More</string>
 </resources>
