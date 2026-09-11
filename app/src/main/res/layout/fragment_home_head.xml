@@ -34,63 +34,22 @@
         <LinearLayout
             android:id="@+id/home_padding"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="top"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingStart="14dp"
-            android:paddingEnd="14dp">
-
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:orientation="horizontal">
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/home_search"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:editTextColor="@color/white"
-                android:gravity="center_vertical"
                 android:iconifiedByDefault="true"
-                android:nextFocusRight="@id/home_head_profile_padding"
-                android:padding="0dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                app:closeIcon="@drawable/ic_baseline_close_24"
-                app:iconifiedByDefault="true"
-                app:queryBackground="@color/transparent"
-                app:queryHint="@string/search_hint"
-                app:searchIcon="@drawable/search_icon"
-                tools:ignore="RtlSymmetry" />
-
+                android:visibility="gone"
+                app:iconifiedByDefault="true" />
             <LinearLayout
                 android:id="@+id/home_head_profile_padding"
                 android:layout_width="46dp"
                 android:layout_height="46dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="@drawable/rounded_select_ripple"
-                android:gravity="center"
-                android:nextFocusLeft="@id/home_search"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/home_head_profile_card"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:background="@color/transparent"
-                    android:focusable="true"
-                    android:foreground="@drawable/outline_big_15_gray"
-                    app:cardCornerRadius="20dp">
-
-                    <ImageView
-                        android:id="@+id/home_head_profile_pic"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:contentDescription="@string/account"
-                        android:scaleType="centerCrop"
-                        tools:src="@drawable/profile_bg_orange" />
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -149,7 +108,6 @@
                 app:drawableTint="?attr/iconColor"
                 app:drawableStartCompat="@drawable/ic_outline_info_24"
                 app:tint="?attr/iconColor" />
-
         </LinearLayout>
 
     </FrameLayout>
@@ -157,42 +115,9 @@
     <LinearLayout
         android:id="@+id/alternative_account_padding"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="end"
-        android:orientation="horizontal"
-        android:paddingHorizontal="0dp">
-
-        <LinearLayout
-            android:id="@+id/alternate_home_head_profile_padding"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="@drawable/rounded_select_ripple"
-            android:gravity="center"
-            android:nextFocusLeft="@id/home_search"
-            android:orientation="horizontal">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/alternate_home_head_profile_card"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:background="@color/transparent"
-                android:focusable="true"
-                android:foreground="@drawable/outline_big_15_gray"
-                app:cardCornerRadius="20dp">
-
-                <ImageView
-                    android:id="@+id/alternate_home_head_profile_pic"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/account"
-                    android:scaleType="centerCrop"
-                    tools:src="@drawable/profile_bg_orange" />
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
-    </LinearLayout>
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:orientation="horizontal" />
 
     <LinearLayout
         android:id="@+id/home_watch_holder"
@@ -225,7 +150,6 @@
             android:paddingHorizontal="5dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/home_result_grid" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -241,7 +165,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground">
-
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -255,12 +178,10 @@
                 android:paddingEnd="12dp"
                 android:paddingBottom="5dp"
                 android:requiresFadingEdge="horizontal">
-
                 <com.google.android.material.chip.ChipGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
                     <com.google.android.material.chip.Chip
                         android:id="@+id/home_type_watching_btt"
                         style="@style/ChipFilled"
@@ -269,7 +190,6 @@
                         android:nextFocusLeft="@id/nav_rail_view"
                         android:nextFocusRight="@id/home_plan_to_watch_btt"
                         android:text="@string/type_watching" />
-
                     <com.google.android.material.chip.Chip
                         android:id="@+id/home_plan_to_watch_btt"
                         style="@style/ChipFilled"
@@ -278,7 +198,6 @@
                         android:nextFocusLeft="@id/home_type_watching_btt"
                         android:nextFocusRight="@id/home_type_on_hold_btt"
                         android:text="@string/type_plan_to_watch" />
-
                     <com.google.android.material.chip.Chip
                         android:id="@+id/home_type_on_hold_btt"
                         style="@style/ChipFilled"
@@ -287,7 +206,6 @@
                         android:nextFocusLeft="@id/home_plan_to_watch_btt"
                         android:nextFocusRight="@id/home_type_dropped_btt"
                         android:text="@string/type_on_hold" />
-
                     <com.google.android.material.chip.Chip
                         android:id="@+id/home_type_dropped_btt"
                         style="@style/ChipFilled"
@@ -296,7 +214,6 @@
                         android:nextFocusLeft="@id/home_type_on_hold_btt"
                         android:nextFocusRight="@id/home_type_completed_btt"
                         android:text="@string/type_dropped" />
-
                     <com.google.android.material.chip.Chip
                         android:id="@+id/home_type_completed_btt"
                         style="@style/ChipFilled"
@@ -305,9 +222,7 @@
                         android:nextFocusLeft="@id/home_type_dropped_btt"
                         android:text="@string/type_completed" />
                 </com.google.android.material.chip.ChipGroup>
-
             </HorizontalScrollView>
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
