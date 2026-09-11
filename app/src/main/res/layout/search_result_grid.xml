@@ -96,8 +96,21 @@
         android:maxLines="1"
         android:paddingTop="8dp"
         android:textColor="?attr/textColor"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="bold"
-        tools:text="The Perfect Run" />
+        tools:text="The Runner" />
+
+    <TextView
+        android:id="@+id/search_result_meta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:maxLines="1"
+        android:paddingTop="4dp"
+        android:textColor="?attr/grayTextColor"
+        android:textSize="11sp"
+        android:textStyle="normal"
+        tools:text="★ 6.7 · 2026 · Movie" />
 
 </LinearLayout>
