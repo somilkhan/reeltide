@@ -16,6 +16,7 @@ import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.AppContextUtils.html
 import com.lagradost.cloudstream3.utils.ImageLoader.loadImage
+import java.util.Locale
 
 class HomeScrollAdapter(
     val callback: ((View, Int, LoadResponse) -> Unit)
@@ -53,17 +54,34 @@ class HomeScrollAdapter(
         position: Int,
     ) {
         val binding = holder.view
-
         val posterUrl = item.backgroundPosterUrl ?: item.posterUrl
 
         when (binding) {
             is HomeScrollViewBinding -> {
                 binding.homeScrollPreview.loadImage(posterUrl, item.posterHeaders)
-                binding.homeScrollPreviewTags.apply {
-                    text = item.tags?.joinToString(" • ") ?: ""
-                    isGone = item.tags.isNullOrEmpty()
-                    maxLines = 2
+
+                val score = item.score?.toFloat()?.let {
+                    String.format(Locale.US, "%.1f", it)
                 }
+                val type = item.type.toString()
+                    .replace("TvSeries", "TV")
+                    .replace("TvType.", "")
+                val metadata = listOfNotNull(
+                    score?.let { "★ $it" },
+                    item.year?.toString(),
+                    type.takeIf { it.isNotBlank() },
+                ).joinToString("  ·  ")
+
+                binding.homeScrollPreviewTags.apply {
+                    text = metadata
+                    isGone = metadata.isBlank()
+                }
+
+                binding.homeScrollPreviewDescription.apply {
+                    text = item.plot?.html() ?: ""
+                    isGone = item.plot.isNullOrBlank()
+                }
+
                 binding.homeScrollPreviewTitle.text = item.name.html()
 
                 bindLogo(
