@@ -13,7 +13,8 @@
     <LinearLayout
         android:id="@+id/home_head_profile_padding"
         android:layout_width="1dp"
-        android:layout_height="1dp" />
+        android:layout_height="1dp"
+        android:orientation="vertical" />
 
     <ImageView
         android:id="@+id/alternate_home_head_profile_pic"
@@ -23,5 +24,6 @@
     <LinearLayout
         android:id="@+id/alternate_home_head_profile_padding"
         android:layout_width="1dp"
-        android:layout_height="1dp" />
+        android:layout_height="1dp"
+        android:orientation="vertical" />
 </LinearLayout>
