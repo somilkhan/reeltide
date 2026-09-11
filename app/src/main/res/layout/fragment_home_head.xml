@@ -98,43 +98,46 @@
             android:layout_width="match_parent"
             android:layout_height="88dp"
             android:layout_gravity="bottom"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp">
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp">
 
             <TextView
                 android:id="@+id/home_preview_bookmark"
-                android:layout_width="wrap_content"
+                android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="12dp"
-                android:minWidth="48dp"
-                android:background="@drawable/rt_pill_bg"
+                android:background="@drawable/rt_circle_button_bg"
                 android:foreground="?android:attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:text="@string/none"
+                android:maxLines="1"
+                android:minWidth="48dp"
+                android:padding="0dp"
                 android:textColor="?attr/white"
-                android:textSize="12sp"
+                android:textSize="0sp"
                 app:drawableTint="?attr/white"
-                app:drawableTopCompat="@drawable/ic_baseline_add_24"
                 app:tint="?attr/white" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/home_preview_play"
                 style="@style/WhiteButton"
-                android:layout_width="wrap_content"
+                android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:minWidth="132dp"
                 android:layout_gravity="center"
-                android:text="@string/home_play"
-                app:icon="@drawable/ic_baseline_play_arrow_24" />
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:padding="0dp"
+                android:text=""
+                app:cornerRadius="24dp"
+                app:icon="@drawable/ic_baseline_play_arrow_24"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp" />
 
             <TextView
                 android:id="@+id/home_preview_info"
-                android:layout_width="112dp"
-                android:layout_height="48dp"
+                android:layout_width="137dp"
+                android:layout_height="45dp"
                 android:layout_marginStart="12dp"
                 android:background="@drawable/rt_pill_bg"
                 android:foreground="?android:attr/selectableItemBackgroundBorderless"
