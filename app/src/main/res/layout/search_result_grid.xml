@@ -3,22 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/search_result_root"
-    android:layout_width="match_parent"
+    android:layout_width="150dp"
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
     android:foreground="@drawable/outline_drawable"
-    android:orientation="vertical"
-    android:padding="3dp">
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/background_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="225dp"
         android:layout_margin="0dp"
         android:elevation="0dp"
         app:cardBackgroundColor="@color/rt_surface"
-        app:cardCornerRadius="12dp">
+        app:cardCornerRadius="8dp">
 
         <ImageView
             android:id="@+id/imageView"
@@ -92,16 +91,12 @@
         android:id="@+id/imageText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:ellipsize="end"
         android:gravity="start"
-        android:maxLines="2"
-        android:paddingStart="4dp"
-        android:paddingTop="7dp"
-        android:paddingEnd="4dp"
-        android:paddingBottom="4dp"
+        android:maxLines="1"
+        android:paddingTop="8dp"
         android:textColor="?attr/textColor"
-        android:textSize="13sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         tools:text="The Perfect Run" />
 
