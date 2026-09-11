@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -23,28 +23,28 @@
             android:ellipsize="end"
             android:fontFamily="sans-serif-medium"
             android:maxLines="1"
-            android:textColor="?attr/textColor"
+            android:textColor="#E6FFFFFF"
             android:textSize="17sp"
             tools:text="Trending Right Now" />
 
         <TextView
             android:id="@+id/home_child_more_info"
             android:layout_width="wrap_content"
-            android:layout_height="36dp"
+            android:layout_height="30dp"
             android:background="@drawable/rt_pill_bg"
             android:clickable="true"
             android:contentDescription="@string/home_more_info"
             android:focusable="true"
             android:gravity="center"
-            android:minWidth="92dp"
-            android:paddingStart="14dp"
-            android:paddingEnd="14dp"
+            android:minWidth="0dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="9dp"
             android:text="@string/rt_view_all"
-            android:textColor="?attr/textColor"
-            android:textSize="14sp"
+            android:textColor="#80FFFFFF"
+            android:textSize="12sp"
             android:textStyle="bold"
             app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_24"
-            app:drawableTint="?attr/iconColor" />
+            app:drawableTint="#80FFFFFF" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
