@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/search_result_root"
-    android:layout_width="150dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
     android:foreground="@drawable/outline_drawable"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -89,7 +90,7 @@
 
     <TextView
         android:id="@+id/imageText"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:gravity="start"
@@ -102,7 +103,7 @@
 
     <TextView
         android:id="@+id/search_result_meta"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:gravity="start"
@@ -110,7 +111,6 @@
         android:paddingTop="4dp"
         android:textColor="?attr/grayTextColor"
         android:textSize="11sp"
-        android:textStyle="normal"
         tools:text="★ 6.7 · 2026 · Movie" />
 
 </LinearLayout>
