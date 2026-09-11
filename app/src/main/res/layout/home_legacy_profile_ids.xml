@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="1dp"
+    android:layout_height="1dp"
+    android:visibility="gone"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/home_head_profile_pic"
+        android:layout_width="1dp"
+        android:layout_height="1dp" />
+
+    <LinearLayout
+        android:id="@+id/home_head_profile_padding"
+        android:layout_width="1dp"
+        android:layout_height="1dp" />
+
+    <ImageView
+        android:id="@+id/alternate_home_head_profile_pic"
+        android:layout_width="1dp"
+        android:layout_height="1dp" />
+
+    <LinearLayout
+        android:id="@+id/alternate_home_head_profile_padding"
+        android:layout_width="1dp"
+        android:layout_height="1dp" />
+</LinearLayout>
