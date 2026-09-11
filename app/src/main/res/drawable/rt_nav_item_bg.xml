@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="true">
-        <inset android:insetLeft="8dp" android:insetTop="8dp" android:insetRight="8dp" android:insetBottom="8dp">
-            <shape>
-                <solid android:color="@color/rt_surface_alt" />
-                <corners android:radius="24dp" />
-            </shape>
-        </inset>
-    </item>
     <item>
-        <inset android:insetLeft="8dp" android:insetTop="8dp" android:insetRight="8dp" android:insetBottom="8dp">
+        <inset
+            android:insetLeft="14dp"
+            android:insetTop="14dp"
+            android:insetRight="14dp"
+            android:insetBottom="14dp">
             <shape>
-                <solid android:color="@color/rt_surface" />
-                <corners android:radius="24dp" />
+                <solid android:color="#1A1A1A" />
+                <corners android:radius="18dp" />
             </shape>
         </inset>
     </item>
