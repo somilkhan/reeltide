@@ -38,13 +38,8 @@ class HomeScrollAdapter(
 
     override fun onClearView(holder: ViewHolderState<Any>) {
         when (val binding = holder.view) {
-            is HomeScrollViewBinding -> {
-                clearImage(binding.homeScrollPreview)
-            }
-
-            is HomeScrollViewTvBinding -> {
-                clearImage(binding.homeScrollPreview)
-            }
+            is HomeScrollViewBinding -> clearImage(binding.homeScrollPreview)
+            is HomeScrollViewTvBinding -> clearImage(binding.homeScrollPreview)
         }
     }
 
@@ -66,11 +61,19 @@ class HomeScrollAdapter(
                 val type = item.type.toString()
                     .replace("TvSeries", "TV")
                     .replace("TvType.", "")
-                val metadata = listOfNotNull(
-                    score?.let { "★ $it" },
-                    item.year?.toString(),
-                    type.takeIf { it.isNotBlank() },
-                ).joinToString("  ·  ")
+                val genres = item.tags
+                    ?.asSequence()
+                    ?.map { it.trim() }
+                    ?.filter { it.isNotBlank() }
+                    ?.distinct()
+                    ?.take(3)
+                    ?.toList()
+                    .orEmpty()
+                val metadata = buildList {
+                    score?.let { add("★ $it") }
+                    item.year?.let { add(it.toString()) }
+                    if (genres.isNotEmpty()) addAll(genres) else type.takeIf { it.isNotBlank() }?.let(::add)
+                }.joinToString("  ·  ")
 
                 binding.homeScrollPreviewTags.apply {
                     text = metadata
