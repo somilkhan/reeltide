@@ -33,9 +33,7 @@ class HomeScrollViewHolderState(view: ViewBinding) : ViewHolderState<Boolean>(vi
     override fun restore(state: Boolean) {
         if (state) {
             wasFocused = false
-            if (isLayout(TV)) {
-                itemView.requestFocus()
-            }
+            if (isLayout(TV)) itemView.requestFocus()
         }
     }
 }
@@ -45,22 +43,14 @@ class ResumeItemAdapter(
     nextFocusDown: Int? = null,
     clickCallback: (SearchClickCallback) -> Unit,
     private val removeCallback: (View) -> Unit,
-) : HomeChildItemAdapter(
-    id = "resumeAdapter".hashCode(),
-    nextFocusUp = nextFocusUp,
-    nextFocusDown = nextFocusDown,
-    clickCallback = clickCallback
-) {
+) : HomeChildItemAdapter("resumeAdapter".hashCode(), nextFocusUp, nextFocusDown, clickCallback) {
     override val footers = if (isLayout(TV or EMULATOR)) 1 else 0
 
     override fun onCreateFooter(parent: ViewGroup): ViewHolderState<Boolean> {
         val expanded = parent.context.isBottomLayout()
         val inflater = LayoutInflater.from(parent.context)
-        val binding = if (expanded) HomeRemoveGridExpandedBinding.inflate(
-            inflater,
-            parent,
-            false
-        ) else HomeRemoveGridBinding.inflate(inflater, parent, false)
+        val binding = if (expanded) HomeRemoveGridExpandedBinding.inflate(inflater, parent, false)
+        else HomeRemoveGridBinding.inflate(inflater, parent, false)
         return HomeScrollViewHolderState(binding)
     }
 
@@ -69,7 +59,7 @@ class ResumeItemAdapter(
     }
 
     override fun onBindFooter(holder: ViewHolderState<Boolean>) {
-        this.applyBinding(holder, false)
+        applyBinding(holder, false)
         when (val binding = holder.view) {
             is HomeRemoveGridBinding -> updateLayoutParms(binding.backgroundCard, setWidth, setHeight)
             is HomeRemoveGridExpandedBinding -> updateLayoutParms(binding.backgroundCard, setWidth, setHeight)
@@ -81,9 +71,7 @@ class ResumeItemAdapter(
             }
             nextFocusUp?.let { nextFocusUpId = it }
             nextFocusDown?.let { nextFocusDownId = it }
-            setOnClickListener { v ->
-                removeCallback.invoke(v ?: return@setOnClickListener)
-            }
+            setOnClickListener { v -> removeCallback.invoke(v ?: return@setOnClickListener) }
         }
     }
 }
@@ -93,13 +81,10 @@ open class HomeChildItemAdapter(
     var nextFocusUp: Int? = null,
     var nextFocusDown: Int? = null,
     var clickCallback: (SearchClickCallback) -> Unit,
-) :
-    BaseAdapter<SearchResponse, Boolean>(
-        id, diffCallback = BaseDiffCallback(
-            itemSame = { a, b -> a.url == b.url && a.name == b.name },
-            contentSame = { a, b -> a == b }
-        )
-    ) {
+) : BaseAdapter<SearchResponse, Boolean>(id, diffCallback = BaseDiffCallback(
+    itemSame = { a, b -> a.url == b.url && a.name == b.name },
+    contentSame = { a, b -> a == b }
+)) {
     var hasNext: Boolean = false
     var isHorizontal: Boolean = false
         set(value) {
@@ -112,9 +97,7 @@ open class HomeChildItemAdapter(
         setHeight = if (!isHorizontal) maxPosterSize else minPosterSize
     }
 
-    init {
-        updateCachedPosterSize()
-    }
+    init { updateCachedPosterSize() }
 
     protected var setWidth = 0
     protected var setHeight = 0
@@ -122,60 +105,67 @@ open class HomeChildItemAdapter(
     override fun onCreateContent(parent: ViewGroup): ViewHolderState<Boolean> {
         val expanded = parent.context.isBottomLayout()
         val inflater = LayoutInflater.from(parent.context)
-        val binding = if (expanded) HomeResultGridExpandedBinding.inflate(
-            inflater,
-            parent,
-            false
-        ) else HomeResultGridBinding.inflate(inflater, parent, false)
+        val binding = if (expanded) HomeResultGridExpandedBinding.inflate(inflater, parent, false)
+        else HomeResultGridBinding.inflate(inflater, parent, false)
         return HomeScrollViewHolderState(binding)
     }
 
     companion object {
         val sharedPool = newSharedPool { setMaxRecycledViews(CONTENT, 20) }
-
         var minPosterSize: Int = 0
         var maxPosterSize: Int = 0
 
         fun updatePosterSize(context: Context, value: Int? = null) {
             val scale = value ?: PreferenceManager.getDefaultSharedPreferences(context)
                 ?.getInt(context.getString(R.string.poster_size_key), 0) ?: 0
-            // v0 mobile card: 124px wide, 0.68 poster ratio. Preserve the user's size preference.
             val mul = 1.0f + scale * 0.1f
             minPosterSize = (124.toPx.toFloat() * mul).toInt()
             maxPosterSize = (182.toPx.toFloat() * mul).toInt()
         }
 
         fun updateLayoutParms(layout: FrameLayout, width: Int, height: Int) {
-            val params = layout.layoutParams
-            if (params.height == height && params.width == width) return
-            params.width = width
-            params.height = height
-            layout.layoutParams = params
+            layout.layoutParams = layout.layoutParams.apply {
+                this.width = width
+                this.height = height
+            }
             (layout as? CardView)?.radius = 17.toPx.toFloat()
+        }
+    }
+
+    private fun applyV0CardContainer(view: View) {
+        view.layoutParams = view.layoutParams?.apply {
+            width = setWidth
+            if (this is ViewGroup.MarginLayoutParams) marginEnd = 16.toPx
+        }
+        view.findViewById<View>(R.id.imageText)?.apply {
+            setPadding(paddingLeft, 10.toPx, paddingRight, paddingBottom)
+            textSize = 14f
+        }
+        view.findViewById<View>(R.id.search_result_meta)?.apply {
+            setPadding(paddingLeft, 4.toPx, paddingRight, paddingBottom)
+            textSize = 10f
         }
     }
 
     protected fun applyBinding(holder: ViewHolderState<Boolean>, isFirstItem: Boolean) {
         when (val binding = holder.view) {
-            is HomeResultGridBinding -> updateLayoutParms(binding.backgroundCard, setWidth, setHeight)
+            is HomeResultGridBinding -> {
+                updateLayoutParms(binding.backgroundCard, setWidth, setHeight)
+                applyV0CardContainer(holder.itemView)
+            }
             is HomeResultGridExpandedBinding -> {
                 updateLayoutParms(binding.backgroundCard, setWidth, setHeight)
+                applyV0CardContainer(holder.itemView)
                 if (isFirstItem) binding.backgroundCard.nextFocusLeftId = R.id.nav_rail_view
             }
         }
     }
 
-    override fun onBindContent(
-        holder: ViewHolderState<Boolean>,
-        item: SearchResponse,
-        position: Int
-    ) {
+    override fun onBindContent(holder: ViewHolderState<Boolean>, item: SearchResponse, position: Int) {
         applyBinding(holder, position == 0)
         SearchResultBuilder.bind(
             clickCallback = { click ->
-                when (click.action) {
-                    SEARCH_ACTION_LOAD -> (holder as? HomeScrollViewHolderState)?.wasFocused = true
-                }
+                if (click.action == SEARCH_ACTION_LOAD) (holder as? HomeScrollViewHolderState)?.wasFocused = true
                 clickCallback(click)
             },
             item,
@@ -184,13 +174,9 @@ open class HomeChildItemAdapter(
             nextFocusUp,
             nextFocusDown
         )
-
-        // Home cards are always title-forward. The global poster-title preference is retained
-        // for search/library surfaces, while the redesigned home feed keeps title + compact meta.
         holder.itemView.findViewById<View>(R.id.imageText)?.visibility = View.VISIBLE
         holder.itemView.findViewById<View>(R.id.search_result_meta)?.visibility =
             if (item.type?.toString().isNullOrBlank() && item.name.isBlank()) View.GONE else View.VISIBLE
-
         holder.itemView.tag = position
     }
 }
