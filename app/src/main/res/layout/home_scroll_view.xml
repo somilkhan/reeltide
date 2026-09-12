@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
+        android:adjustViewBounds="false"
         tools:src="@drawable/example_poster" />
 
     <View
@@ -27,23 +28,23 @@
         android:focusable="false" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="85%"
         android:layout_height="wrap_content"
         android:layout_gravity="start|bottom"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="112dp"
+        android:layout_marginBottom="146dp"
         android:gravity="start"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/home_preview_logo"
-            android:layout_width="270dp"
+            android:layout_width="100%"
             android:layout_height="84dp"
             android:layout_gravity="start"
             android:contentDescription="@null"
             android:paddingBottom="8dp"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitStart" />
 
         <TextView
             android:id="@+id/home_scroll_preview_title"
@@ -52,7 +53,7 @@
             android:layout_gravity="start"
             android:gravity="start"
             android:maxLines="2"
-            android:paddingEnd="30dp"
+            android:paddingEnd="0dp"
             android:paddingBottom="7dp"
             android:textColor="?attr/white"
             android:textSize="30sp"
@@ -80,7 +81,7 @@
             android:ellipsize="end"
             android:lineSpacingExtra="1dp"
             android:maxLines="3"
-            android:paddingEnd="30dp"
+            android:paddingEnd="0dp"
             android:textColor="#B3FFFFFF"
             android:textSize="14sp"
             tools:text="A concise description of the featured title appears here, matching the reference hero hierarchy without overwhelming the artwork." />
