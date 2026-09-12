@@ -14,9 +14,11 @@ import androidx.preference.PreferenceManager
 import com.lagradost.cloudstream3.AnimeSearchResponse
 import com.lagradost.cloudstream3.DubStatus
 import com.lagradost.cloudstream3.LiveSearchResponse
+import com.lagradost.cloudstream3.MovieSearchResponse
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.SearchQuality
 import com.lagradost.cloudstream3.SearchResponse
+import com.lagradost.cloudstream3.TvSeriesSearchResponse
 import com.lagradost.cloudstream3.isMovieType
 import com.lagradost.cloudstream3.syncproviders.SyncAPI
 import com.lagradost.cloudstream3.ui.settings.Globals.TV
@@ -42,6 +44,28 @@ object SearchResultBuilder {
         }
     }
 
+    private fun getSearchResponseYear(result: SearchResponse): Int? = when (result) {
+        is MovieSearchResponse -> result.year
+        is TvSeriesSearchResponse -> result.year
+        is AnimeSearchResponse -> result.year
+        else -> null
+    }
+
+    private fun getSearchResponseMeta(context: Context, result: SearchResponse): String {
+        val score = if (result is SyncAPI.LibraryItem) {
+            result.personalRating?.toStringNull(0.1, 10, 1)
+        } else {
+            result.score?.toStringNull(0.1, 10, 1)
+        }
+        val year = getSearchResponseYear(result)?.toString()
+        val type = result.type?.toString()
+        return buildList {
+            if (!score.isNullOrBlank()) add("★ $score")
+            if (!year.isNullOrBlank()) add(year)
+            if (!type.isNullOrBlank()) add(type)
+        }.joinToString(" · ")
+    }
+
     @SuppressLint("StringFormatInvalid")
     fun bind(
         clickCallback: (SearchClickCallback) -> Unit,
@@ -54,6 +78,7 @@ object SearchResultBuilder {
     ) {
         val cardView: ImageView = itemView.findViewById(R.id.imageView)
         val cardText: TextView? = itemView.findViewById(R.id.imageText)
+        val cardMeta: TextView? = itemView.findViewById(R.id.search_result_meta)
 
         val textIsDub: TextView? = itemView.findViewById(R.id.text_is_dub)
         val textIsSub: TextView? = itemView.findViewById(R.id.text_is_sub)
@@ -68,8 +93,6 @@ object SearchResultBuilder {
         val bar: ProgressBar? = itemView.findViewById(R.id.watchProgress)
         val playImg: ImageView? = itemView.findViewById(R.id.search_item_download_play)
         val episodeText: TextView? = itemView.findViewById(R.id.episode_text)
-
-        // Do logic
 
         bar?.isVisible = false
         playImg?.isVisible = false
@@ -131,6 +154,8 @@ object SearchResultBuilder {
 
         cardText?.text = card.name
         cardText?.isVisible = showTitle
+        cardMeta?.text = getSearchResponseMeta(itemView.context, card)
+        cardMeta?.isVisible = cardMeta?.text?.isNotBlank() == true
         cardView.isVisible = true
         if (!card.posterUrl.isNullOrEmpty()) {
             cardView.loadImage(card.posterUrl, card.posterHeaders) {
@@ -184,9 +209,6 @@ object SearchResultBuilder {
                 return@setOnLongClickListener true
             }
         }
-        //
-        //
-        //
 
         itemView.setOnClickListener {
             click(it)
@@ -199,43 +221,15 @@ object SearchResultBuilder {
             itemView.nextFocusDownId = nextFocusDown
         }
 
-        /*when (nextFocusBehavior) {
-            true -> itemView.nextFocusLeftId = bg.id
-            false -> itemView.nextFocusRightId = bg.id
-            null -> {
-                bg.nextFocusRightId = -1
-                bg.nextFocusLeftId = -1
-            }
-        }*/
-
-        /*if (nextFocusUp != null) {
-            bg.nextFocusUpId = nextFocusUp
-        }
-
-        if (nextFocusDown != null) {
-            bg.nextFocusDownId = nextFocusDown
-        }
-
-        */
-
         if (isLayout(TV)) {
-            // bg.isFocusable = true
-            // bg.isFocusableInTouchMode = true
-            // bg.touchscreenBlocksFocus = false
             itemView.isFocusableInTouchMode = true
             itemView.isFocusable = true
         }
-
-        /**/
 
         itemView.setOnLongClickListener {
             longClick(it)
             return@setOnLongClickListener true
         }
-
-        /*bg.setOnFocusChangeListener { view, b ->
-            focus(view, b)
-        }*/
 
         itemView.setOnFocusChangeListener { view, b ->
             focus(view, b)
@@ -260,7 +254,7 @@ object SearchResultBuilder {
                 }
                 playImg?.visibility = View.VISIBLE
                 if (card.type?.isMovieType() == false && showEpisodeText) {
-                    episodeText?.context?.getShortSeasonText(card.episode, card.season)?.let {text->
+                    episodeText?.context?.getShortSeasonText(card.episode, card.season)?.let { text ->
                         episodeText.text = text
                         episodeText.isVisible = true
                     }
@@ -303,11 +297,6 @@ object SearchResultBuilder {
             }
         }
 
-        // This is the logic for making the rounded corners more round on the top and bottom element
-        // a bit dirty to do memory allocation, but it makes it more extensible and is easier to reason about
-        // then a large if statement
-
-        // Requires that the ordering here is the same as in the xml
         val boxes = arrayListOf<TextView>()
         for (view in arrayOf(textIsDub, textIsSub, rating)) {
             if (view?.isVisible == true) {

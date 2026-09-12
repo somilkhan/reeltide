@@ -16,6 +16,8 @@ import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.AppContextUtils.html
 import com.lagradost.cloudstream3.utils.ImageLoader.loadImage
+import com.lagradost.cloudstream3.utils.UIHelper.toPx
+import java.util.Locale
 
 class HomeScrollAdapter(
     val callback: ((View, Int, LoadResponse) -> Unit)
@@ -31,19 +33,13 @@ class HomeScrollAdapter(
         } else {
             HomeScrollViewBinding.inflate(inflater, parent, false)
         }
-
         return ViewHolderState(binding)
     }
 
     override fun onClearView(holder: ViewHolderState<Any>) {
         when (val binding = holder.view) {
-            is HomeScrollViewBinding -> {
-                clearImage(binding.homeScrollPreview)
-            }
-
-            is HomeScrollViewTvBinding -> {
-                clearImage(binding.homeScrollPreview)
-            }
+            is HomeScrollViewBinding -> clearImage(binding.homeScrollPreview)
+            is HomeScrollViewTvBinding -> clearImage(binding.homeScrollPreview)
         }
     }
 
@@ -53,17 +49,43 @@ class HomeScrollAdapter(
         position: Int,
     ) {
         val binding = holder.view
-
         val posterUrl = item.backgroundPosterUrl ?: item.posterUrl
 
         when (binding) {
             is HomeScrollViewBinding -> {
-                binding.homeScrollPreview.loadImage(posterUrl, item.posterHeaders)
-                binding.homeScrollPreviewTags.apply {
-                    text = item.tags?.joinToString(" • ") ?: ""
-                    isGone = item.tags.isNullOrEmpty()
-                    maxLines = 2
+                // v0 hero viewport is 620dp on phone; keep TV/emulator layout untouched.
+                if (!isLayout(TV or EMULATOR)) {
+                    binding.root.layoutParams = binding.root.layoutParams?.apply {
+                        height = 620.toPx
+                    }
                 }
+
+                binding.homeScrollPreview.loadImage(posterUrl, item.posterHeaders)
+
+                val score = item.score?.toFloat()?.let {
+                    String.format(Locale.US, "%.1f", it)
+                }
+                val type = item.type.toString()
+                    .replace("TvSeries", "TV")
+                    .replace("TvType.", "")
+                    .takeIf { it.isNotBlank() && it != "null" }
+
+                val metadata = buildList {
+                    score?.let { add("★ $it") }
+                    item.year?.let { add(it.toString()) }
+                    type?.let(::add)
+                }.joinToString("  ·  ")
+
+                binding.homeScrollPreviewTags.apply {
+                    text = metadata
+                    isGone = metadata.isBlank()
+                }
+
+                binding.homeScrollPreviewDescription.apply {
+                    text = item.plot?.html() ?: ""
+                    isGone = item.plot.isNullOrBlank()
+                }
+
                 binding.homeScrollPreviewTitle.text = item.name.html()
 
                 bindLogo(

@@ -1,83 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="?attr/primaryGrayBackground"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#050506">
 
     <ImageView
         android:id="@+id/home_scroll_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:adjustViewBounds="false"
         android:scaleType="centerCrop"
         tools:src="@drawable/example_poster" />
 
     <View
-        android:id="@+id/title_shadow_top"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_gravity="top"
-        android:alpha="1"
-        android:background="@drawable/background_shadow"
-        android:rotation="180"
-        android:visibility="visible" />
+        android:layout_height="match_parent"
+        android:background="@drawable/rt_hero_scrim"
+        android:clickable="false"
+        android:focusable="false" />
 
     <View
-        android:id="@+id/title_shadow"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/rt_hero_left_scrim"
+        android:clickable="false"
+        android:focusable="false" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
         android:layout_gravity="bottom"
-        android:background="@drawable/background_shadow" />
+        android:background="@drawable/rt_hero_bottom_scrim"
+        android:clickable="false"
+        android:focusable="false" />
 
     <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/rt_brand_mark_bg"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="n"
+            android:textColor="#050506"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="sans-serif"
+            android:letterSpacing="0.25"
+            android:text="NORTHSTAR"
+            android:textColor="#FFFFFFFF"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="100dp"
-        android:orientation="vertical">
+        android:layout_gravity="start|bottom"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="154dp">
 
-        <ImageView
-            android:id="@+id/home_preview_logo"
-            android:layout_width="260dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_horizontal|bottom"
-            android:scaleType="fitCenter"
-            android:paddingBottom="10dp"
-            android:contentDescription="@null" />
+        <LinearLayout
+            android:id="@+id/home_preview_content_stack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.85">
 
-        <TextView
-            android:id="@+id/home_scroll_preview_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:paddingHorizontal="30dp"
-            android:paddingBottom="10dp"
-            android:textColor="?attr/white"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            tools:text="The Perfect Run" />
-        <!--<TextView
-            android:paddingStart="30dp"
-            android:paddingEnd="30dp"
-            android:id="@+id/home_season_tags"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            tools:text="5 seasons 50 episodes" />-->
-        <TextView
-            android:id="@+id/home_scroll_preview_tags"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:paddingStart="30dp"
-            android:paddingEnd="30dp"
-            android:textColor="?attr/white"
-            android:textSize="14sp"
-            tools:text="Hello • World • Tags" />
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/home_preview_logo"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:contentDescription="@null"
+                android:paddingBottom="8dp"
+                android:scaleType="fitStart" />
+
+            <TextView
+                android:id="@+id/home_scroll_preview_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:gravity="start"
+                android:includeFontPadding="false"
+                android:maxLines="2"
+                android:paddingBottom="9dp"
+                android:textColor="#F9F9F9"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                tools:text="The Last Meridian" />
+
+            <TextView
+                android:id="@+id/home_scroll_preview_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:textColor="#E6FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:text="★ 8.8  ·  2026  ·  Movie" />
+
+            <TextView
+                android:id="@+id/home_scroll_preview_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="1dp"
+                android:maxLines="3"
+                android:textColor="#B3FFFFFF"
+                android:textSize="13sp"
+                tools:text="At the edge of a collapsing world, one cartographer traces a path through the impossible — and finds a way back to us." />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

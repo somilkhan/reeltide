@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@null"
+    android:background="?attr/primaryBlackBackground"
     android:orientation="vertical">
 
     <LinearLayout
@@ -82,8 +82,6 @@
             android:layout_weight="50"
             android:orientation="vertical">
 
-            <!--   android:id="@+id/subs_settings"                 android:foreground="?android:attr/selectableItemBackgroundBorderless"
--->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -192,8 +190,6 @@
                     tools:listfooter="@layout/sort_bottom_footer_add_choice"
                     tools:listitem="@layout/sort_bottom_single_choice" />
             </LinearLayout>
-
-
         </LinearLayout>
     </LinearLayout>
 
@@ -205,15 +201,12 @@
         android:layout_marginTop="-60dp"
         android:gravity="bottom|end"
         android:orientation="horizontal">
-
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/apply_btt"
             style="@style/WhiteButton"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:text="@string/sort_apply" />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel_btt"
             style="@style/BlackButton"

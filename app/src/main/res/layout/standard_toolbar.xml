@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,9 +8,12 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/settings_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/primaryGrayBackground"
+        android:layout_height="56dp"
+        android:background="@color/rt_surface"
         android:descendantFocusability="afterDescendants"
+        android:minHeight="56dp"
+        android:paddingStart="@dimen/rt_space_4"
+        android:paddingEnd="@dimen/rt_space_4"
         android:paddingTop="@dimen/navbar_height"
         app:layout_scrollFlags="scroll|enterAlways"
         app:navigationIconTint="?attr/iconColor"

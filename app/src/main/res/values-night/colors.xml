@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Bingr-inspired dark foundation. Only the default night palette is overridden; custom themes keep their own tokens. -->
+    <color name="colorPrimary">#F5F5F5</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#F5F5F5</color>
+    <color name="colorSearch">#15151B</color>
+    <color name="primaryGrayBackground">#15151B</color>
+    <color name="primaryBlackBackground">#000000</color>
+    <color name="iconGrayBackground">#101014</color>
+    <color name="boxItemBackground">#111116</color>
+    <color name="textColor">#F5F5F5</color>
+    <color name="grayTextColor">#8F8F98</color>
+    <color name="iconColor">#A8A8B0</color>
+    <color name="searchColorTransparent">#1AFFFFFF</color>
+
+    <!-- Reeltide tokens aligned with the default Bingr-inspired night surface. -->
+    <color name="rt_bg">#000000</color>
+    <color name="rt_surface">#101010</color>
+    <color name="rt_surface_alt">#151515</color>
+    <color name="rt_nav_bg">#E60B0B0D</color>
+    <color name="rt_text_primary">#FFF5F5F5</color>
+    <color name="rt_text_heading">#FFFBFBFB</color>
+    <color name="rt_text_secondary">#B3F5F5F5</color>
+    <color name="rt_text_tertiary">#80F5F5F5</color>
+    <color name="rt_text_muted">#4DF5F5F5</color>
+    <color name="rt_text_meta">#FF9A9AA0</color>
+    <color name="rt_ring_5">#0DF5F5F5</color>
+    <color name="rt_ring_8">#14F5F5F5</color>
+    <color name="rt_ring_10">#1AF5F5F5</color>
+    <color name="rt_ring_20">#33F5F5F5</color>
+</resources>

@@ -6,19 +6,20 @@
     android:id="@+id/extensions_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/primaryGrayBackground"
+    android:background="?attr/primaryBlackBackground"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent">
+        android:background="?attr/primaryBlackBackground"
+        android:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/settings_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/primaryGrayBackground"
+            android:background="?attr/primaryBlackBackground"
             android:paddingTop="@dimen/navbar_height"
             app:layout_scrollFlags="scroll|enterAlways"
             app:menu="@menu/repository_search"
@@ -28,13 +29,11 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!--    <include layout="@layout/standard_toolbar" />-->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/repo_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="96dp"
         android:background="?attr/primaryBlackBackground"
         android:clipToPadding="false"
         android:nextFocusUp="@id/settings_toolbar"
@@ -47,17 +46,17 @@
         tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:visibility="gone"
         android:id="@+id/plugin_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="96dp"
         android:background="?attr/primaryBlackBackground"
         android:clipToPadding="false"
-        android:layout_marginBottom="80dp"
         android:nextFocusLeft="@id/nav_rail_view"
         android:nextFocusUp="@id/tvtypes_chips"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:visibility="gone"
         tools:listitem="@layout/repository_item" />
 
     <LinearLayout
@@ -81,14 +80,8 @@
             android:layout_margin="20dp"
             android:gravity="center"
             android:text="@string/blank_repo_message"
+            android:textColor="?attr/textColor"
             android:textSize="16sp" />
-
-        <!--        <com.google.android.material.button.MaterialButton-->
-        <!--            android:id="@+id/list_repositories"-->
-        <!--            style="@style/WhiteButton"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:nextFocusDown="@id/add_repo_button"-->
-        <!--            android:text="@string/view_public_repositories_button" />-->
     </LinearLayout>
 
     <LinearLayout
@@ -96,7 +89,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_gravity="bottom"
-        android:background="?attr/primaryGrayBackground"
+        android:background="@drawable/rt_card_bg"
         android:baselineAligned="false"
         android:focusable="true"
         android:foreground="@drawable/outline_drawable"
@@ -110,7 +103,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-
             android:orientation="vertical">
 
             <TextView
@@ -225,7 +217,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_gravity="center"
                 android:text="@string/add_repository"
                 android:textColor="?attr/textColor" />
@@ -235,7 +226,6 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-
                 android:background="@drawable/outline_drawable"
                 android:contentDescription="@string/add_repository"
                 android:focusable="true"
@@ -243,7 +233,6 @@
                 android:nextFocusUp="@id/repo_recycler_view"
                 android:nextFocusRight="@id/add_repo_button_imageview"
                 android:nextFocusDown="@id/add_repo_button_imageview"
-
                 android:src="@drawable/ic_baseline_add_24"
                 app:tint="?attr/textColor" />
         </LinearLayout>
@@ -262,4 +251,3 @@
         tools:ignore="ContentDescription" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-

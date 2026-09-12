@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_root"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
@@ -34,17 +33,14 @@
             app:shimmer_base_alpha="0.2"
             app:shimmer_duration="@integer/loading_time"
             app:shimmer_highlight_alpha="0.3">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
                     <androidx.cardview.widget.CardView
                         android:layout_width="125dp"
                         android:layout_height="200dp"
@@ -53,7 +49,6 @@
                         android:background="@color/grayShimmer"
                         android:translationX="-164dp"
                         app:cardCornerRadius="@dimen/loading_radius" />
-
                     <androidx.cardview.widget.CardView
                         android:layout_width="148dp"
                         android:layout_height="234dp"
@@ -61,7 +56,6 @@
                         android:layout_margin="@dimen/loading_margin"
                         android:background="@color/grayShimmer"
                         app:cardCornerRadius="@dimen/loading_radius" />
-
                     <androidx.cardview.widget.CardView
                         android:layout_width="125dp"
                         android:layout_height="200dp"
@@ -71,22 +65,16 @@
                         android:translationX="164dp"
                         app:cardCornerRadius="@dimen/loading_radius" />
                 </FrameLayout>
-
                 <include layout="@layout/loading_line_short_center" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/result_padding"
                     android:layout_marginTop="@dimen/result_padding"
-
                     android:layout_marginEnd="@dimen/result_padding"
                     android:orientation="vertical">
-
                     <include layout="@layout/loading_list" />
-
                     <include layout="@layout/loading_list" />
-
                     <include layout="@layout/loading_list" />
                 </LinearLayout>
             </LinearLayout>
@@ -101,19 +89,15 @@
             android:background="@color/transparent"
             android:orientation="horizontal"
             android:visibility="gone">
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/home_change_api"
                 style="@style/RegularButtonTV"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="0dp"
                 android:background="@drawable/player_button_tv_attr_no_bg"
                 android:gravity="center_vertical"
                 android:nextFocusLeft="@id/nav_rail_view"
                 android:nextFocusRight="@id/home_switch_account" />
-
             <ImageView
                 android:id="@+id/home_preview_reload_provider"
                 android:layout_width="50dp"
@@ -131,7 +115,6 @@
                 android:tag="@string/tv_no_focus_tag"
                 android:visibility="gone"
                 app:tint="@color/player_on_button_tv_attr" />
-
             <ImageView
                 android:id="@+id/home_preview_search_button"
                 android:layout_width="50dp"
@@ -147,10 +130,8 @@
                 android:tag="@string/tv_no_focus_tag"
                 android:visibility="gone"
                 app:tint="@color/player_on_button_tv_attr" />
-
             <ImageView
                 android:id="@+id/home_switch_account"
-
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
@@ -170,43 +151,33 @@
         android:orientation="vertical"
         android:visibility="gone"
         tools:visibility="gone">
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/home_reload_connectionerror"
             style="@style/WhiteButton"
-
             android:layout_width="wrap_content"
-
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:minWidth="200dp"
             android:text="@string/reload_error"
             app:icon="@drawable/ic_baseline_autorenew_24" />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/home_reload_connection_open_in_browser"
             style="@style/BlackButton"
-
             android:layout_width="wrap_content"
-
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:minWidth="200dp"
             android:text="@string/result_open_in_browser"
             app:icon="@drawable/ic_baseline_public_24" />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/home_reload_connection_go_to_downloads"
             style="@style/BlackButton"
-
             android:layout_width="wrap_content"
-
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:minWidth="200dp"
             android:text="@string/go_to_downloads"
             app:icon="@drawable/netflix_download" />
-
         <TextView
             android:id="@+id/result_error_text"
             android:layout_width="match_parent"
@@ -221,25 +192,37 @@
         android:id="@+id/home_master_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
         android:descendantFocusability="afterDescendants"
         android:nextFocusLeft="@id/nav_rail_view"
+        android:paddingBottom="96dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/homepage_parent"
         tools:visibility="gone" />
 
     <TextClock
-            android:id="@+id/home_clock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+        android:id="@+id/home_clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/home_api_fab"
         style="@style/ExtendedFloatingActionButton"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="92dp"
+        android:minWidth="52dp"
+        android:minHeight="52dp"
+        android:padding="0dp"
         android:text="@string/home_source"
         android:textColor="?attr/textColor"
+        android:textSize="0sp"
         android:visibility="gone"
         app:icon="@drawable/ic_baseline_filter_list_24"
+        app:iconSize="20dp"
         tools:ignore="ContentDescription"
         tools:visibility="visible" />
 
@@ -254,14 +237,12 @@
         tools:ignore="ContentDescription"
         tools:visibility="visible" />
 
-    <!-- Placeholder for TV layout random button - always hidden on phone -->
     <ImageView
         android:id="@+id/home_random_button_tv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone" />
 
-    <!-- Placeholder for TV layout settings button - always hidden on phone -->
     <ImageView
         android:id="@+id/home_preview_settings_button"
         android:layout_width="0dp"

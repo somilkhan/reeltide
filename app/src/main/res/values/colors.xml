@@ -122,4 +122,21 @@
     <color name="colorTestFail">#ea596e</color>
     <color name="colorTestWarning">#FF9800</color>
     <color name="playIconBackground">#B3000000</color>
+
+    <!-- Reeltide tokens -->
+    <color name="rt_bg">#FF1A1C24</color>
+    <color name="rt_surface">#FF16181F</color>
+    <color name="rt_surface_alt">#FF1A1A1A</color>
+    <color name="rt_nav_bg">#E60F1014</color>
+    <color name="rt_text_primary">#FFFFFFFF</color>
+    <color name="rt_text_heading">#FFFBFBFE</color>
+    <color name="rt_text_secondary">#B3FFFFFF</color>
+    <color name="rt_text_tertiary">#80FFFFFF</color>
+    <color name="rt_text_muted">#4DFFFFFF</color>
+    <color name="rt_text_meta">#FF8F98A2</color>
+    <color name="rt_ring_5">#0DFFFFFF</color>
+    <color name="rt_ring_8">#14FFFFFF</color>
+    <color name="rt_ring_10">#1AFFFFFF</color>
+    <color name="rt_ring_20">#33FFFFFF</color>
+    <color name="rt_danger">#FBEF4444</color>
 </resources>
