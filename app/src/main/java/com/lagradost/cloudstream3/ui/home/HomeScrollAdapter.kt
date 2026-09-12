@@ -32,7 +32,6 @@ class HomeScrollAdapter(
         } else {
             HomeScrollViewBinding.inflate(inflater, parent, false)
         }
-
         return ViewHolderState(binding)
     }
 
@@ -61,18 +60,15 @@ class HomeScrollAdapter(
                 val type = item.type.toString()
                     .replace("TvSeries", "TV")
                     .replace("TvType.", "")
-                val genres = item.tags
-                    ?.asSequence()
-                    ?.map { it.trim() }
-                    ?.filter { it.isNotBlank() }
-                    ?.distinct()
-                    ?.take(3)
-                    ?.toList()
-                    .orEmpty()
+                    .takeIf { it.isNotBlank() && it != "null" }
+
+                // The hero follows the reference hierarchy: rating (when available),
+                // year, then content type. Genres belong to detail pages, not this
+                // compact hero metadata row.
                 val metadata = buildList {
                     score?.let { add("★ $it") }
                     item.year?.let { add(it.toString()) }
-                    if (genres.isNotEmpty()) addAll(genres) else type.takeIf { it.isNotBlank() }?.let(::add)
+                    type?.let(::add)
                 }.joinToString("  ·  ")
 
                 binding.homeScrollPreviewTags.apply {
