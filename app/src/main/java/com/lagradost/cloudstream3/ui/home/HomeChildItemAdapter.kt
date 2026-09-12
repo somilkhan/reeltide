@@ -182,6 +182,14 @@ open class HomeChildItemAdapter(
             nextFocusUp,
             nextFocusDown
         )
+
+        // Home cards are always title-forward. The global poster-title preference is
+        // retained for search/library surfaces, while the redesigned home feed follows
+        // the reference card hierarchy: poster → title → compact metadata.
+        holder.itemView.findViewById<View>(R.id.imageText)?.visibility = View.VISIBLE
+        holder.itemView.findViewById<View>(R.id.search_result_meta)?.visibility =
+            if (item.type?.toString().isNullOrBlank() && item.name.isBlank()) View.GONE else View.VISIBLE
+
         holder.itemView.tag = position
     }
 }
