@@ -16,6 +16,7 @@ import com.lagradost.cloudstream3.ui.settings.Globals.TV
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 import com.lagradost.cloudstream3.utils.AppContextUtils.html
 import com.lagradost.cloudstream3.utils.ImageLoader.loadImage
+import com.lagradost.cloudstream3.utils.UIHelper.toPx
 import java.util.Locale
 
 class HomeScrollAdapter(
@@ -52,6 +53,13 @@ class HomeScrollAdapter(
 
         when (binding) {
             is HomeScrollViewBinding -> {
+                // v0 hero viewport is 620dp on phone; keep TV/emulator layout untouched.
+                if (!isLayout(TV or EMULATOR)) {
+                    binding.root.layoutParams = binding.root.layoutParams?.apply {
+                        height = 620.toPx
+                    }
+                }
+
                 binding.homeScrollPreview.loadImage(posterUrl, item.posterHeaders)
 
                 val score = item.score?.toFloat()?.let {
@@ -62,9 +70,6 @@ class HomeScrollAdapter(
                     .replace("TvType.", "")
                     .takeIf { it.isNotBlank() && it != "null" }
 
-                // The hero follows the reference hierarchy: rating (when available),
-                // year, then content type. Genres belong to detail pages, not this
-                // compact hero metadata row.
                 val metadata = buildList {
                     score?.let { add("★ $it") }
                     item.year?.let { add(it.toString()) }
