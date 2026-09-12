@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.cardview.widget.CardView
 import androidx.preference.PreferenceManager
 import androidx.viewbinding.ViewBinding
+import androidx.viewpager2.widget.ViewPager2
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.SearchResponse
 import com.lagradost.cloudstream3.databinding.HomeRemoveGridBinding
@@ -138,10 +140,10 @@ open class HomeChildItemAdapter(
         fun updatePosterSize(context: Context, value: Int? = null) {
             val scale = value ?: PreferenceManager.getDefaultSharedPreferences(context)
                 ?.getInt(context.getString(R.string.poster_size_key), 0) ?: 0
-            // Match the compact mobile card geometry used by the Bingr reference.
+            // v0 mobile card: 124px wide, 0.68 poster ratio. Preserve the user's size preference.
             val mul = 1.0f + scale * 0.1f
-            minPosterSize = (130.toPx.toFloat() * mul).toInt()
-            maxPosterSize = (195.toPx.toFloat() * mul).toInt()
+            minPosterSize = (124.toPx.toFloat() * mul).toInt()
+            maxPosterSize = (182.toPx.toFloat() * mul).toInt()
         }
 
         fun updateLayoutParms(layout: FrameLayout, width: Int, height: Int) {
@@ -150,6 +152,7 @@ open class HomeChildItemAdapter(
             params.width = width
             params.height = height
             layout.layoutParams = params
+            (layout as? CardView)?.radius = 17.toPx.toFloat()
         }
     }
 
@@ -183,9 +186,8 @@ open class HomeChildItemAdapter(
             nextFocusDown
         )
 
-        // Home cards are always title-forward. The global poster-title preference is
-        // retained for search/library surfaces, while the redesigned home feed follows
-        // the reference card hierarchy: poster → title → compact metadata.
+        // Home cards are always title-forward. The global poster-title preference is retained
+        // for search/library surfaces, while the redesigned home feed keeps title + compact meta.
         holder.itemView.findViewById<View>(R.id.imageText)?.visibility = View.VISIBLE
         holder.itemView.findViewById<View>(R.id.search_result_meta)?.visibility =
             if (item.type?.toString().isNullOrBlank() && item.name.isBlank()) View.GONE else View.VISIBLE
