@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Compatibility IDs retained for legacy Home focus/binding code after the phone header redesign. -->
+    <item name="home_padding" type="id" />
+    <item name="home_search" type="id" />
+</resources>
