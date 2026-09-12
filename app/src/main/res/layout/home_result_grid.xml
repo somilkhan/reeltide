@@ -3,25 +3,25 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="130dp"
+    android:layout_width="124dp"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="12dp"
+    android:layout_marginEnd="16dp"
     android:backgroundTint="@color/transparent"
     app:cardCornerRadius="0dp"
     app:cardElevation="0dp">
 
     <LinearLayout
-        android:layout_width="130dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/background_card"
-            android:layout_width="130dp"
-            android:layout_height="195dp"
+            android:layout_width="match_parent"
+            android:layout_height="182dp"
             android:elevation="0dp"
             app:cardBackgroundColor="?attr/primaryGrayBackground"
-            app:cardCornerRadius="8dp">
+            app:cardCornerRadius="17dp">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -96,7 +96,7 @@
             android:gravity="start"
             android:includeFontPadding="false"
             android:maxLines="2"
-            android:paddingTop="9dp"
+            android:paddingTop="10dp"
             android:textColor="?attr/textColor"
             android:textSize="14sp"
             tools:text="Moana" />
@@ -112,7 +112,7 @@
             android:maxLines="1"
             android:paddingTop="4dp"
             android:textColor="?attr/grayTextColor"
-            android:textSize="11sp"
+            android:textSize="10sp"
             tools:text="★ 6.2 · 2026 · Movie" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
