@@ -34,7 +34,7 @@
         android:layout_gravity="start|bottom"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="90dp">
+        android:layout_marginBottom="150dp">
 
         <LinearLayout
             android:id="@+id/home_preview_content_stack"
@@ -45,15 +45,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.85">
+            app:layout_constraintWidth_percent="0.88">
 
             <ImageView
                 android:id="@+id/home_preview_logo"
                 android:layout_width="match_parent"
-                android:layout_height="84dp"
+                android:layout_height="72dp"
                 android:layout_gravity="start"
                 android:contentDescription="@null"
-                android:paddingBottom="8dp"
+                android:paddingBottom="6dp"
                 android:scaleType="fitStart" />
 
             <TextView
@@ -63,8 +63,7 @@
                 android:layout_gravity="start"
                 android:gravity="start"
                 android:maxLines="2"
-                android:paddingEnd="0dp"
-                android:paddingBottom="7dp"
+                android:paddingBottom="6dp"
                 android:textColor="?attr/white"
                 android:textSize="30sp"
                 android:textStyle="bold"
@@ -90,7 +89,6 @@
                 android:ellipsize="end"
                 android:lineSpacingExtra="1dp"
                 android:maxLines="3"
-                android:paddingEnd="0dp"
                 android:textColor="#B3FFFFFF"
                 android:textSize="14sp"
                 tools:text="A concise description of the featured title appears here, matching the reference hero hierarchy without overwhelming the artwork." />
