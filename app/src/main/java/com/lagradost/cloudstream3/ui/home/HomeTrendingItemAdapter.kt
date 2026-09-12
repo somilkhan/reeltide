@@ -1,37 +1,36 @@
 package com.lagradost.cloudstream3.ui.home
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.SearchResponse
 import com.lagradost.cloudstream3.databinding.HomeTrendingGridBinding
-import com.lagradost.cloudstream3.ui.BaseDiffCallback
-import com.lagradost.cloudstream3.ui.NoStateAdapter
 import com.lagradost.cloudstream3.ui.ViewHolderState
 import com.lagradost.cloudstream3.ui.search.SEARCH_ACTION_LOAD
 import com.lagradost.cloudstream3.ui.search.SearchClickCallback
 import com.lagradost.cloudstream3.utils.ImageLoader.loadImage
 
 class HomeTrendingItemAdapter(
-    private val clickCallback: (SearchClickCallback) -> Unit,
-) : NoStateAdapter<SearchResponse>(
-    diffCallback = BaseDiffCallback(
-        itemSame = { a, b -> a.url == b.url && a.name == b.name },
-        contentSame = { a, b -> a == b },
-    )
+    id: Int,
+    nextFocusUp: Int? = null,
+    nextFocusDown: Int? = null,
+    clickCallback: (SearchClickCallback) -> Unit,
+) : HomeChildItemAdapter(
+    id = id,
+    nextFocusUp = nextFocusUp,
+    nextFocusDown = nextFocusDown,
+    clickCallback = clickCallback,
 ) {
-    override fun onCreateContent(parent: ViewGroup): ViewHolderState<Any> {
+    override fun onCreateContent(parent: ViewGroup): ViewHolderState<Boolean> {
         val binding = HomeTrendingGridBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false,
         )
-        return ViewHolderState(binding)
+        return HomeScrollViewHolderState(binding)
     }
 
     override fun onBindContent(
-        holder: ViewHolderState<Any>,
+        holder: ViewHolderState<Boolean>,
         item: SearchResponse,
         position: Int,
     ) {
@@ -48,9 +47,10 @@ class HomeTrendingItemAdapter(
                 )
             )
         }
+        holder.itemView.tag = position
     }
 
-    override fun onClearView(holder: ViewHolderState<Any>) {
+    override fun onClearView(holder: ViewHolderState<Boolean>) {
         val binding = holder.view as? HomeTrendingGridBinding ?: return
         clearImage(binding.trendingImage)
     }
