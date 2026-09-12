@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -27,65 +28,75 @@
         android:clickable="false"
         android:focusable="false" />
 
-    <LinearLayout
-        android:layout_width="85%"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start|bottom"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="146dp"
-        android:gravity="start"
-        android:orientation="vertical">
+        android:layout_marginBottom="146dp">
 
-        <ImageView
-            android:id="@+id/home_preview_logo"
-            android:layout_width="100%"
-            android:layout_height="84dp"
-            android:layout_gravity="start"
-            android:contentDescription="@null"
-            android:paddingBottom="8dp"
-            android:scaleType="fitStart" />
-
-        <TextView
-            android:id="@+id/home_scroll_preview_title"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/home_preview_content_stack"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
             android:gravity="start"
-            android:maxLines="2"
-            android:paddingEnd="0dp"
-            android:paddingBottom="7dp"
-            android:textColor="?attr/white"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            tools:text="The Perfect Run" />
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.85">
 
-        <TextView
-            android:id="@+id/home_scroll_preview_tags"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:maxLines="1"
-            android:paddingBottom="8dp"
-            android:textColor="#E6FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            tools:text="★ 6.7  ·  2026  ·  Movie" />
+            <ImageView
+                android:id="@+id/home_preview_logo"
+                android:layout_width="match_parent"
+                android:layout_height="84dp"
+                android:layout_gravity="start"
+                android:contentDescription="@null"
+                android:paddingBottom="8dp"
+                android:scaleType="fitStart" />
 
-        <TextView
-            android:id="@+id/home_scroll_preview_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
-            android:ellipsize="end"
-            android:lineSpacingExtra="1dp"
-            android:maxLines="3"
-            android:paddingEnd="0dp"
-            android:textColor="#B3FFFFFF"
-            android:textSize="14sp"
-            tools:text="A concise description of the featured title appears here, matching the reference hero hierarchy without overwhelming the artwork." />
+            <TextView
+                android:id="@+id/home_scroll_preview_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:gravity="start"
+                android:maxLines="2"
+                android:paddingEnd="0dp"
+                android:paddingBottom="7dp"
+                android:textColor="?attr/white"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                tools:text="The Perfect Run" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/home_scroll_preview_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:gravity="start"
+                android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:textColor="#E6FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:text="★ 6.7  ·  2026  ·  Movie" />
+
+            <TextView
+                android:id="@+id/home_scroll_preview_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lineSpacingExtra="1dp"
+                android:maxLines="3"
+                android:paddingEnd="0dp"
+                android:textColor="#B3FFFFFF"
+                android:textSize="14sp"
+                tools:text="A concise description of the featured title appears here, matching the reference hero hierarchy without overwhelming the artwork." />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
