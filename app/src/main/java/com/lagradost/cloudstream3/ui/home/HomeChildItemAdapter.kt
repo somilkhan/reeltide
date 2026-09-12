@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.preference.PreferenceManager
 import androidx.viewbinding.ViewBinding
@@ -137,11 +138,11 @@ open class HomeChildItemAdapter(
             width = setWidth
             if (this is ViewGroup.MarginLayoutParams) marginEnd = 16.toPx
         }
-        view.findViewById<View>(R.id.imageText)?.apply {
+        view.findViewById<TextView>(R.id.imageText)?.apply {
             setPadding(paddingLeft, 10.toPx, paddingRight, paddingBottom)
             textSize = 14f
         }
-        view.findViewById<View>(R.id.search_result_meta)?.apply {
+        view.findViewById<TextView>(R.id.search_result_meta)?.apply {
             setPadding(paddingLeft, 4.toPx, paddingRight, paddingBottom)
             textSize = 10f
         }
