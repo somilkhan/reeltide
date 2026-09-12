@@ -16,7 +16,7 @@
     <FrameLayout
         android:id="@+id/home_preview_viewpager_text"
         android:layout_width="match_parent"
-        android:layout_height="520dp">
+        android:layout_height="646dp">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/home_preview_viewpager"
@@ -24,25 +24,19 @@
             android:layout_height="match_parent"
             android:orientation="horizontal" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/rt_hero_scrim"
-            android:clickable="false"
-            android:focusable="false" />
-
         <FrameLayout
             android:id="@+id/home_preview_title_holder"
             android:layout_width="match_parent"
-            android:layout_height="88dp"
-            android:layout_gravity="bottom"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp">
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:focusable="false">
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="start|center_vertical"
+                android:layout_height="48dp"
+                android:layout_gravity="bottom|start"
+                android:layout_marginStart="24dp"
+                android:layout_marginBottom="90dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -61,7 +55,6 @@
                     style="@style/WhiteButton"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_gravity="center"
                     android:minWidth="48dp"
                     android:minHeight="48dp"
                     android:padding="0dp"
@@ -92,7 +85,9 @@
                 android:id="@+id/home_preview_mute"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
-                android:layout_gravity="end|center_vertical"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="93dp"
                 android:background="@drawable/rt_circle_button_bg"
                 android:contentDescription="@null"
                 android:padding="11dp"
