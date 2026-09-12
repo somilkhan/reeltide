@@ -16,7 +16,7 @@
     <FrameLayout
         android:id="@+id/home_preview_viewpager_text"
         android:layout_width="match_parent"
-        android:layout_height="400dp">
+        android:layout_height="520dp">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/home_preview_viewpager"
@@ -30,28 +30,6 @@
             android:background="@drawable/rt_hero_scrim"
             android:clickable="false"
             android:focusable="false" />
-
-        <LinearLayout
-            android:id="@+id/home_padding"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:visibility="gone"
-            android:orientation="horizontal">
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/home_search"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:iconifiedByDefault="true"
-                android:visibility="gone"
-                app:iconifiedByDefault="true" />
-            <LinearLayout
-                android:id="@+id/home_head_profile_padding"
-                android:layout_width="46dp"
-                android:layout_height="46dp"
-                android:visibility="gone"
-                android:orientation="vertical" />
-        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/home_preview_title_holder"
