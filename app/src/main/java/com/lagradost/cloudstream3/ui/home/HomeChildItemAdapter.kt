@@ -8,7 +8,6 @@ import android.widget.FrameLayout
 import androidx.cardview.widget.CardView
 import androidx.preference.PreferenceManager
 import androidx.viewbinding.ViewBinding
-import androidx.viewpager2.widget.ViewPager2
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.SearchResponse
 import com.lagradost.cloudstream3.databinding.HomeRemoveGridBinding
