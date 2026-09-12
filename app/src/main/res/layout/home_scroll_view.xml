@@ -28,6 +28,14 @@
         android:clickable="false"
         android:focusable="false" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/rt_hero_bottom_scrim"
+        android:clickable="false"
+        android:focusable="false" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,10 +69,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
+                android:fontFamily="sans-serif-black"
                 android:gravity="start"
                 android:maxLines="2"
                 android:paddingBottom="7dp"
-                android:textColor="?attr/white"
+                android:textColor="#F9F9F9"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 tools:text="The Perfect Run" />
@@ -89,8 +98,8 @@
                 android:ellipsize="end"
                 android:lineSpacingExtra="1dp"
                 android:maxLines="3"
-                android:textColor="#B8FFFFFF"
-                android:textSize="14sp"
+                android:textColor="#B3FFFFFF"
+                android:textSize="13sp"
                 tools:text="A concise description of the featured title appears here, matching the reference hero hierarchy without overwhelming the artwork." />
 
         </LinearLayout>
