@@ -113,6 +113,6 @@
             android:paddingTop="4dp"
             android:textColor="?attr/grayTextColor"
             android:textSize="11sp"
-            tools:text="Movie" />
+            tools:text="★ 6.2 · 2026 · Movie" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

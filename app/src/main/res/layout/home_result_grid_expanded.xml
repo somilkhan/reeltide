@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_marginEnd="12dp"
     android:backgroundTint="@color/transparent"
-    app:cardCornerRadius="8dp"
+    app:cardCornerRadius="0dp"
     app:cardElevation="0dp">
 
     <LinearLayout
@@ -55,8 +55,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
-                <com.google.android.material.imageview.ShapeableImageView android:id="@+id/search_item_download_play" style="@style/HomePlayUnderlayProgress" />
-                <com.google.android.material.progressindicator.CircularProgressIndicator android:id="@+id/watchProgress" style="@style/HomeCircularProgress" tools:progress="50" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/search_item_download_play"
+                    style="@style/HomePlayUnderlayProgress" />
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/watchProgress"
+                    style="@style/HomeCircularProgress"
+                    tools:progress="50" />
             </FrameLayout>
             <TextView
                 android:id="@+id/episode_text"
@@ -70,21 +75,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
             android:gravity="start"
+            android:includeFontPadding="false"
             android:maxLines="2"
-            android:paddingTop="8dp"
+            android:paddingTop="9dp"
             android:textColor="?attr/textColor"
             android:textSize="14sp"
-            android:textStyle="bold"
             tools:text="The Perfect Run" />
         <TextView
             android:id="@+id/search_result_meta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
+            android:fontFamily="sans-serif"
             android:gravity="start"
+            android:includeFontPadding="false"
             android:maxLines="1"
-            android:paddingTop="3dp"
+            android:paddingTop="4dp"
             android:textColor="?attr/grayTextColor"
             android:textSize="11sp"
             tools:text="★ 6.7 · 2026 · Movie" />
