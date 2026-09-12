@@ -16,7 +16,7 @@
     <FrameLayout
         android:id="@+id/home_preview_viewpager_text"
         android:layout_width="match_parent"
-        android:layout_height="600dp">
+        android:layout_height="620dp">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/home_preview_viewpager"
@@ -36,7 +36,7 @@
                 android:layout_height="48dp"
                 android:layout_gravity="bottom|start"
                 android:layout_marginStart="24dp"
-                android:layout_marginBottom="90dp"
+                android:layout_marginBottom="106dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -87,7 +87,7 @@
                 android:layout_height="42dp"
                 android:layout_gravity="bottom|end"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="93dp"
+                android:layout_marginBottom="109dp"
                 android:background="@drawable/rt_circle_button_bg"
                 android:contentDescription="@null"
                 android:padding="11dp"
