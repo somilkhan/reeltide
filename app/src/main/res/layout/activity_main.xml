@@ -33,7 +33,7 @@
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/nav_view"
-            android:layout_width="244dp"
+            android:layout_width="328dp"
             android:layout_height="64dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/rt_nav_bg"
