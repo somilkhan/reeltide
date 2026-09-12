@@ -75,6 +75,9 @@ open class ParentItemAdapter(
         super.submitList(list?.sortedBy { it.list.list.isEmpty() }, commitCallback)
     }
 
+    private fun isTrending(item: HomeViewModel.ExpandableHomepageList): Boolean =
+        item.list.name.equals("Trending Right Now", ignoreCase = true)
+
     override fun onUpdateContent(
         holder: ViewHolderState<Bundle>,
         item: HomeViewModel.ExpandableHomepageList,
@@ -82,7 +85,10 @@ open class ParentItemAdapter(
     ) {
         val binding = holder.view
         if (binding !is HomepageParentBinding) return
-        (binding.homeChildRecyclerview.adapter as? HomeChildItemAdapter)?.submitList(item.list.list)
+        when (val adapter = binding.homeChildRecyclerview.adapter) {
+            is HomeTrendingItemAdapter -> adapter.submitIncomparableList(item.list.list)
+            is HomeChildItemAdapter -> adapter.submitIncomparableList(item.list.list)
+        }
     }
 
     override fun onBindContent(
@@ -95,30 +101,53 @@ open class ParentItemAdapter(
         val binding = holder.view
         if (binding !is HomepageParentBinding) return
         val info = item.list
+        val trending = isTrending(item)
+
         binding.apply {
             homeChildTitle.text = info.name
 
-            val currentAdapter = homeChildRecyclerview.adapter as? HomeChildItemAdapter
-            if (currentAdapter == null) {
+            val currentAdapter = homeChildRecyclerview.adapter
+            if (currentAdapter == null || (trending && currentAdapter !is HomeTrendingItemAdapter) || (!trending && currentAdapter is HomeTrendingItemAdapter)) {
                 homeChildRecyclerview.setRecycledViewPool(HomeChildItemAdapter.sharedPool)
-                homeChildRecyclerview.adapter = HomeChildItemAdapter(
-                    id = id + position + 100,
-                    clickCallback = clickCallback,
-                    nextFocusUp = homeChildRecyclerview.nextFocusUpId,
-                    nextFocusDown = homeChildRecyclerview.nextFocusDownId,
-                ).apply {
-                    isHorizontal = info.isHorizontalImages
-                    hasNext = item.hasNext
-                    submitList(item.list.list)
+                homeChildRecyclerview.adapter = if (trending) {
+                    HomeTrendingItemAdapter(
+                        id = id + position + 100,
+                        nextFocusUp = homeChildRecyclerview.nextFocusUpId,
+                        nextFocusDown = homeChildRecyclerview.nextFocusDownId,
+                        clickCallback = clickCallback,
+                    ).apply {
+                        hasNext = item.hasNext
+                        submitList(item.list.list)
+                    }
+                } else {
+                    HomeChildItemAdapter(
+                        id = id + position + 100,
+                        clickCallback = clickCallback,
+                        nextFocusUp = homeChildRecyclerview.nextFocusUpId,
+                        nextFocusDown = homeChildRecyclerview.nextFocusDownId,
+                    ).apply {
+                        isHorizontal = info.isHorizontalImages
+                        hasNext = item.hasNext
+                        submitList(item.list.list)
+                    }
                 }
             } else {
-                currentAdapter.apply {
-                    isHorizontal = info.isHorizontalImages
-                    hasNext = item.hasNext
-                    this.clickCallback = this@ParentItemAdapter.clickCallback
-                    nextFocusUp = homeChildRecyclerview.nextFocusUpId
-                    nextFocusDown = homeChildRecyclerview.nextFocusDownId
-                    submitIncomparableList(item.list.list)
+                when (currentAdapter) {
+                    is HomeTrendingItemAdapter -> currentAdapter.apply {
+                        hasNext = item.hasNext
+                        this.clickCallback = this@ParentItemAdapter.clickCallback
+                        nextFocusUp = homeChildRecyclerview.nextFocusUpId
+                        nextFocusDown = homeChildRecyclerview.nextFocusDownId
+                        submitIncomparableList(item.list.list)
+                    }
+                    is HomeChildItemAdapter -> currentAdapter.apply {
+                        isHorizontal = info.isHorizontalImages
+                        hasNext = item.hasNext
+                        this.clickCallback = this@ParentItemAdapter.clickCallback
+                        nextFocusUp = homeChildRecyclerview.nextFocusUpId
+                        nextFocusDown = homeChildRecyclerview.nextFocusDownId
+                        submitIncomparableList(item.list.list)
+                    }
                 }
             }
 
