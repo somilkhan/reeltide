@@ -3,106 +3,100 @@
 **Last updated:** 2026-09-14
 **Active branch:** `ui/2026-liquid-glass-redesign`
 **Baseline:** `master`
-**Current head:** `94761c225c322d574b27cea2d9442523e9ae68a6`
+**Current head:** `90b91e7f179c4c1dfba26620126423d039831f0e`
 
 > Live execution checkpoint. Repository/code/build/test evidence outranks stale documentation or conversation memory.
 
 ## Current Phase
 
-**Phase 3 → Phase 5 transition — Core presentation foundation and Home/shell replacement**
+**Phase 3 → Phase 5 — Core presentation foundation, shell and Home replacement**
 
 ## Current Objective
 
-Move the app from a subtle Material reskin toward a visibly premium monochrome Liquid Glass presentation while preserving the existing navigation, Home state, adapters, repositories, player behavior and business logic.
+Move ReelTide from a subtle Material reskin toward a clearly premium monochrome Liquid Glass presentation while preserving navigation, Home state, adapters, repositories, player behavior and business logic.
 
-## RECONSTRUCTED PREVIOUS EXECUTION
+## COMPLETED / RECONSTRUCTED
 
-- Baseline `master` was preserved; the historical `ui/2026-modern-redesign` branch is not used.
-- Architecture/research/design/execution-control documents were established.
-- Shared Liquid Glass Compose primitives and navigation state-model tests were created.
-- A Compose `LiquidGlassNavPillView` was previously wired into `activity_main.xml`, caused a launch regression in the installed build, and was removed from the launch path.
-- Commit `e22aa98996eada2596b14ff057d69b2cde50bcf6` restored the original main shell; its CI run `34764860428` succeeded.
-- Home section headers/cards had already received an initial visual pass, but runtime feedback showed the redesign was still too subtle.
+- Active branch reconstructed from GitHub; baseline is `master` with no divergence.
+- Architecture, research, UI/UX/design and execution-control documents exist and remain authoritative.
+- Shared Liquid Glass Compose foundation exists: theme/tokens, surfaces, controls, media card, modal/content-state primitives and route mapping tests.
+- Previous experimental `LiquidGlassNavPillView` launch integration caused a user-reported launch regression; the shell was restored in `e22aa989...`, whose CI run `34764860428` succeeded.
+- The obsolete/unintegrated `LiquidGlassNavPillView.kt` has now been removed from the active branch to eliminate the known risky duplicate launch implementation.
+- Phone navigation is now presented through a native Android floating glass surface wrapping the existing `BottomNavigationView`; navigation IDs, menu, graph and business ownership remain unchanged.
+- Home now has stronger content framing: fixed brand header, edge-to-edge content spacing, stronger section hierarchy and deeper media-card treatment.
+- Home changes remain at the existing XML/ViewBinding presentation boundary; HomeFragment state/data/business logic was not changed.
 
-## DONE THIS EXECUTION
+## CHANGED IN CURRENT EXECUTION
 
-- Reconstructed the actual branch head from GitHub: `e22aa989...` before new work; current head is `94761c225...`.
-- Confirmed the active branch is 56 commits ahead of `master` and has no divergence from the baseline.
-- Replaced the flat phone bottom-bar presentation with a **native View-only floating glass navigation surface** around the existing `BottomNavigationView`. No custom Compose view is in the launch shell.
-- Preserved `@id/nav_view`, `@id/nav_host_fragment`, the existing menu, navigation graph and cast mini-controller ownership.
-- Added `liquid_glass_home_toolbar.xml` as the reusable floating glass material for the shell/Home presentation.
-- Strengthened Home visual hierarchy with a fixed branded header, edge-to-edge RecyclerView framing and safe content padding while preserving existing Home state/adapter IDs.
-- Refined Home section rhythm and media-card depth/corners/typography without changing the adapter contract or business logic.
-- Kept the existing Liquid Glass principle: hierarchy and bounded translucency first; no fake universal backdrop blur.
-
-## CHANGED
-
-- `app/src/main/res/drawable/liquid_glass_home_toolbar.xml`
-- `app/src/main/res/layout/activity_main.xml`
-- `app/src/main/res/layout/fragment_home.xml`
-- `app/src/main/res/layout/home_result_grid.xml`
-- `app/src/main/res/layout/homepage_parent.xml`
-- `docs/PROJECT_STATE.md`
+- Added `app/src/main/res/drawable/liquid_glass_home_toolbar.xml`.
+- Reworked `app/src/main/res/layout/activity_main.xml` to use a native floating glass nav container around the existing `nav_view`.
+- Reworked `app/src/main/res/layout/fragment_home.xml` with stronger Home framing and preserved existing IDs.
+- Refined `app/src/main/res/layout/home_result_grid.xml` for poster depth, corners and typography.
+- Refined `app/src/main/res/layout/homepage_parent.xml` for section rhythm and spacing.
+- Removed `app/src/main/java/com/lagradost/cloudstream3/ui/liquidglass/LiquidGlassNavPillView.kt`.
+- Removed an unused error-state drawable that was created but intentionally not integrated.
+- Reconciled this state document with the actual branch.
 
 ## IN PROGRESS
 
-- CI verification for the current presentation checkpoint is pending.
-- Runtime verification of the new native floating navigation surface is still required.
-- Home loading/error states have improved spacing but still use existing legacy Material controls; a complete state-specific visual pass remains.
-- Shell edge-to-edge/insets and cast mini-controller coexistence still require verification.
+- Current shell/Home checkpoint has no CI result yet; it is not build-verified.
+- Search has been inspected and is still legacy presentation; an attempted update was rejected by GitHub's stale blob check and therefore **no Search change was applied**.
+- Home loading/error/empty states still need a coherent visual pass.
+- Shell edge-to-edge/insets and cast mini-controller coexistence require runtime verification.
 
 ## REMAINING
 
-1. Verify the current shell/Home checkpoint through CI and inspect failures.
-2. Complete Home loading/error/empty interaction polish.
-3. Verify phone navigation + cast mini-controller coexistence and insets.
-4. Rebuild Search presentation.
-5. Rebuild Details presentation.
-6. Rebuild Library/Downloads presentation.
-7. Rebuild Settings/account presentation.
+1. Obtain build/CI evidence for the current shell/Home checkpoint.
+2. Complete Home loading/error/empty presentation and interaction polish.
+3. Verify floating navigation, back behavior, insets and cast mini-controller coexistence.
+4. Replace Search presentation.
+5. Replace Details presentation.
+6. Replace Library and Downloads presentation.
+7. Replace Settings/account presentation.
 8. Audit player presentation without changing playback behavior.
-9. Replace remaining secondary legacy Material presentation.
-10. Add bounded blur only where technically justified and measurable.
+9. Replace remaining secondary legacy Material surfaces.
+10. Add bounded blur only where justified and measurable.
 11. Accessibility, reduced-motion, contrast, dynamic text and performance verification.
 12. Functional + visual regression matrix.
-13. Remove obsolete presentation bridges/dead code after stable replacement.
+13. Remove obsolete presentation bridges/dead code after stable replacements.
 
 ## BLOCKED
 
-- No device/runtime automation is available in the current execution environment.
 - Local Gradle execution is unavailable because outbound repository/network resolution is unavailable.
-- GitHub Actions remains the executable build authority.
+- No device/runtime automation is available in the current execution environment.
+- GitHub Actions is the executable build authority, but the connector has not exposed a workflow run for the newest API-created commits yet.
 
 ## REGRESSIONS / KNOWN RISKS
 
-- The previous custom Compose NavPill launch integration caused a user-reported launch regression and has been removed from the shell.
-- The new floating navigation surface is deliberately implemented with standard Android Views to reduce runtime risk.
-- Current changes are source/CI verifiable but not yet device-verified.
-- True backdrop blur is not being faked with `Modifier.blur`; Android Compose blur is an element blur, not automatically a backdrop material.
+- The prior Compose NavPill launch integration is explicitly retired after the launch regression.
+- The new navigation shell uses standard Android Views rather than a custom ComposeView to reduce runtime integration risk.
+- Current UI changes are source-inspected but not device-verified.
+- True backdrop blur is not being faked with Compose `Modifier.blur`; current material relies on bounded translucency, borders, shadow and hierarchy.
 
 ## FAILED APPROACHES
 
-- Directly replacing the launch shell with `LiquidGlassNavPillView` before device verification: rejected after launch regression.
-- Treating a small XML polish as sufficient redesign: rejected by runtime visual feedback; the redesign now needs coherent shell + Home hierarchy changes.
+- Wiring the custom Compose `LiquidGlassNavPillView` directly into the launch shell before device verification: rejected after launch regression.
+- Treating a small XML polish as sufficient redesign: rejected after user runtime feedback; shell and Home hierarchy are now being replaced coherently.
 - Source-only confidence: not accepted as verification.
+- Search update via stale blob SHA: rejected by GitHub; no unverified Search mutation was forced through.
 
 ## DECISIONS
 
-- Existing navigation IDs and ownership remain authoritative.
-- Native Android View boundaries are preferred for the current shell/Home migration because the app is still heavily XML/ViewBinding based.
-- Compose Liquid Glass primitives remain the canonical reusable design system for future presentation boundaries, but are not injected into the launch shell until a safe integration boundary is proven.
-- Liquid Glass is reserved for functional/floating hierarchy; content remains content-first.
-- Apple Liquid Glass research reinforces hierarchy, harmony, consistency and a distinct UI layer above content; this informs the shell direction.
+- Existing navigation IDs, graph, menu, state and business ownership remain authoritative.
+- Native Android View boundaries are preferred for the current shell/Home migration because the app is heavily XML/ViewBinding based.
+- Compose Liquid Glass primitives remain the reusable design-system foundation for future safe presentation boundaries.
+- Liquid Glass is a functional floating hierarchy, not universal decoration or blur.
+- Apple Liquid Glass research reinforces hierarchy, harmony, consistency and a distinct UI layer above content; this is the design direction, not a literal platform API dependency.
 
 ## VERIFICATION
 
-- Active branch and current head inspected directly from GitHub.
-- Branch comparison confirms 56 commits ahead of `master`, 0 behind at the reconstructed baseline.
-- Previous shell restoration CI `34764860428` succeeded on `e22aa989...`.
-- Current UI changes are committed through `94761c225...`.
-- No current-head CI result exists yet; therefore the current checkpoint is **not build-verified**.
-- No device/runtime verification is claimed for the new UI checkpoint.
+- GitHub branch/ref state inspected directly.
+- Current branch is 66 commits ahead of `master` and 0 behind.
+- Previous restored-shell CI `34764860428` succeeded on `e22aa989...`.
+- Current head is `90b91e7f...`.
+- Current-head CI/status list is empty; therefore **current changes are not build-verified**.
+- No current device/runtime verification is claimed.
 
 ## NEXT RESUME ACTION
 
-Inspect CI for `94761c225...`. If green, continue the Home state subsystem and shell/inset/cast audit. If red, diagnose the owning XML/resource failure, correct it, rerun verification, and continue rather than stopping at the first build fix.
+First check whether CI has appeared for `90b91e7f...`. If it is green, continue Home state completion and shell/inset/cast audit. If no CI is available, continue source-level work on the next coherent presentation subsystem while keeping all unverified changes clearly marked.
