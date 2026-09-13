@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -40,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.LocalContext
@@ -55,12 +57,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
-import androidx.compose.material3.Icon
 
 private enum class NavInteractionState {
     Idle,
@@ -112,9 +112,9 @@ class LiquidGlassNavPillView @JvmOverloads constructor(
 
             DisposableEffect(navController) {
                 val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
-                    selectedId = destination.topLevelDestinationId()
+                    selectedId = destination.toLiquidGlassTopLevelId()
                 }
-                selectedId = navController.currentDestination?.topLevelDestinationId() ?: R.id.navigation_home
+                selectedId = navController.currentDestination?.toLiquidGlassTopLevelId() ?: R.id.navigation_home
                 navController.addOnDestinationChangedListener(listener)
                 onDispose { navController.removeOnDestinationChangedListener(listener) }
             }
@@ -162,23 +162,6 @@ class LiquidGlassNavPillView @JvmOverloads constructor(
             }
         }
     }
-
-    private fun NavDestination.topLevelDestinationId(): Int = when (id) {
-        R.id.navigation_download_child,
-        R.id.navigation_download_queue -> R.id.navigation_downloads
-        R.id.navigation_subtitles,
-        R.id.navigation_chrome_subtitles,
-        R.id.navigation_settings_player,
-        R.id.navigation_settings_updates,
-        R.id.navigation_settings_ui,
-        R.id.navigation_settings_account,
-        R.id.navigation_settings_providers,
-        R.id.navigation_settings_general,
-        R.id.navigation_settings_extensions,
-        R.id.navigation_settings_plugins,
-        R.id.navigation_test_providers -> R.id.navigation_settings
-        else -> id
-    }
 }
 
 @Composable
@@ -216,7 +199,7 @@ private fun LiquidGlassNavItem(
             .height(52.dp)
             .animateContentSize(spring(stiffness = Spring.StiffnessMediumLow))
             .clip(CircleShape)
-            .background(if (selected) tokens.glassHighlight else androidx.compose.ui.graphics.Color.Transparent)
+            .background(if (selected) tokens.glassHighlight else Color.Transparent)
             .semantics {
                 contentDescription = item.title
                 role = Role.Tab
