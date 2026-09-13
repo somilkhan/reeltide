@@ -13,7 +13,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -29,7 +28,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -42,7 +40,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.LocalContext
@@ -63,6 +60,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
+import androidx.compose.material3.Icon
 
 private enum class NavInteractionState {
     Idle,
@@ -87,12 +85,6 @@ private val navItems = listOf(
     NavItem(R.id.navigation_settings, "Settings", R.drawable.settings_icon_selector),
 )
 
-private val GlassBackground = Color(0xD90B0B0D)
-private val GlassBorder = Color(0x20FFFFFF)
-private val GlassSurfaceSelected = Color(0x24FFFFFF)
-private val PrimaryText = Color(0xFFF7F7F8)
-private val SecondaryText = Color(0xFF9B9BA1)
-
 class LiquidGlassNavPillView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -103,65 +95,69 @@ class LiquidGlassNavPillView @JvmOverloads constructor(
     override fun Content() {
         if (!isLayout(PHONE)) return
 
-        val activity = LocalContext.current as? FragmentActivity ?: return
-        val navHost = remember(activity) {
-            activity.supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
-        } ?: return
-        val navController = navHost.navController
-        var selectedId by remember { mutableIntStateOf(R.id.navigation_home) }
-        var transitioningId by remember { mutableIntStateOf(0) }
+        ReelTideTheme {
+            val activity = LocalContext.current as? FragmentActivity ?: return@ReelTideTheme
+            val navHost = remember(activity) {
+                activity.supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
+            } ?: return@ReelTideTheme
+            val navController = navHost.navController
+            var selectedId by remember { mutableIntStateOf(R.id.navigation_home) }
+            var transitioningId by remember { mutableIntStateOf(0) }
 
-        LaunchedEffect(selectedId) {
-            transitioningId = selectedId
-            kotlinx.coroutines.delay(240)
-            if (transitioningId == selectedId) transitioningId = 0
-        }
-
-        DisposableEffect(navController) {
-            val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
-                selectedId = destination.topLevelDestinationId()
+            LaunchedEffect(selectedId) {
+                transitioningId = selectedId
+                kotlinx.coroutines.delay(240)
+                if (transitioningId == selectedId) transitioningId = 0
             }
-            selectedId = navController.currentDestination?.topLevelDestinationId() ?: R.id.navigation_home
-            navController.addOnDestinationChangedListener(listener)
-            onDispose { navController.removeOnDestinationChangedListener(listener) }
-        }
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .windowInsetsPadding(WindowInsets.navigationBars)
-                .padding(horizontal = 16.dp)
-                .padding(bottom = 8.dp),
-            contentAlignment = Alignment.BottomCenter,
-        ) {
-            Row(
+            DisposableEffect(navController) {
+                val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
+                    selectedId = destination.topLevelDestinationId()
+                }
+                selectedId = navController.currentDestination?.topLevelDestinationId() ?: R.id.navigation_home
+                navController.addOnDestinationChangedListener(listener)
+                onDispose { navController.removeOnDestinationChangedListener(listener) }
+            }
+
+            Box(
                 modifier = Modifier
-                    .shadow(16.dp, RoundedCornerShape(28.dp), clip = false)
-                    .clip(RoundedCornerShape(28.dp))
-                    .background(GlassBackground)
-                    .border(1.dp, GlassBorder, RoundedCornerShape(28.dp))
-                    .padding(6.dp),
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                verticalAlignment = Alignment.CenterVertically,
+                    .fillMaxWidth()
+                    .windowInsetsPadding(WindowInsets.navigationBars)
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 8.dp),
+                contentAlignment = Alignment.BottomCenter,
             ) {
-                navItems.forEach { item ->
-                    LiquidGlassNavItem(
-                        item = item,
-                        selected = selectedId == item.destinationId,
-                        transitioning = transitioningId == item.destinationId,
-                        onClick = {
-                            activity.findViewById<android.view.View>(R.id.nav_view)
-                                ?.let { navView ->
-                                    navView.findViewById<android.view.View>(item.destinationId)?.performClick()
-                                        ?: navView.menu.findItem(item.destinationId)?.let { navView.selectedItemId = it.itemId }
-                                }
-                        },
-                        onLongClick = {
-                            activity.findViewById<android.view.View>(R.id.nav_view)
-                                ?.findViewById<android.view.View>(item.destinationId)
-                                ?.performLongClick()
-                        },
-                    )
+                GlassPill(
+                    modifier = Modifier.shadow(16.dp, RoundedCornerShape(28.dp), clip = false),
+                    level = GlassLevel.Strong,
+                ) {
+                    Row(
+                        modifier = Modifier.padding(6.dp),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        navItems.forEach { item ->
+                            LiquidGlassNavItem(
+                                item = item,
+                                selected = selectedId == item.destinationId,
+                                transitioning = transitioningId == item.destinationId,
+                                onClick = {
+                                    activity.findViewById<android.view.View>(R.id.nav_view)
+                                        ?.let { navView ->
+                                            navView.findViewById<android.view.View>(item.destinationId)?.performClick()
+                                                ?: navView.menu.findItem(item.destinationId)?.let {
+                                                    navView.selectedItemId = it.itemId
+                                                }
+                                        }
+                                },
+                                onLongClick = {
+                                    activity.findViewById<android.view.View>(R.id.nav_view)
+                                        ?.findViewById<android.view.View>(item.destinationId)
+                                        ?.performLongClick()
+                                },
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -193,6 +189,7 @@ private fun LiquidGlassNavItem(
     onClick: () -> Unit,
     onLongClick: () -> Unit,
 ) {
+    val tokens = LocalReelTideGlassTokens.current
     val interactionSource = remember { MutableInteractionSource() }
     val pressed by interactionSource.collectIsPressedAsState()
     val state = when {
@@ -219,7 +216,7 @@ private fun LiquidGlassNavItem(
             .height(52.dp)
             .animateContentSize(spring(stiffness = Spring.StiffnessMediumLow))
             .clip(CircleShape)
-            .background(if (selected) GlassSurfaceSelected else Color.Transparent)
+            .background(if (selected) tokens.glassHighlight else androidx.compose.ui.graphics.Color.Transparent)
             .semantics {
                 contentDescription = item.title
                 role = Role.Tab
@@ -244,7 +241,7 @@ private fun LiquidGlassNavItem(
             modifier = Modifier
                 .size(22.dp)
                 .graphicsLayer { scaleX = scale; scaleY = scale },
-            tint = if (selected) PrimaryText else SecondaryText,
+            tint = if (selected) tokens.textPrimary else tokens.textSecondary,
         )
         AnimatedVisibility(
             visible = selected,
@@ -254,7 +251,7 @@ private fun LiquidGlassNavItem(
             Text(
                 text = item.title,
                 modifier = Modifier.padding(start = 7.dp),
-                color = PrimaryText,
+                color = tokens.textPrimary,
                 fontSize = 11.sp,
                 fontWeight = FontWeight.Medium,
                 maxLines = 1,
