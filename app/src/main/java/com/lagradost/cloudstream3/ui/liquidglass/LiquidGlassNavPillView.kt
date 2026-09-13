@@ -12,7 +12,6 @@ import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
-import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -24,7 +23,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,7 +39,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.LocalContext
@@ -62,14 +59,7 @@ import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 
-private enum class NavInteractionState {
-    Idle,
-    Pressed,
-    Selected,
-    Transitioning,
-    Disabled,
-    Scrolling,
-}
+private enum class NavInteractionState { Idle, Pressed, Selected, Transitioning, Disabled, Scrolling }
 
 private data class NavItem(
     val destinationId: Int,
@@ -143,12 +133,8 @@ class LiquidGlassNavPillView @JvmOverloads constructor(
                                 transitioning = transitioningId == item.destinationId,
                                 onClick = {
                                     activity.findViewById<android.view.View>(R.id.nav_view)
-                                        ?.let { navView ->
-                                            navView.findViewById<android.view.View>(item.destinationId)?.performClick()
-                                                ?: navView.menu.findItem(item.destinationId)?.let {
-                                                    navView.selectedItemId = it.itemId
-                                                }
-                                        }
+                                        ?.findViewById<android.view.View>(item.destinationId)
+                                        ?.performClick()
                                 },
                                 onLongClick = {
                                     activity.findViewById<android.view.View>(R.id.nav_view)
@@ -199,7 +185,6 @@ private fun LiquidGlassNavItem(
             .height(52.dp)
             .animateContentSize(spring(stiffness = Spring.StiffnessMediumLow))
             .clip(CircleShape)
-            .background(if (selected) tokens.glassHighlight else Color.Transparent)
             .semantics {
                 contentDescription = item.title
                 role = Role.Tab
@@ -211,6 +196,7 @@ private fun LiquidGlassNavItem(
                 onClickLabel = "Open ${item.title}",
                 onLongClickLabel = "Scroll ${item.title} to top",
                 interactionSource = interactionSource,
+                indication = null,
                 onClick = onClick,
                 onLongClick = onLongClick,
             )
@@ -222,9 +208,9 @@ private fun LiquidGlassNavItem(
             painter = painterResource(item.iconRes),
             contentDescription = null,
             modifier = Modifier
-                .size(22.dp)
-                .graphicsLayer { scaleX = scale; scaleY = scale },
-            tint = if (selected) tokens.textPrimary else tokens.textSecondary,
+                .graphicsLayer(scaleX = scale, scaleY = scale)
+                .height(22.dp),
+            tint = tokens.textPrimary,
         )
         AnimatedVisibility(
             visible = selected,
@@ -233,9 +219,9 @@ private fun LiquidGlassNavItem(
         ) {
             Text(
                 text = item.title,
-                modifier = Modifier.padding(start = 7.dp),
+                modifier = Modifier.padding(start = 6.dp),
                 color = tokens.textPrimary,
-                fontSize = 11.sp,
+                fontSize = 13.sp,
                 fontWeight = FontWeight.Medium,
                 maxLines = 1,
             )
