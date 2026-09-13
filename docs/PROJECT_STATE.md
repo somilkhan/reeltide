@@ -3,7 +3,7 @@
 **Last updated:** 2026-09-13
 **Active branch:** `ui/2026-liquid-glass-redesign`
 **Baseline:** `master`
-**Current head:** `f1f1c9d8900454fbbabad37ba6caaa21506a41af`
+**Current head:** `8d4983ded6869ab85226da1a47df10f84a7196df`
 
 > Live execution checkpoint. Repository/build/test evidence outranks stale documentation or conversation memory.
 
@@ -70,7 +70,7 @@ Establish the reusable Liquid Glass design/material foundation, finish verificat
 
 Local build execution is still unavailable in the current tool environment because outbound DNS/network access previously prevented cloning the repository. GitHub source access is available, but no executable Gradle environment or CI run exists for the current head yet. Therefore no build/test success is claimed.
 
-No GitHub Actions workflow run is associated with current head `f1f1c9d8900454fbbabad37ba6caaa21506a41af`.
+No GitHub Actions workflow run is associated with current head `8d4983ded6869ab85226da1a47df10f84a7196df`.
 
 ## REGRESSIONS
 
@@ -111,7 +111,8 @@ Attempted clone failed because the execution environment could not resolve GitHu
 ## VERIFICATION
 
 - Active branch verified from GitHub: `ui/2026-liquid-glass-redesign`.
-- Current implementation head verified: `f1f1c9d8900454fbbabad37ba6caaa21506a41af`.
+- Current branch head verified: `8d4983ded6869ab85226da1a47df10f84a7196df`.
+- Last implementation head before the state-only checkpoint: `f1f1c9d8900454fbbabad37ba6caaa21506a41af`.
 - `master` baseline head previously verified: `fe981345bdad180338e6cee75d59e77a568b96ee`.
 - MainActivity navigation semantics inspected directly from the active branch.
 - `docs/SCREEN_STATE_MAP.md` committed with verified primary state owners and protected navigation contracts.
@@ -119,7 +120,7 @@ Attempted clone failed because the execution environment could not resolve GitHu
 - `LiquidGlassNavPillView` now consumes the shared theme/material primitives rather than defining independent material colors.
 - `GlassButton` and `GlassIconButton` exist on the active branch with explicit touch sizing and semantics.
 - AndroidX/Compose API assumptions were cross-checked against current Jetpack Compose documentation for `painterResource` and `combinedClickable`.
-- Current head has no associated GitHub Actions workflow run.
+- Current branch has no associated GitHub Actions workflow run.
 - Local Gradle build: unverified due environment restriction.
 - Runtime/device visual verification: pending.
 - Interaction verification: source-level only; runtime pending.
