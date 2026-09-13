@@ -3,7 +3,7 @@
 **Last updated:** 2026-09-13
 **Active branch:** `ui/2026-liquid-glass-redesign`
 **Baseline:** `master`
-**Current head:** `8d4983ded6869ab85226da1a47df10f84a7196df`
+**Current head:** `0248dc6fe1aa5eedf4443270bb709797aa25bccd`
 
 > Live execution checkpoint. Repository/build/test evidence outranks stale documentation or conversation memory.
 
@@ -19,8 +19,7 @@ Establish the reusable Liquid Glass design/material foundation, finish verificat
 
 - New redesign branch established from the intended baseline.
 - Persistent roadmap, agent, workflow, state and design-authority documents established.
-- Repository structure inspected.
-- App architecture confirmed as mature Android: XML/ViewBinding/Fragments/AndroidX Navigation plus Compose dependencies.
+- Repository structure and Android presentation architecture inspected.
 - Main shell and primary navigation boundary identified.
 - Primary navigation destinations identified: Home, Search, Library, Downloads, Settings.
 - Secondary navigation responsibilities identified across settings, playback, subtitles, downloads and web flows.
@@ -29,60 +28,63 @@ Establish the reusable Liquid Glass design/material foundation, finish verificat
 - Current Apple Liquid Glass principles researched from official Apple documentation/video.
 - Current Android edge-to-edge, Android 16 back behavior, and Compose blur constraints researched from official Android documentation.
 - Research findings persisted in `docs/RESEARCH.md`.
-- `docs/UI.md` refined with research-derived material hierarchy, media handling, edge-to-edge, accessibility and blur/performance rules.
+- `docs/UI.md`, `docs/UX.md`, `docs/DESIGN.md`, and `docs/SKILL.md` established as active design/engineering authorities.
 - Primary screen/state ownership map recorded in `docs/SCREEN_STATE_MAP.md`.
 - Existing navigation semantics inspected directly in `MainActivity`: debounce, restore-state, start-destination popUpTo, secondary-route selection mapping, TV focus handling and long-press scroll behavior.
-- First coherent phone navigation presentation boundary implemented as `LiquidGlassNavPillView` using native Compose/Android animation and accessibility semantics.
-- Existing navigation behavior is deliberately retained behind the new surface: the pill delegates selection to the existing `BottomNavigationView` contract rather than duplicating business/navigation state.
-- Legacy phone bottom navigation presentation is visually suppressed via an alpha-zero compatibility bridge; its menu/controller remains present so existing MainActivity listeners and long-press behavior remain available while the replacement is stabilized.
-- NavPill has an explicit interaction-state model covering `Idle`, `Pressed`, `Selected`, `Transitioning`, `Disabled`, and `Scrolling`, with pressed-state collection, spring scaling, selection animation and accessibility semantics.
+- Phone primary navigation presentation boundary implemented as `LiquidGlassNavPillView` using native Compose/Android animation and accessibility semantics.
+- Existing navigation behavior is retained behind the new surface; the pill observes the existing `NavController` and delegates selection/long-press behavior to the existing navigation contract.
+- Legacy phone bottom navigation presentation is visually suppressed via an alpha-zero compatibility bridge while the replacement is stabilized.
+- NavPill has an explicit interaction-state model covering `Idle`, `Pressed`, `Selected`, `Transitioning`, `Disabled`, and `Scrolling`.
 - Reusable `ReelTideGlassTokens` and `ReelTideTheme` established for the Compose presentation layer.
-- Reusable `GlassSurface`, `GlassCard`, and `GlassPill` primitives established with material hierarchy levels (`Glass`, `Elevated`, `Strong`, `Sheet`).
-- NavPill styling moved onto the shared Liquid Glass token/material system instead of keeping screen-local color constants.
-- Reusable `GlassButton` and `GlassIconButton` controls added with 48dp minimum touch sizing and accessibility semantics.
+- Reusable `GlassSurface`, `GlassCard`, and `GlassPill` primitives established with `Glass`, `Elevated`, `Strong`, and `Sheet` hierarchy levels.
+- Reusable `GlassButton` and `GlassIconButton` controls added with 48dp minimum touch sizing and semantics.
+- Shared media presentation primitive added as `GlassMediaCard` with poster artwork, metadata, optional progress, missing-art fallback, and click semantics.
+- Shared modal primitives added as `GlassSheet` and `GlassDialog`; business/state ownership remains with callers.
+- Shared asynchronous content-state primitives added as `GlassLoadingState`, `GlassEmptyState`, and `GlassErrorState`.
+- Navigation destination grouping extracted into `toLiquidGlassTopLevelId()` so route ownership is no longer duplicated inside the NavPill.
 
 ## IN PROGRESS
 
-- Runtime/build verification of the NavPill, shell and shared Compose primitives.
-- Verify rapid taps, interrupted transitions, back navigation, restoration, narrow screens and long-press behavior.
-- Verify the alpha-zero legacy navigation bridge does not interfere with touch, focus or layout.
-- Complete the remaining secondary-screen state ownership audit.
-- Establish executable baseline/build evidence for the active branch.
-- Extend the shared material system with media/card, sheet/dialog and accessibility-safe fallbacks before using it across content-heavy screens.
+- Build/CI and runtime verification of the NavPill, shell, and shared Compose primitives.
+- Verify rapid taps, interrupted transitions, back navigation, restoration, narrow screens, accessibility, and long-press behavior.
+- Verify the alpha-zero legacy navigation bridge does not interfere with touch, focus, layout, or cast mini-controller behavior.
+- Complete the remaining route-by-route secondary-screen state ownership audit.
+- Establish executable build/test evidence for the active branch.
+- Integrate the shared primitives into the shell and Home only after their API/build contract is verified.
 
 ## REMAINING
 
-- Complete primary/secondary screen inventory.
-- Complete ViewModel/state ownership map for all reachable secondary routes.
-- Establish baseline build/test evidence.
-- Finalize visual/design system and component API.
-- Add reusable media surfaces, sheets, dialogs, loading, empty and error primitives.
+- Complete primary/secondary screen inventory and route-by-route state ownership map.
+- Establish baseline and active-branch build/test evidence.
+- Finalize component APIs after compile verification.
 - Replace app shell presentation completely, including system-bar/inset behavior.
 - Rebuild Home with the shared component system.
 - Rebuild Search, Details, Library, Downloads and Settings presentation.
 - Audit player presentation without changing playback behavior.
 - Replace secondary legacy Material-default screens consistently.
+- Add/profile bounded blur where it materially improves hierarchy and can be verified safely.
 - Verify performance/accessibility.
 - Run functional and visual regression verification.
-- Remove obsolete presentation code after replacement is stable.
+- Remove obsolete presentation code and temporary compatibility bridges after replacement is stable.
 
 ## BLOCKED
 
-Local build execution is still unavailable in the current tool environment because outbound DNS/network access previously prevented cloning the repository. GitHub source access is available, but no executable Gradle environment or CI run exists for the current head yet. Therefore no build/test success is claimed.
+Local Gradle build execution is still unavailable in the current tool environment because outbound DNS/network access previously prevented cloning the repository. GitHub source access is available, but no executable Gradle environment is available through the current tool set.
 
-No GitHub Actions workflow run is associated with current head `8d4983ded6869ab85226da1a47df10f84a7196df`.
+The repository's build workflow is pull-request based. No PR/CI run has been created for the active branch, so no CI build/test result exists for the current head.
 
 ## REGRESSIONS
 
-No repository-level regression has been demonstrated. Runtime/build verification of the new navigation and shared Compose primitives remains pending, so this is not yet a verified regression-free implementation.
+No repository-level regression has been demonstrated. The newly added Compose primitives are source-reviewed but not compile/runtime verified in this environment.
 
 ## KNOWN RISKS
 
-- Legacy `ui/2026-modern-redesign` must not become the implementation base.
+- `ui/2026-modern-redesign` must not become the implementation base.
 - Existing presentation/business ownership is distributed across large fragments, ViewModels, utilities and navigation; replacement must preserve those contracts.
 - The current phone NavPill uses the existing `BottomNavigationView` as a temporary behavioral bridge. It must not become a permanent duplicate navigation architecture.
-- Backdrop blur is not yet implemented as a universal effect; the current material system deliberately uses bounded translucency/borders until backdrop blur can be profiled and implemented safely.
+- Backdrop blur is not implemented as a universal effect; the current material system deliberately uses bounded translucency/borders until a safe, profiled backdrop strategy exists.
 - Liquid Glass effects must be bounded for readability and rendering cost.
+- Compose APIs used by the new primitives still require actual project compilation before being considered verified.
 - Current styles contain extensive Material3/theme infrastructure; replacing presentation must avoid leaving contradictory legacy styling active.
 
 ## FAILED APPROACHES
@@ -92,6 +94,9 @@ The previous redesign accumulated UI/state conflicts. New strategy: coherent pre
 
 ### Local repository clone for build
 Attempted clone failed because the execution environment could not resolve GitHub. No build result was fabricated.
+
+### Treating source-level API inspection as build verification
+Source/API review can catch obvious contract errors but cannot prove the project compiles or behaves correctly. The current branch remains explicitly unverified until a real Gradle/CI/device execution path exists.
 
 ## DECISIONS
 
@@ -110,25 +115,25 @@ Attempted clone failed because the execution environment could not resolve GitHu
 
 ## VERIFICATION
 
-- Active branch verified from GitHub: `ui/2026-liquid-glass-redesign`.
-- Current branch head verified: `8d4983ded6869ab85226da1a47df10f84a7196df`.
-- Last implementation head before the state-only checkpoint: `f1f1c9d8900454fbbabad37ba6caaa21506a41af`.
-- `master` baseline head previously verified: `fe981345bdad180338e6cee75d59e77a568b96ee`.
-- MainActivity navigation semantics inspected directly from the active branch.
-- `docs/SCREEN_STATE_MAP.md` committed with verified primary state owners and protected navigation contracts.
-- `LiquidGlassNavPillView.kt` exists on the active branch and is integrated into `activity_main.xml`.
-- `LiquidGlassNavPillView` now consumes the shared theme/material primitives rather than defining independent material colors.
-- `GlassButton` and `GlassIconButton` exist on the active branch with explicit touch sizing and semantics.
-- AndroidX/Compose API assumptions were cross-checked against current Jetpack Compose documentation for `painterResource` and `combinedClickable`.
-- Current branch has no associated GitHub Actions workflow run.
+- Active branch name verified from GitHub: `ui/2026-liquid-glass-redesign`.
+- Baseline remains `master`.
+- Latest implementation commits were created successfully on the active branch; latest pre-state checkpoint implementation commit is `0248dc6fe1aa5eedf4443270bb709797aa25bccd`.
+- `LiquidGlassNavPillView.kt` exists and is integrated into `activity_main.xml`.
+- `LiquidGlassNavPillView` consumes the shared theme/material primitives.
+- Navigation route mapping is isolated in `LiquidGlassNavigation.kt`.
+- `GlassButton` and `GlassIconButton` exist with explicit touch sizing and semantics.
+- `GlassMediaCard`, `GlassSheet`, `GlassDialog`, `GlassLoadingState`, `GlassEmptyState`, and `GlassErrorState` exist on the active branch.
+- `app/build.gradle.kts` confirms Coil 3 Compose support is already a project dependency, so the media primitive did not introduce a new dependency.
+- The PR build workflow was inspected: it runs `library:checkKotlinAbi`, `assemblePrereleaseDebug`, `lint`, and `check`, then uploads the prerelease APK.
+- No active-branch PR/CI result exists, so build/test success is not claimed.
 - Local Gradle build: unverified due environment restriction.
 - Runtime/device visual verification: pending.
 - Interaction verification: source-level only; runtime pending.
 
 ## LAST VERIFIED COMMIT
 
-`f1f1c9d8900454fbbabad37ba6caaa21506a41af` — reusable glass controls are present; build/runtime verification remains pending.
+`0248dc6fe1aa5eedf4443270bb709797aa25bccd` — shared content-state primitives added. This is repository commit evidence only, not build/runtime verification.
 
 ## NEXT RESUME ACTION
 
-Continue the shared component system with media/card and sheet/dialog primitives, while auditing the shell's inset/cast interaction and the Home presentation boundary. Do not start screen-by-screen replacement until the shared primitives and navigation contract have an executable verification path.
+Obtain an executable build/CI path if available; otherwise continue the phase by completing the secondary route/state audit and auditing the shell inset/cast boundary. Once the component API is compile-verified, integrate the shared system into the app shell and Home. Do not declare the navigation subsystem complete until runtime/interaction verification is available.
