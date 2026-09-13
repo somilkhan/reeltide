@@ -41,7 +41,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.AbstractComposeView
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -52,6 +51,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.activity.compose.LocalActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -86,7 +86,7 @@ class LiquidGlassNavPillView @JvmOverloads constructor(
         if (!isLayout(PHONE)) return
 
         ReelTideTheme {
-            val activity = LocalContext.current as? FragmentActivity ?: return@ReelTideTheme
+            val activity = LocalActivity.current as? FragmentActivity ?: return@ReelTideTheme
             val navHost = remember(activity) {
                 activity.supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
             } ?: return@ReelTideTheme
