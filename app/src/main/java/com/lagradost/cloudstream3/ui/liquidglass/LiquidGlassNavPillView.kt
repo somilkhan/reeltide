@@ -15,6 +15,8 @@ import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -31,6 +33,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -46,6 +49,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
@@ -59,6 +63,15 @@ import androidx.navigation.fragment.NavHostFragment
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
 import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
+
+private enum class NavInteractionState {
+    Idle,
+    Pressed,
+    Selected,
+    Transitioning,
+    Disabled,
+    Scrolling,
+}
 
 private data class NavItem(
     val destinationId: Int,
@@ -96,6 +109,13 @@ class LiquidGlassNavPillView @JvmOverloads constructor(
         } ?: return
         val navController = navHost.navController
         var selectedId by remember { mutableIntStateOf(R.id.navigation_home) }
+        var transitioningId by remember { mutableIntStateOf(0) }
+
+        LaunchedEffect(selectedId) {
+            transitioningId = selectedId
+            kotlinx.coroutines.delay(240)
+            if (transitioningId == selectedId) transitioningId = 0
+        }
 
         DisposableEffect(navController) {
             val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
@@ -128,6 +148,7 @@ class LiquidGlassNavPillView @JvmOverloads constructor(
                     LiquidGlassNavItem(
                         item = item,
                         selected = selectedId == item.destinationId,
+                        transitioning = transitioningId == item.destinationId,
                         onClick = {
                             activity.findViewById<android.view.View>(R.id.nav_view)
                                 ?.let { navView ->
@@ -168,11 +189,27 @@ class LiquidGlassNavPillView @JvmOverloads constructor(
 private fun LiquidGlassNavItem(
     item: NavItem,
     selected: Boolean,
+    transitioning: Boolean,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val pressed by interactionSource.collectIsPressedAsState()
+    val state = when {
+        pressed -> NavInteractionState.Pressed
+        transitioning -> NavInteractionState.Transitioning
+        selected -> NavInteractionState.Selected
+        else -> NavInteractionState.Idle
+    }
     val scale by animateFloatAsState(
-        targetValue = if (selected) 1f else 0.92f,
+        targetValue = when (state) {
+            NavInteractionState.Pressed -> 0.96f
+            NavInteractionState.Selected -> 1f
+            NavInteractionState.Transitioning -> 1.02f
+            NavInteractionState.Scrolling -> 0.98f
+            NavInteractionState.Disabled -> 0.90f
+            NavInteractionState.Idle -> 0.92f
+        },
         animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
         label = "nav-icon-scale",
     )
@@ -187,10 +224,13 @@ private fun LiquidGlassNavItem(
                 contentDescription = item.title
                 role = Role.Tab
                 this.selected = selected
+                if (state == NavInteractionState.Disabled) disabled()
             }
             .combinedClickable(
+                enabled = state != NavInteractionState.Disabled,
                 onClickLabel = "Open ${item.title}",
                 onLongClickLabel = "Scroll ${item.title} to top",
+                interactionSource = interactionSource,
                 onClick = onClick,
                 onLongClick = onLongClick,
             )
