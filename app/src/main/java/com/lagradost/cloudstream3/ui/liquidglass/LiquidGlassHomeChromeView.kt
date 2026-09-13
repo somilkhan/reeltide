@@ -4,10 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
@@ -20,9 +17,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -35,7 +32,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
@@ -46,6 +42,8 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.isVisible
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.lagradost.cloudstream3.R
+import com.lagradost.cloudstream3.ui.settings.Globals.PHONE
+import com.lagradost.cloudstream3.ui.settings.Globals.isLayout
 
 /**
  * Phone-only Home chrome. It delegates actions to the existing Home controls so
@@ -68,7 +66,10 @@ class LiquidGlassHomeChromeView @JvmOverloads constructor(
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        if (visibility != VISIBLE) return
+        if (!isLayout(PHONE)) {
+            visibility = GONE
+            return
+        }
         post { bindControls() }
     }
 
@@ -157,7 +158,7 @@ private fun HomeChrome(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .navigationBarsPadding()
+            .statusBarsPadding()
             .padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
