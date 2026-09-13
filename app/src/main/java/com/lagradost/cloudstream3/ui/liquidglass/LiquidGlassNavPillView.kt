@@ -13,6 +13,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,8 +23,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -43,6 +44,11 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -68,7 +74,8 @@ private val navItems = listOf(
     NavItem(R.id.navigation_settings, "Settings", R.drawable.settings_icon_selector),
 )
 
-private val GlassBackground = Color(0xF20B0B0D)
+private val GlassBackground = Color(0xD90B0B0D)
+private val GlassBorder = Color(0x20FFFFFF)
 private val GlassSurfaceSelected = Color(0x24FFFFFF)
 private val PrimaryText = Color(0xFFF7F7F8)
 private val SecondaryText = Color(0xFF9B9BA1)
@@ -112,6 +119,7 @@ class LiquidGlassNavPillView @JvmOverloads constructor(
                     .shadow(16.dp, RoundedCornerShape(28.dp), clip = false)
                     .clip(RoundedCornerShape(28.dp))
                     .background(GlassBackground)
+                    .border(1.dp, GlassBorder, RoundedCornerShape(28.dp))
                     .padding(6.dp),
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -175,14 +183,24 @@ private fun LiquidGlassNavItem(
             .animateContentSize(spring(stiffness = Spring.StiffnessMediumLow))
             .clip(CircleShape)
             .background(if (selected) GlassSurfaceSelected else Color.Transparent)
-            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
+            .semantics {
+                contentDescription = item.title
+                role = Role.Tab
+                this.selected = selected
+            }
+            .combinedClickable(
+                onClickLabel = "Open ${item.title}",
+                onLongClickLabel = "Scroll ${item.title} to top",
+                onClick = onClick,
+                onLongClick = onLongClick,
+            )
             .padding(horizontal = if (selected) 14.dp else 10.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             painter = painterResource(item.iconRes),
-            contentDescription = item.title,
+            contentDescription = null,
             modifier = Modifier
                 .size(22.dp)
                 .graphicsLayer { scaleX = scale; scaleY = scale },
