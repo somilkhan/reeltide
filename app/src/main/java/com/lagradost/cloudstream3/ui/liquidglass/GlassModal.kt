@@ -50,6 +50,7 @@ fun GlassSheet(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GlassDialog(
     visible: Boolean,
