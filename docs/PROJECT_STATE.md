@@ -21,10 +21,11 @@ Establish a reliable, persistent execution control plane and then audit the clea
 - `AGENTS.md` created as the short persistent agent entry point.
 - `docs/SMART_MECHANICS_WORKFLOW.md` created as the continuous-execution contract.
 - Project design authority documents created: `UI.md`, `UX.md`, `DESIGN.md`, `SKILL.md`.
+- Control-plane files verified on the active branch.
 
 ## IN PROGRESS
 
-- Control-plane setup and baseline audit.
+- Baseline audit is ready to begin.
 
 ## REMAINING
 
@@ -67,18 +68,19 @@ The previous redesign accumulated UI/state conflicts. The new strategy is a clea
 - Continuous execution is the default; `START` and `CONTINUE` are resume commands, not memory mechanisms.
 - `RELOAD` is the recovery command when conversational context is unreliable.
 - UI/UX/design quality is governed by the project design authority documents.
+- `AGENTS.md` is intentionally short and routes the agent to durable project knowledge rather than attempting to hold the entire project in one prompt.
 
 ## VERIFICATION
 
 - Repository metadata verified through GitHub.
 - Roadmap file verified on the active branch.
-- Control-plane files are being established on the active branch.
+- `AGENTS.md`, workflow, state, UI, UX, DESIGN, and SKILL documents created and verified on the active branch.
 - Full application build/test verification: **pending baseline audit**.
 - Visual verification: **pending**.
 
 ## LAST VERIFIED COMMIT
 
-`fbab53ea3128b677d77cc2d51d5fbbb44011be07` — smart mechanics workflow added.
+`f72e5808ae97f5793394d3adce9fa7fbc9d206dc` — project skill document added; control-plane document set established.
 
 ## NEXT RESUME ACTION
 
