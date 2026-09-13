@@ -3,7 +3,7 @@
 **Last updated:** 2026-09-13
 **Active branch:** `ui/2026-liquid-glass-redesign`
 **Baseline:** `master`
-**Current head:** `83caa50c210daf1e5278caae39ba5513559a1d4a`
+**Current head:** `f1f1c9d8900454fbbabad37ba6caaa21506a41af`
 
 > Live execution checkpoint. Repository/build/test evidence outranks stale documentation or conversation memory.
 
@@ -39,15 +39,16 @@ Establish the reusable Liquid Glass design/material foundation, finish verificat
 - Reusable `ReelTideGlassTokens` and `ReelTideTheme` established for the Compose presentation layer.
 - Reusable `GlassSurface`, `GlassCard`, and `GlassPill` primitives established with material hierarchy levels (`Glass`, `Elevated`, `Strong`, `Sheet`).
 - NavPill styling moved onto the shared Liquid Glass token/material system instead of keeping screen-local color constants.
+- Reusable `GlassButton` and `GlassIconButton` controls added with 48dp minimum touch sizing and accessibility semantics.
 
 ## IN PROGRESS
 
-- Runtime/build verification of the NavPill and shell.
+- Runtime/build verification of the NavPill, shell and shared Compose primitives.
 - Verify rapid taps, interrupted transitions, back navigation, restoration, narrow screens and long-press behavior.
 - Verify the alpha-zero legacy navigation bridge does not interfere with touch, focus or layout.
 - Complete the remaining secondary-screen state ownership audit.
 - Establish executable baseline/build evidence for the active branch.
-- Extend the shared material system with accessibility-safe fallbacks and bounded blur strategy before using it across content-heavy screens.
+- Extend the shared material system with media/card, sheet/dialog and accessibility-safe fallbacks before using it across content-heavy screens.
 
 ## REMAINING
 
@@ -55,7 +56,7 @@ Establish the reusable Liquid Glass design/material foundation, finish verificat
 - Complete ViewModel/state ownership map for all reachable secondary routes.
 - Establish baseline build/test evidence.
 - Finalize visual/design system and component API.
-- Add reusable buttons, icon buttons, media surfaces, sheets, dialogs, loading, empty and error primitives.
+- Add reusable media surfaces, sheets, dialogs, loading, empty and error primitives.
 - Replace app shell presentation completely, including system-bar/inset behavior.
 - Rebuild Home with the shared component system.
 - Rebuild Search, Details, Library, Downloads and Settings presentation.
@@ -69,7 +70,7 @@ Establish the reusable Liquid Glass design/material foundation, finish verificat
 
 Local build execution is still unavailable in the current tool environment because outbound DNS/network access previously prevented cloning the repository. GitHub source access is available, but no executable Gradle environment or CI run exists for the current head yet. Therefore no build/test success is claimed.
 
-No GitHub Actions workflow run is associated with current head `83caa50c210daf1e5278caae39ba5513559a1d4a`.
+No GitHub Actions workflow run is associated with current head `f1f1c9d8900454fbbabad37ba6caaa21506a41af`.
 
 ## REGRESSIONS
 
@@ -110,12 +111,13 @@ Attempted clone failed because the execution environment could not resolve GitHu
 ## VERIFICATION
 
 - Active branch verified from GitHub: `ui/2026-liquid-glass-redesign`.
-- Current implementation head verified: `83caa50c210daf1e5278caae39ba5513559a1d4a`.
+- Current implementation head verified: `f1f1c9d8900454fbbabad37ba6caaa21506a41af`.
 - `master` baseline head previously verified: `fe981345bdad180338e6cee75d59e77a568b96ee`.
 - MainActivity navigation semantics inspected directly from the active branch.
 - `docs/SCREEN_STATE_MAP.md` committed with verified primary state owners and protected navigation contracts.
 - `LiquidGlassNavPillView.kt` exists on the active branch and is integrated into `activity_main.xml`.
 - `LiquidGlassNavPillView` now consumes the shared theme/material primitives rather than defining independent material colors.
+- `GlassButton` and `GlassIconButton` exist on the active branch with explicit touch sizing and semantics.
 - AndroidX/Compose API assumptions were cross-checked against current Jetpack Compose documentation for `painterResource` and `combinedClickable`.
 - Current head has no associated GitHub Actions workflow run.
 - Local Gradle build: unverified due environment restriction.
@@ -124,8 +126,8 @@ Attempted clone failed because the execution environment could not resolve GitHu
 
 ## LAST VERIFIED COMMIT
 
-`83caa50c210daf1e5278caae39ba5513559a1d4a` — shared Liquid Glass theme/material primitives are present and NavPill consumes them; build/runtime verification remains pending.
+`f1f1c9d8900454fbbabad37ba6caaa21506a41af` — reusable glass controls are present; build/runtime verification remains pending.
 
 ## NEXT RESUME ACTION
 
-Continue the shared component system with `GlassIconButton`, `GlassButton`, and media/card primitives, while simultaneously auditing the shell's inset/cast behavior. Then replace the Home presentation against the shared system only after the navigation/material foundation has an executable build path.
+Continue the shared component system with media/card and sheet/dialog primitives, while auditing the shell's inset/cast interaction and the Home presentation boundary. Do not start screen-by-screen replacement until the shared primitives and navigation contract have an executable verification path.
