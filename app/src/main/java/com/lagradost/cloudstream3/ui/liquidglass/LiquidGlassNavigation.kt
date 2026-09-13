@@ -4,7 +4,7 @@ import androidx.navigation.NavDestination
 import com.lagradost.cloudstream3.R
 
 /** Maps every reachable secondary route to the primary destination that owns it. */
-internal fun NavDestination.toLiquidGlassTopLevelId(): Int = when (id) {
+internal fun toLiquidGlassTopLevelId(destinationId: Int): Int = when (destinationId) {
     R.id.navigation_download_child,
     R.id.navigation_download_queue -> R.id.navigation_downloads
     R.id.navigation_subtitles,
@@ -18,5 +18,7 @@ internal fun NavDestination.toLiquidGlassTopLevelId(): Int = when (id) {
     R.id.navigation_settings_extensions,
     R.id.navigation_settings_plugins,
     R.id.navigation_test_providers -> R.id.navigation_settings
-    else -> id
+    else -> destinationId
 }
+
+internal fun NavDestination.toLiquidGlassTopLevelId(): Int = toLiquidGlassTopLevelId(id)
