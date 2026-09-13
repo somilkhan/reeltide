@@ -3,93 +3,88 @@
 **Last updated:** 2026-09-13
 **Active branch:** `ui/2026-liquid-glass-redesign`
 **Baseline:** `master`
-**Current head:** `5f6d01f438e0aa586b99d76dfde858955858ec34`
+**Current head:** `e6f11c858a895135faa634975efa882a251dc756`
 
 > Live execution checkpoint. Repository/code/build/test evidence outranks stale documentation or conversation memory.
 
 ## Current Phase
 
-**Phase 3 — Core UI architecture and first Home presentation integration**
+**Phase 3 — Core UI architecture and Home presentation integration**
 
 ## Current Objective
 
-Finish the verified Liquid Glass foundation, replace the phone shell presentation coherently, then migrate Home presentation while preserving all existing Home state, adapters, navigation and business logic.
+Finish the shared Liquid Glass foundation, complete the phone shell boundary, and migrate Home presentation without changing Home state, adapters, navigation or business logic.
 
 ## DONE
 
-- Baseline and active branch established from `master`; previous redesign branch remains historical.
-- Architecture, UI/UX, design and implementation rules persisted in project docs.
-- Primary/secondary navigation ownership and screen/state responsibilities audited.
-- Phone `LiquidGlassNavPillView` integrated into the existing shell without taking ownership away from existing navigation logic.
+- Clean redesign branch established from `master`; previous redesign branch remains historical.
+- Architecture, UI/UX, design, research and execution-control documents established.
+- Navigation ownership and screen/state responsibilities audited.
+- Phone `LiquidGlassNavPillView` integrated while preserving existing navigation ownership.
 - NavPill state model established: `Idle`, `Pressed`, `Selected`, `Transitioning`, `Disabled`, `Scrolling`.
-- Shared `ReelTideGlassTokens` / `ReelTideTheme` established.
-- Shared glass surfaces, cards, pills, buttons, media cards, modals and content-state primitives established.
-- Navigation destination grouping extracted into `LiquidGlassNavigation.kt` with route mapping tests.
-- Draft PR #2 opened against `master` for executable verification.
-- CI run `34730092385` completed successfully for commit `dc39cbbff1329338a8f4d1b69add7bbdda2e6f09`, including ABI verification, Gradle build, lint/test stages and artifact upload.
-- Latest Home work is presentation-only: Home section headers and media-card presentation were refined without changing Home data/business logic.
+- Shared Liquid Glass theme/tokens, surfaces, cards, pills, controls, media card, modals and content states established.
+- Navigation destination grouping and route mapping tests established.
+- Draft PR #2 opened against `master`.
+- CI run `34730092385` succeeded for `dc39cbb...`, covering ABI verification and the full configured Gradle build/test/lint/artifact pipeline.
+- Home section hierarchy was modernized at the existing ViewBinding boundary.
+- Home media cards were polished while preserving existing IDs, dimensions and dynamic poster sizing behavior.
+- Section-header pressed/focused states added for touch/focus feedback.
 
 ## IN PROGRESS
 
-- Home presentation migration: current adapters/ViewModels remain authoritative; presentation is being modernized at existing ViewBinding boundaries.
-- Shell edge-to-edge/inset and cast mini-controller audit.
-- Secondary route/state ownership audit.
-- CI verification of the latest Home presentation commits.
+- CI run `34762731770` is running against the current Home presentation checkpoint.
+- Home loading/error/empty presentation still needs to be brought into the same visual hierarchy.
+- Shell edge-to-edge/insets and cast mini-controller coexistence still require source audit plus runtime verification when available.
+- Secondary route/state ownership audit continues.
 
 ## REMAINING
 
-- Verify latest Home presentation changes with CI.
-- Complete shell/inset/cast behavior audit.
-- Finish Home loading/error/empty states using the shared visual hierarchy.
+- Establish successful CI evidence for current head `e6f11c...`.
+- Complete Home presentation as a coherent subsystem, including loading/error/empty and phone interaction polish.
+- Complete shell/inset/cast audit.
 - Rebuild Search, Details, Library, Downloads and Settings presentation.
 - Audit player presentation without changing playback behavior.
-- Replace remaining secondary legacy Material-default presentation.
-- Add/profile bounded blur only where hierarchy and performance justify it.
-- Accessibility, reduced-motion/transparency/contrast and performance verification.
+- Replace remaining secondary legacy Material presentation.
+- Add/profile bounded blur only where justified and measurable.
+- Accessibility/reduced-motion/transparency/contrast and performance verification.
 - Functional and visual regression verification.
-- Remove obsolete presentation code and temporary compatibility bridges after stable replacement.
+- Remove obsolete presentation code/bridges after stable replacement.
 
 ## BLOCKED
 
-- No device/runtime visual verification tool is available through the current execution environment.
+- No device/runtime visual verification tool is available in the current execution environment.
 - Local Gradle execution is unavailable; GitHub Actions is the executable build authority.
 
 ## REGRESSIONS / KNOWN RISKS
 
-- Earlier CI exposed two actual defects in new presentation code; both were corrected and the corrected foundation passed CI run `34730092385`.
-- Runtime NavPill behavior, touch/focus behavior, inset interaction and cast mini-controller coexistence still require device-level verification.
-- The Home media-card XML is shared with Home child adapters; changes intentionally preserve existing dimensions/IDs and dynamic poster sizing behavior.
-- True backdrop blur is not implemented as a fake `Modifier.blur`; the current glass hierarchy uses bounded translucency, border and depth until a safe profiled backdrop strategy exists.
+- Earlier NavPill and modal API defects were caught by real CI and corrected; the corrected foundation subsequently passed CI.
+- Current Home XML changes have not yet completed their own CI run.
+- Runtime NavPill touch/focus/inset behavior and cast mini-controller coexistence remain unverified.
+- True backdrop blur is intentionally not faked with `Modifier.blur`; current material uses bounded translucency, borders and depth.
 
 ## FAILED APPROACHES
 
-### Untyped NavPill compatibility lookup
-Do not access `menu`/`selectedItemId` through an untyped Android `View`. Existing navigation behavior is preserved through concrete navigation item views and the existing Activity/NavController contract.
-
-### Source-only API confidence
-Presentation APIs must be CI-verified before being treated as compile-clean.
-
-### Legacy redesign patching
-The old `ui/2026-modern-redesign` branch is not an implementation base for this work.
+- Untyped Android `View` access to navigation menu state was rejected by Kotlin; concrete navigation item views are now used.
+- Source-only confidence is not accepted as verification; CI is required for presentation changes.
+- The old `ui/2026-modern-redesign` implementation is not being patched or used as a base.
+- An unused Compose Home-chrome prototype was removed instead of leaving duplicate/dead presentation code.
 
 ## DECISIONS
 
-- Active implementation branch: `ui/2026-liquid-glass-redesign`.
-- `master` is the comparison baseline.
-- Existing business logic, state, repositories, player behavior, adapters and navigation ownership remain authoritative.
-- Liquid Glass is hierarchical functional material, not universal blur/decorative translucency.
+- Active branch: `ui/2026-liquid-glass-redesign`; baseline: `master`.
+- Existing business logic, state, repositories, adapters, player behavior and navigation ownership remain authoritative.
+- Liquid Glass is hierarchical functional material, not universal blur.
 - Native Compose/Android motion is preferred over web-specific motion libraries.
-- Shared primitives are reused; screen-specific glass copies are rejected.
+- Shared primitives remain the canonical Compose design system; legacy View boundaries are modernized without duplicating business logic.
 - CI is the executable build authority while local Gradle/device execution is unavailable.
 
 ## VERIFICATION
 
-- Branch/PR state inspected against GitHub.
-- CI `34730092385` completed with `success` for the corrected NavPill foundation commit `dc39cbbff1329338a8f4d1b69add7bbdda2e6f09`.
-- The successful CI run confirms the previous compiler/lint defects were resolved on that tested commit.
-- Latest Home presentation commits after that successful run are not yet CI-verified.
-- No device/runtime verification has been claimed.
+- GitHub repository, branch, PR, source and changed-file state inspected.
+- CI `34730092385` succeeded on the corrected foundation commit `dc39cbb...`.
+- CI `34762731770` exists for the current Home checkpoint and is currently in progress.
+- No runtime/device verification has been claimed.
 
 ## NEXT RESUME ACTION
 
-Run/inspect CI for the current head `5f6d01f438e0aa586b99d76dfde858955858ec34`. If green, continue the Home subsystem rather than returning to foundation micro-fixes. If red, fix the owning Home presentation subsystem, rerun CI, then continue to shell/insets and the next screen.
+Inspect CI `34762731770` for `e6f11c...`. If green, continue completing Home states and then perform the shell/inset/cast audit. If red, diagnose and fix the owning Home presentation failure before moving forward.
