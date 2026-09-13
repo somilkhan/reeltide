@@ -8,6 +8,12 @@ Premium, restrained, monochrome, OLED-friendly, Apple-inspired Liquid Glass tran
 
 The visual language must feel intentional and editorial rather than like a generic Material theme or an AI-generated glassmorphism template.
 
+## Core Liquid Glass Principle
+
+Liquid Glass is a **functional hierarchy layer**, not a universal surface treatment. Important controls float above content and remain visually related to the content they control. The strongest material treatment belongs to high-value interaction surfaces; content itself should remain dominant.
+
+Current Apple guidance emphasizes hierarchy, legibility, restrained use of Liquid Glass, and adaptive behavior across accessibility settings. ReelTide adopts those principles while implementing them with native Android capabilities rather than reproducing Apple's proprietary framework behavior.
+
 ## Material Hierarchy
 
 Use layered surfaces with distinct roles:
@@ -18,7 +24,13 @@ Use layered surfaces with distinct roles:
 - Strong Glass: navigation and high-priority floating controls.
 - Sheet Glass: modal surfaces with stronger separation.
 
-Do not apply the same opacity, blur, border, or shadow to every surface.
+Map material strength to function and context. Do not apply the same opacity, blur, border, or shadow to every surface.
+
+### Media context
+
+For visually rich poster/video backgrounds, a lighter/clearer material may be appropriate so the media remains visible. For text-heavy controls or variable/bright backgrounds, use a stronger material and/or scrim so readability wins.
+
+Avoid putting heavy glass over faces, poster typography, subtitles, or other important media content unless the control genuinely needs that placement.
 
 ## Color
 
@@ -44,6 +56,8 @@ Glass should communicate depth and layering. Prefer subtle translucency, control
 
 A glass surface must remain readable over variable content. Avoid blur everywhere, excessive opacity, excessive highlights, or effects that obscure posters/media.
 
+Use scroll-edge material/blur only where floating controls overlap scrolling content. Do not add edge effects as decoration where no UI/content boundary needs clarification.
+
 ## Components
 
 Core components should be coherent across the product, including:
@@ -67,6 +81,8 @@ Navigation is a primary visual anchor. The NavPill must feel integrated with the
 
 Selection should communicate location through coordinated material, icon, label, and motion changes.
 
+Navigation material should remain functional and unobtrusive; it must not visually compete with the primary media content.
+
 ## Imagery
 
 Posters and artwork are content, not decoration. Preserve their prominence while ensuring controls remain legible. Avoid placing heavy glass over important faces/text in artwork when unnecessary.
@@ -79,16 +95,34 @@ Use one coherent icon language. Optical sizing matters more than nominal box dim
 
 Design for edge-to-edge layouts. System bars, navigation, gesture areas, keyboard, sheets, and floating controls must respect insets without visible layout jumps.
 
+Android 15+ enforces edge-to-edge for apps targeting the relevant SDK, so the redesign must treat insets as part of the layout model rather than as a late styling adjustment.
+
 ## Motion
 
 Motion belongs to the visual system. Prefer native Compose/Android spring and transition primitives. Motion should be responsive, interruptible, and tied to user intent.
 
+Liquid material transitions should communicate continuity rather than decorative spectacle.
+
 Avoid gratuitous animation.
 
-## Accessibility
+## Accessibility / Adaptation
 
-Visual minimalism cannot reduce usable touch targets, focusability, semantics, contrast, or dynamic text support.
+Glass must have an accessibility-safe fallback. When transparency or motion needs to be reduced, prioritize opaque/semi-opaque contrast and simplified motion rather than preserving visual effects at the expense of legibility.
+
+Test custom glass surfaces under reduced-motion, increased-contrast, dynamic-text, and other applicable accessibility configurations.
+
+## Performance
+
+Blur and translucent layers have real rendering cost. Use bounded surfaces and avoid expensive full-screen or per-item blur unless profiling/evidence justifies it.
+
+Android Compose blur renders content into a separate graphics layer and has API-level constraints; the implementation must account for this rather than assuming arbitrary blur is free.
 
 ## Quality Gate
 
 Reject a UI change if it is visually impressive in isolation but inconsistent with the system, harms readability/performance, duplicates an existing pattern, or makes existing functionality less discoverable.
+
+A successful Liquid Glass surface should answer three questions:
+
+1. Why does this surface need to float above the content?
+2. What interaction or hierarchy does its material communicate?
+3. Does the effect improve the product enough to justify its visual and rendering cost?
