@@ -3,7 +3,7 @@
 **Last updated:** 2026-09-13
 **Active branch:** `ui/2026-liquid-glass-redesign`
 **Baseline:** `master`
-**Current head:** `7548277e4cba180b53b3a3fb76f1f09f056cac79`
+**Current head:** `3ee811182a0ede56abbf8ac8f9017e62ae0c0d08`
 
 > Live execution checkpoint. Repository/build/test evidence outranks stale documentation or conversation memory.
 
@@ -13,7 +13,7 @@
 
 ## Current Objective
 
-Complete the primary presentation/state ownership boundary, establish the new phone navigation surface without moving business state, then continue into the reusable Liquid Glass component system and app-shell replacement.
+Complete the phone navigation subsystem to the point where its contract is verified, then establish the reusable Liquid Glass material/token layer and replace the app shell presentation without moving business/data state.
 
 ## DONE
 
@@ -35,11 +35,13 @@ Complete the primary presentation/state ownership boundary, establish the new ph
 - First coherent phone navigation presentation boundary implemented as `LiquidGlassNavPillView` using native Compose/Android animation and accessibility semantics.
 - Existing navigation behavior is deliberately retained behind the new surface: the pill delegates selection to the existing `BottomNavigationView` contract rather than duplicating business/navigation state.
 - Legacy phone bottom navigation presentation is visually suppressed via an alpha-zero compatibility bridge; its menu/controller remains present so existing MainActivity listeners and long-press behavior remain available while the replacement is stabilized.
+- NavPill now has an explicit interaction-state model covering `Idle`, `Pressed`, `Selected`, `Transitioning`, `Disabled`, and `Scrolling`, with pressed-state collection, spring scaling, selection animation and accessibility semantics.
 
 ## IN PROGRESS
 
-- Finish the NavPill state machine and interaction verification: pressed/selected/transitioning/disabled/scrolling behavior, interruption, restoration, narrow widths and accessibility.
-- Validate the new shell against real device/runtime behavior.
+- Runtime/build verification of the NavPill and shell.
+- Verify rapid taps, interrupted transitions, back navigation, restoration, narrow screens and long-press behavior.
+- Verify the alpha-zero legacy navigation bridge does not interfere with touch, focus or layout.
 - Complete the remaining secondary-screen state ownership audit.
 - Establish executable baseline/build evidence for the active branch.
 - Define the reusable Liquid Glass token/material/component APIs before replacing Home.
@@ -64,7 +66,7 @@ Complete the primary presentation/state ownership boundary, establish the new ph
 
 Local build execution is still unavailable in the current tool environment because outbound DNS/network access previously prevented cloning the repository. GitHub source access is available, but no executable Gradle environment or CI run exists for the current head yet. Therefore no build/test success is claimed.
 
-The current branch has no workflow run associated with head `7548277e4cba180b53b3a3fb76f1f09f056cac79`.
+No GitHub Actions workflow run is associated with current head `3ee811182a0ede56abbf8ac8f9017e62ae0c0d08`.
 
 ## REGRESSIONS
 
@@ -104,7 +106,7 @@ Attempted clone failed because the execution environment could not resolve GitHu
 ## VERIFICATION
 
 - Active branch verified from GitHub: `ui/2026-liquid-glass-redesign`.
-- Current head verified: `7548277e4cba180b53b3a3fb76f1f09f056cac79`.
+- Current implementation head verified: `3ee811182a0ede56abbf8ac8f9017e62ae0c0d08`.
 - `master` baseline head previously verified: `fe981345bdad180338e6cee75d59e77a568b96ee`.
 - MainActivity navigation semantics inspected directly from the active branch.
 - `docs/SCREEN_STATE_MAP.md` committed with verified primary state owners and protected navigation contracts.
@@ -117,8 +119,8 @@ Attempted clone failed because the execution environment could not resolve GitHu
 
 ## LAST VERIFIED COMMIT
 
-`7548277e4cba180b53b3a3fb76f1f09f056cac79` — first phone Liquid Glass navigation boundary and screen/state map are present on the active branch; build/runtime verification remains pending.
+`3ee811182a0ede56abbf8ac8f9017e62ae0c0d08` — explicit NavPill interaction-state model and accessibility behavior are present on the active branch; build/runtime verification remains pending.
 
 ## NEXT RESUME ACTION
 
-Audit and harden `LiquidGlassNavPillView` as a complete navigation subsystem: add the explicit interaction-state model, verify destination mapping/long-press behavior and restoration paths, inspect the phone shell/insets/cast interaction, then continue into shared Liquid Glass tokens and reusable surface primitives. Do not move business/data state.
+Run the navigation subsystem audit against the actual Android build/runtime as soon as an executable build/CI path is available. In parallel, inspect shell inset/cast interactions and complete the secondary route/state inventory, then build the shared Liquid Glass tokens and material primitives. Do not move business/data state.
