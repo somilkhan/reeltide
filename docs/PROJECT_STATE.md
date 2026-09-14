@@ -1,9 +1,9 @@
 # ReelTide — Project State
 
-**Last updated:** 2026-09-14
+**Last updated:** 2026-09-15
 **Active branch:** `ui/2026-liquid-glass-redesign`
 **Baseline:** `master`
-**Current code checkpoint:** `a79dc6499aeaf8731d3b574bf5170ca846c9dc80`
+**Current code checkpoint:** `b382501e0b415a7ba6383ba9d68bbfd9d235a454`
 
 > Live execution checkpoint. Repository/code/build/test evidence outranks stale documentation or conversation memory.
 
@@ -17,54 +17,56 @@
 - Shared Liquid Glass foundation and reusable presentation primitives exist.
 - Direct Compose launch-shell NavPill integration was retired after a user-reported launch regression.
 - Settings presentation was replaced while preserving SettingsFragment IDs and behavior.
-- Home presentation was replaced as a coherent subsystem while leaving Home data/state/business ownership intact.
 - Search presentation and bounded empty/error state rendering were integrated while preserving SearchViewModel, adapters, history, suggestions, filters, intent handling and existing search/retry entry points.
 - Search checkpoint `0cda31fdc5d15757c1a0dc52add1c92bf170865b` passed GitHub Actions run #217 (`34847250153`).
-- For runtime isolation, `activity_main.xml` has now been restored byte-for-byte to the `master` shell presentation in commit `a79dc6499aeaf8731d3b574bf5170ca846c9dc80`. This intentionally removes the floating navigation shell for the diagnostic build only; it does not abandon the Liquid Glass redesign.
+- `activity_main.xml` remains restored to the stable `master` shell for runtime isolation.
+- `fragment_home.xml` remains restored to the stable `master` loading/state shell for runtime isolation.
+- Home header/hero Liquid Glass checkpoint reintroduced incrementally without changing Home data/state/business ownership.
+- Home hero now has no enclosing top toolbar; search and profile are individual floating controls over the hero.
+- Home hero height was increased from the redesigned 560dp checkpoint to 728dp (~30%).
+- Hero action group is left-aligned near the bottom while retaining the existing `home_preview_bookmark`, `home_preview_play`, and `home_preview_info` IDs.
+- Home section headers now use a compact genre/title glass pill with a separate right-side `View all` treatment rather than one full-width glass bar.
 
 ## IN PROGRESS
 
-- Diagnostic CI run #219 (`34849938052`) is queued for the master-shell isolation checkpoint.
-- Device/runtime verification is still unavailable from the execution environment; user-reported launch crash has no captured ReelTide stacktrace yet.
-- After run #219, the diagnostic result will determine whether the launch regression is in the activity shell or elsewhere.
+- Verify GitHub Actions for the latest Home presentation commits and then use the resulting build for device/runtime verification.
+- Continue Home visual refinement only after the current checkpoint is confirmed build-safe.
 
 ## REMAINING
 
-1. Verify diagnostic run #219 and record its result.
-2. If the master shell launches on-device, reintroduce the navigation glass shell incrementally with the smallest safe change set and verify each checkpoint.
-3. If the master shell still crashes, isolate the Home loading/presentation subsystem next, then continue screen-by-screen.
-4. Replace Details presentation coherently.
-5. Replace Library and Downloads presentation.
-6. Finish Settings sub-screens/account presentation.
-7. Audit player presentation without changing playback behavior.
-8. Replace remaining secondary legacy Material surfaces.
-9. Add bounded blur only where justified and measurable; do not fake backdrop blur with `Modifier.blur`.
-10. Accessibility, reduced-motion, contrast, dynamic text and performance verification.
-11. Functional + visual regression matrix and cleanup of obsolete presentation bridges/dead code.
+1. Verify latest Home checkpoint in CI and on-device.
+2. Finish the Home screen presentation: section rhythm, poster/card treatment, floating controls, navigation material and motion.
+3. Replace Details presentation coherently.
+4. Replace Library and Downloads presentation.
+5. Finish Settings sub-screens/account presentation.
+6. Audit player presentation without changing playback behavior.
+7. Replace remaining secondary legacy Material surfaces.
+8. Add bounded blur only where justified and measurable; do not fake backdrop blur with `Modifier.blur`.
+9. Accessibility, reduced-motion, contrast, dynamic text and performance verification.
+10. Functional + visual regression matrix and cleanup of obsolete presentation bridges/dead code.
 
 ## BLOCKED
 
 - Local Gradle execution is unavailable because outbound repository/network resolution is unavailable.
 - No device/runtime automation is available in the execution environment.
 - GitHub Actions is the executable build authority.
-- The user's current logcat capture contains only `com.termux` PID 16550 output; it does not establish a ReelTide exception or root cause.
 
 ## REGRESSIONS / KNOWN RISKS
 
 - Direct Compose launch-shell NavPill remains retired.
-- The previous floating native navigation shell is now temporarily removed from `activity_main.xml` solely to isolate the user-reported launch crash.
+- The launch shell is intentionally still the stable native `master` shell while navigation redesign is isolated separately.
 - The earlier CI regression caused by `itemActiveIndicatorColor` remains fixed; that attribute must not be reintroduced.
-- Shell/inset/cast coexistence is not device-verified.
-- Search business logic and state ownership remain authoritative; Search Kotlin changes are presentation-state rendering around existing observer outputs.
-- True backdrop blur is not being faked; current glass materials rely on bounded translucency, borders, shadows and hierarchy.
+- True backdrop blur is not being faked; current Home glass materials use bounded translucency, borders and shadows.
+- `home_child_more_info` remains a TextView so existing ViewBinding/click behavior is preserved; the visual `View all` affordance is a separate adjacent view.
+- The new 728dp hero should be checked across compact phones/tablets/landscape because it is intentionally taller.
 
 ## FAILED APPROACHES
 
 - Direct Compose NavPill injection into the launch shell before device verification: rejected after launch regression.
-- Small isolated XML polish without subsystem-level verification: rejected.
+- Broad multi-surface UI patching without runtime checkpoints: rejected.
 - Source-only confidence without runtime evidence: rejected.
 - `itemActiveIndicatorColor` navigation-shell attribute: removed after CI regression tracing.
-- Repeated Termux-only logcat inspection: not useful for the ReelTide crash because the captured process is `com.termux`.
+- Repeated Termux-only logcat inspection: not useful for the ReelTide crash because the captured process was `com.termux`.
 
 ## DECISIONS
 
@@ -74,16 +76,17 @@
 - Liquid Glass is a functional floating hierarchy, not universal decoration or blur.
 - Monochrome black/white/grey remains the active redesign direction.
 - Content uses standard/content-layer treatment; glass is reserved for functional floating controls and transient interaction/state surfaces.
-- Runtime regressions are isolated by staged checkpoints rather than speculative multi-file rollback.
+- Home hero controls float directly over media instead of being enclosed in a persistent toolbar.
+- Section genre/title and `View all` are separate visual affordances.
 
 ## VERIFICATION
 
-- Branch head after diagnostic shell restoration: `a79dc6499aeaf8731d3b574bf5170ca846c9dc80`.
-- `activity_main.xml` on the diagnostic checkpoint matches the `master` version, including the original `BottomNavigationView`, original constraints, original tint resource and cast-controller relationship.
-- Search checkpoint run #217 completed successfully.
-- Diagnostic run #219 is queued; no result is claimed yet.
-- No ReelTide crash stacktrace has been captured from the user's provided logs.
+- `activity_main.xml` diagnostic restore is known stable from the user's successful launch report.
+- `fragment_home.xml` diagnostic restore is in place.
+- Latest Home presentation code is committed at `b382501e0b415a7ba6383ba9d68bbfd9d235a454`.
+- CI result for the latest commit has not yet been observed; no green result is claimed.
+- No ReelTide crash stacktrace has been captured from the user's earlier logs.
 
 ## NEXT ACTION
 
-Poll run #219. If green, ask for/install the diagnostic build and use the result to distinguish shell vs Home regression; if the user cannot provide runtime evidence, continue static isolation by comparing the initial Home inflation path against `master` and create the next smallest diagnostic checkpoint.
+Poll CI for the latest Home checkpoint. If green, use the build on-device and then continue the Home screen component/motion pass. If the build fails, fix the actual CI error before adding more UI.
