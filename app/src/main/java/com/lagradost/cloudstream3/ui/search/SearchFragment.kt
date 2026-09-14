@@ -160,6 +160,21 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
     var selectedSearchTypes = mutableListOf<TvType>()
     var selectedApis = mutableSetOf<String>()
 
+    private fun showSearchState(title: Int, message: Int, retry: Boolean) {
+        binding?.apply {
+            searchStateContainer.isVisible = true
+            searchStateTitle.setText(title)
+            searchStateMessage.setText(message)
+            searchRetryButton.isVisible = retry
+            searchSuggestionsRecycler.isVisible = false
+        }
+    }
+
+    private fun hideSearchState() {
+        binding?.searchStateContainer?.isVisible = false
+        binding?.searchRetryButton?.isVisible = false
+    }
+
     /**
      * Will filter all providers by preferred media and selectedSearchTypes.
      * If that results in no available providers then only filter
@@ -167,7 +182,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
      **/
     fun search(query: String?) {
         if (query == null) return
-        // don't resume state from prev search
+        hideSearchState()
         (binding?.searchMasterRecycler?.adapter as? BaseAdapter<*, *>)?.clearState()
         context?.let { ctx ->
             val default = enumValues<TvType>().sorted().filter { it != TvType.NSFW }
@@ -196,9 +211,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
         }
     }
 
-    // Null if defined as a variable
-    // This needs to be run after view created
-
     private fun reloadRepos(success: Boolean = false) = main {
         searchViewModel.reloadRepos()
         context?.filterProviderByPreferredMedia()?.let { validAPIs ->
@@ -224,7 +236,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
             padLeft = isLayout(TV or EMULATOR)
         )
 
-        // Fix grid
         currentSpan = view.context.getSpanCount()
         binding?.searchAutofitResults?.spanCount = currentSpan
         HomeFragment.configEvent.invoke()
@@ -236,12 +247,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
     ) {
         reloadRepos()
         binding.apply {
-            val adapter =
-                SearchAdapter(
-                    searchAutofitResults,
-                ) { callback ->
-                    SearchHelper.handleSearchClickCallback(callback)
-                }
+            val adapter = SearchAdapter(searchAutofitResults) { callback ->
+                SearchHelper.handleSearchClickCallback(callback)
+            }
 
             searchRoot.findViewById<TextView>(androidx.appcompat.R.id.search_src_text)?.tag =
                 "tv_no_focus_tag"
@@ -257,27 +265,19 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
                         showToast(R.string.speech_recognition_unavailable)
                     } else {
                         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-                            putExtra(
-                                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-                            )
+                            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
                             putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-                            putExtra(
-                                RecognizerIntent.EXTRA_PROMPT,
-                                ctx.getString(R.string.begin_speaking)
-                            )
+                            putExtra(RecognizerIntent.EXTRA_PROMPT, ctx.getString(R.string.begin_speaking))
                         }
                         speechRecognizerLauncher.launch(intent)
                     }
                 } catch (_: Throwable) {
-                    // launch may throw
                     showToast(R.string.speech_recognition_unavailable)
                 }
             }
         }
 
-        val searchExitIcon =
-            binding.mainSearch.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
+        val searchExitIcon = binding.mainSearch.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
 
         selectedApis = DataStoreHelper.searchPreferenceProviders.toMutableSet()
 
@@ -285,38 +285,22 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
             searchView?.context?.let { ctx ->
                 val validAPIs = ctx.filterProviderByPreferredMedia(hasHomePageIsRequired = false)
                 var currentValidApis = listOf<MainAPI>()
-                val currentSelectedApis = if (selectedApis.isEmpty()) validAPIs.map { it.name }
-                    .toMutableSet() else selectedApis
-
-                val builder =
-                    BottomSheetDialog(ctx)
-
+                val currentSelectedApis = if (selectedApis.isEmpty()) validAPIs.map { it.name }.toMutableSet() else selectedApis
+                val builder = BottomSheetDialog(ctx)
                 builder.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-
-                val selectMainpageBinding: HomeSelectMainpageBinding =
-                    HomeSelectMainpageBinding.inflate(
-                        builder.layoutInflater,
-                        null,
-                        false
-                    )
+                val selectMainpageBinding = HomeSelectMainpageBinding.inflate(builder.layoutInflater, null, false)
                 builder.setContentView(selectMainpageBinding.root)
                 builder.show()
                 builder.let { dialog ->
                     val previousSelectedApis = selectedApis.toSet()
                     val previousSelectedSearchTypes = selectedSearchTypes.toSet()
-
-                    val isMultiLang = ctx.getApiProviderLangSettings().let { set ->
-                        set.size > 1 || set.contains(AllLanguagesName)
-                    }
-
+                    val isMultiLang = ctx.getApiProviderLangSettings().let { set -> set.size > 1 || set.contains(AllLanguagesName) }
                     val cancelBtt = dialog.findViewById<MaterialButton>(R.id.cancel_btt)
                     val applyBtt = dialog.findViewById<MaterialButton>(R.id.apply_btt)
-
                     val listView = dialog.findViewById<ListView>(R.id.listview1)
                     val arrayAdapter = ArrayAdapter<String>(ctx, R.layout.sort_bottom_single_choice)
                     listView?.adapter = arrayAdapter
                     listView?.choiceMode = AbsListView.CHOICE_MODE_MULTIPLE
-
                     listView?.setOnItemClickListener { _, _, i, _ ->
                         if (currentValidApis.isNotEmpty()) {
                             val api = currentValidApis[i].name
@@ -329,73 +313,36 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
                             }
                         }
                     }
-
                     fun updateList(types: List<TvType>) {
                         DataStoreHelper.searchPreferenceTags = types
-
                         arrayAdapter.clear()
-                        currentValidApis = validAPIs.filter { api ->
-                            api.supportedTypes.any {
-                                types.contains(it)
-                            }
-                        }.sortedBy { it.name.lowercase() }
-
+                        currentValidApis = validAPIs.filter { api -> api.supportedTypes.any { types.contains(it) } }.sortedBy { it.name.lowercase() }
                         val names = currentValidApis.map {
-                            if (isMultiLang) "${
-                                SubtitleHelper.getFlagFromIso(
-                                    it.lang
-                                )?.plus(" ") ?: ""
-                            }${it.name}" else it.name
+                            if (isMultiLang) "${SubtitleHelper.getFlagFromIso(it.lang)?.plus(" ") ?: ""}${it.name}" else it.name
                         }
                         for ((index, api) in currentValidApis.map { it.name }.withIndex()) {
                             listView?.setItemChecked(index, currentSelectedApis.contains(api))
                         }
-
-                        //arrayAdapter.notifyDataSetChanged()
                         arrayAdapter.addAll(names)
                         arrayAdapter.notifyDataSetChanged()
                     }
-
                     bindChips(
                         selectMainpageBinding.tvtypesChipsScroll.tvtypesChips,
                         selectedSearchTypes,
                         validAPIs.flatMap { api -> api.supportedTypes }.distinct()
                     ) { list ->
                         updateList(list)
-
-                        // refresh selected chips in main chips
                         if (selectedSearchTypes.toSet() != list.toSet()) {
                             selectedSearchTypes.clear()
                             selectedSearchTypes.addAll(list)
-                            updateChips(
-                                binding.tvtypesChipsScroll.tvtypesChips,
-                                selectedSearchTypes
-                            )
-
+                            updateChips(binding.tvtypesChipsScroll.tvtypesChips, selectedSearchTypes)
                         }
                     }
-
-
-                    cancelBtt?.setOnClickListener {
-                        dialog.dismissSafe()
-                    }
-
-                    cancelBtt?.setOnClickListener {
-                        dialog.dismissSafe()
-                    }
-
-                    applyBtt?.setOnClickListener {
-                        //if (currentApiName != selectedApiName) {
-                        //    currentApiName?.let(callback)
-                        //}
-                        dialog.dismissSafe()
-                    }
-
+                    cancelBtt?.setOnClickListener { dialog.dismissSafe() }
+                    applyBtt?.setOnClickListener { dialog.dismissSafe() }
                     dialog.setOnDismissListener {
                         DataStoreHelper.searchPreferenceProviders = currentSelectedApis.toList()
                         selectedApis = currentSelectedApis
-
-                        // run search when dialog is close
                         if (previousSelectedApis != selectedApis.toSet() || previousSelectedSearchTypes != selectedSearchTypes.toSet()) {
                             search(binding.mainSearch.query.toString())
                         }
@@ -408,7 +355,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
         val settingsManager = context?.let { PreferenceManager.getDefaultSharedPreferences(it) }
         val isAdvancedSearch = settingsManager?.getBoolean("advanced_search", true) ?: true
         val isSearchSuggestionsEnabled = settingsManager?.getBoolean("search_suggestions_enabled", true) ?: true
-
         selectedSearchTypes = DataStoreHelper.searchPreferenceTags.toMutableList()
 
         if (!isLayout(PHONE)) {
@@ -416,49 +362,37 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
             binding.searchFilter.isFocusableInTouchMode = true
         }
 
-        // Hide suggestions when search view loses focus (phone only)
         if (isLayout(PHONE)) {
             binding.mainSearch.setOnQueryTextFocusChangeListener { _, hasFocus ->
-                if (!hasFocus) {
-                    searchViewModel.clearSuggestions()
-                }
+                if (!hasFocus) searchViewModel.clearSuggestions()
             }
         }
-
 
         binding.mainSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 search(query)
                 searchViewModel.clearSuggestions()
-
-                binding.mainSearch.let {
-                    hideKeyboard(it)
-                }
-
+                hideKeyboard(binding.mainSearch)
                 return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                //searchViewModel.quickSearch(newText)
                 val showHistory = newText.isBlank()
                 if (showHistory) {
                     searchViewModel.clearSearch()
                     searchViewModel.updateHistory()
                     searchViewModel.clearSuggestions()
-                } else {
-                    // Fetch suggestions when user is typing (if enabled)
-                    if (isSearchSuggestionsEnabled) {
-                        searchViewModel.fetchSuggestions(newText)
-                    }
+                    hideSearchState()
+                } else if (isSearchSuggestionsEnabled) {
+                    searchViewModel.fetchSuggestions(newText)
+                    hideSearchState()
                 }
                 binding.apply {
                     searchHistoryRecycler.isVisible = showHistory
                     searchMasterRecycler.isVisible = !showHistory && isAdvancedSearch
                     searchAutofitResults.isVisible = !showHistory && !isAdvancedSearch
-                    // Hide suggestions when showing history or showing search results
                     searchSuggestionsRecycler.isVisible = !showHistory && isSearchSuggestionsEnabled
                 }
-
                 return true
             }
         })
@@ -466,64 +400,59 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
         observe(searchViewModel.searchResponse) {
             when (it) {
                 is Resource.Success -> {
-                    it.value.let { data ->
-                        val list = data.list
-                        if (list.isNotEmpty()) {
-                            (binding.searchAutofitResults.adapter as? SearchAdapter)?.submitList(
-                                list
-                            )
-                        }
+                    val list = it.value.list
+                    if (list.isNotEmpty()) {
+                        (binding.searchAutofitResults.adapter as? SearchAdapter)?.submitList(list)
+                        hideSearchState()
+                    } else if (!isAdvancedSearch && binding.mainSearch.query.isNotBlank()) {
+                        showSearchState(R.string.search_no_results_title, R.string.search_no_results_message, false)
                     }
                     searchExitIcon?.alpha = 1f
                     binding.searchLoadingBar.alpha = 0f
                 }
-
                 is Resource.Failure -> {
-                    // Toast.makeText(activity, "Server error", Toast.LENGTH_LONG).show()
+                    if (!isAdvancedSearch && binding.mainSearch.query.isNotBlank()) {
+                        showSearchState(R.string.search_error_title, R.string.search_error_message, true)
+                    }
                     searchExitIcon?.alpha = 1f
                     binding.searchLoadingBar.alpha = 0f
                 }
-
                 is Resource.Loading -> {
+                    hideSearchState()
                     searchExitIcon?.alpha = 0f
                     binding.searchLoadingBar.alpha = 1f
                 }
             }
         }
 
+        binding.searchRetryButton.setOnClickListener {
+            search(binding.mainSearch.query.toString())
+        }
+
         val listLock = ReentrantLock()
         observe(searchViewModel.currentSearch) { list ->
             try {
-                // https://stackoverflow.com/questions/6866238/concurrent-modification-exception-adding-to-an-arraylist
                 listLock.lock()
-
                 val pinnedOrder = DataStoreHelper.pinnedProviders.reversedArray()
-
                 val sortedList = list.toList().sortedWith(compareBy { (providerName, _) ->
                     val index = pinnedOrder.indexOf(providerName)
                     if (index == -1) Int.MAX_VALUE else index
                 })
-
                 (binding.searchMasterRecycler.adapter as? ParentItemAdapter)?.apply {
                     val newItems = sortedList.map { (providerName, providerData) ->
                         val dataList = providerData.list
-                        val dataListFiltered =
-                            context?.filterSearchResultByFilmQuality(dataList) ?: dataList
-
-                        val homePageList = HomePageList(
-                            providerName,
-                            dataListFiltered
-                        )
-
-                        HomeViewModel.ExpandableHomepageList(
-                            homePageList,
-                            providerData.currentPage,
-                            providerData.hasNext
-                        )
+                        val dataListFiltered = context?.filterSearchResultByFilmQuality(dataList) ?: dataList
+                        val homePageList = HomePageList(providerName, dataListFiltered)
+                        HomeViewModel.ExpandableHomepageList(homePageList, providerData.currentPage, providerData.hasNext)
                     }
-
                     submitList(newItems)
-                    //notifyDataSetChanged()
+                }
+                if (isAdvancedSearch && binding.mainSearch.query.isNotBlank()) {
+                    if (sortedList.isEmpty()) {
+                        showSearchState(R.string.search_no_results_title, R.string.search_no_results_message, false)
+                    } else {
+                        hideSearchState()
+                    }
                 }
             } catch (e: Exception) {
                 logError(e)
@@ -532,27 +461,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
             }
         }
 
-
-        /*main_search.setOnQueryTextFocusChangeListener { _, b ->
-            if (b) {
-                // https://stackoverflow.com/questions/12022715/unable-to-show-keyboard-automatically-in-the-searchview
-                showInputMethod(view.findFocus())
-            }
-        }*/
-        //main_search.onActionViewExpanded()*/
-
-        val masterAdapter =
-            ParentItemAdapter(id = "masterAdapter".hashCode(), { callback ->
-                SearchHelper.handleSearchClickCallback(callback)
-            }, { item ->
-                bottomSheetDialog = activity?.loadHomepageList(item, dismissCallback = {
-                    bottomSheetDialog = null
-                }, expandCallback = { name -> searchViewModel.expandAndReturn(name) })
-            }, expandCallback = { name ->
-                ioSafe {
-                    searchViewModel.expandAndReturn(name)
-                }
-            })
+        val masterAdapter = ParentItemAdapter(id = "masterAdapter".hashCode(), { callback ->
+            SearchHelper.handleSearchClickCallback(callback)
+        }, { item ->
+            bottomSheetDialog = activity?.loadHomepageList(item, dismissCallback = { bottomSheetDialog = null }, expandCallback = { name -> searchViewModel.expandAndReturn(name) })
+        }, expandCallback = { name -> ioSafe { searchViewModel.expandAndReturn(name) } })
 
         val historyAdapter = SearchHistoryAdaptor { click ->
             val searchItem = click.item
@@ -560,43 +473,28 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
                 SEARCH_HISTORY_OPEN -> {
                     if (searchItem == null) return@SearchHistoryAdaptor
                     searchViewModel.clearSearch()
-                    if (searchItem.type.isNotEmpty())
-                        updateChips(
-                            binding.tvtypesChipsScroll.tvtypesChips,
-                            searchItem.type.toMutableList()
-                        )
+                    if (searchItem.type.isNotEmpty()) updateChips(binding.tvtypesChipsScroll.tvtypesChips, searchItem.type.toMutableList())
                     binding.mainSearch.setQuery(searchItem.searchText, true)
                 }
-
                 SEARCH_HISTORY_REMOVE -> {
                     if (searchItem == null) return@SearchHistoryAdaptor
                     removeKey("$currentAccount/$SEARCH_HISTORY_KEY", searchItem.key)
                     searchViewModel.updateHistory()
                 }
-
                 SEARCH_HISTORY_CLEAR -> {
-                    // Show confirmation dialog (from footer button)
                     activity?.let { ctx ->
                         val builder: AlertDialog.Builder = AlertDialog.Builder(ctx)
-                        val dialogClickListener =
-                            DialogInterface.OnClickListener { _, which ->
-                                when (which) {
-                                    DialogInterface.BUTTON_POSITIVE -> {
-                                        removeKeys("$currentAccount/$SEARCH_HISTORY_KEY")
-                                        searchViewModel.updateHistory()
-                                    }
-
-                                    DialogInterface.BUTTON_NEGATIVE -> {
-                                    }
+                        val dialogClickListener = DialogInterface.OnClickListener { _, which ->
+                            when (which) {
+                                DialogInterface.BUTTON_POSITIVE -> {
+                                    removeKeys("$currentAccount/$SEARCH_HISTORY_KEY")
+                                    searchViewModel.updateHistory()
                                 }
+                                DialogInterface.BUTTON_NEGATIVE -> Unit
                             }
-
+                        }
                         try {
-                            builder.setTitle(R.string.clear_history).setMessage(
-                                ctx.getString(R.string.delete_message).format(
-                                    ctx.getString(R.string.history)
-                                )
-                            )
+                            builder.setTitle(R.string.clear_history).setMessage(ctx.getString(R.string.delete_message).format(ctx.getString(R.string.history)))
                                 .setPositiveButton(R.string.sort_clear, dialogClickListener)
                                 .setNegativeButton(R.string.cancel, dialogClickListener)
                                 .show().setDefaultFocus()
@@ -605,61 +503,35 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
                         }
                     }
                 }
-
-                else -> {
-                    // wth are you doing???
-                }
+                else -> Unit
             }
         }
 
         val suggestionAdapter = SearchSuggestionAdapter { callback ->
             when (callback.clickAction) {
                 SEARCH_SUGGESTION_CLICK -> {
-                    // Search directly
                     binding.mainSearch.setQuery(callback.suggestion, true)
                     searchViewModel.clearSuggestions()
                 }
-                SEARCH_SUGGESTION_FILL -> {
-                    // Fill the search box without searching
-                    binding.mainSearch.setQuery(callback.suggestion, false)
-                }
-                SEARCH_SUGGESTION_CLEAR -> {
-                    // Clear suggestions (from footer button)
-                    searchViewModel.clearSuggestions()
-                }
+                SEARCH_SUGGESTION_FILL -> binding.mainSearch.setQuery(callback.suggestion, false)
+                SEARCH_SUGGESTION_CLEAR -> searchViewModel.clearSuggestions()
             }
         }
 
         binding.apply {
             searchHistoryRecycler.adapter = historyAdapter
             searchHistoryRecycler.setLinearListLayout(isHorizontal = false, nextRight = FOCUS_SELF)
-            //searchHistoryRecycler.layoutManager = GridLayoutManager(context, 1)
-
-            // Setup suggestions RecyclerView
             searchSuggestionsRecycler.adapter = suggestionAdapter
             searchSuggestionsRecycler.layoutManager = LinearLayoutManager(context)
-
             searchMasterRecycler.setRecycledViewPool(ParentItemAdapter.sharedPool)
             searchMasterRecycler.adapter = masterAdapter
-            //searchMasterRecycler.setLinearListLayout(isHorizontal = false, nextRight = FOCUS_SELF)
-
             searchMasterRecycler.layoutManager = GridLayoutManager(context, 1)
 
-            // Automatically search the specified query, this allows the app search to launch from intent
-            var sq =
-                arguments?.getString(SEARCH_QUERY) ?: savedInstanceState?.getString(SEARCH_QUERY)
-            if (sq.isNullOrBlank()) {
-                sq = MainActivity.nextSearchQuery
-            }
-
+            var sq = arguments?.getString(SEARCH_QUERY) ?: savedInstanceState?.getString(SEARCH_QUERY)
+            if (sq.isNullOrBlank()) sq = MainActivity.nextSearchQuery
             sq?.let { query ->
                 if (query.isBlank()) return@let
-
-                // Queries are dropped if you are submitted before layout finishes
-                mainSearch.doOnLayout {
-                    mainSearch.setQuery(query, true)
-                }
-                // Clear the query as to not make it request the same query every time the page is opened
+                mainSearch.doOnLayout { mainSearch.setQuery(query, true) }
                 arguments?.remove(SEARCH_QUERY)
                 savedInstanceState?.remove(SEARCH_QUERY)
                 MainActivity.nextSearchQuery = null
@@ -668,30 +540,19 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
 
         observe(searchViewModel.currentHistory) { list ->
             (binding.searchHistoryRecycler.adapter as? SearchHistoryAdaptor?)?.submitList(list)
-             // Scroll to top to show newest items (list is sorted by newest first)
-            if (list.isNotEmpty()) {
-                binding.searchHistoryRecycler.scrollToPosition(0)
-            }
+            if (list.isNotEmpty()) binding.searchHistoryRecycler.scrollToPosition(0)
         }
 
-        // Observe search suggestions
         observe(searchViewModel.searchSuggestions) { suggestions ->
             val hasSuggestions = suggestions.isNotEmpty()
             binding.searchSuggestionsRecycler.isVisible = hasSuggestions
             (binding.searchSuggestionsRecycler.adapter as? SearchSuggestionAdapter?)?.submitList(suggestions)
-
-            // On non-phone layouts, redirect focus and handle back button
             if (!isLayout(PHONE)) {
                 if (hasSuggestions) {
                     binding.tvtypesChipsScroll.tvtypesChips.root.nextFocusDownId = R.id.search_suggestions_recycler
-                    // Attach back button callback to clear suggestions
-                    activity?.attachBackPressedCallback("SearchFragment") {
-                        searchViewModel.clearSuggestions()
-                    }
+                    activity?.attachBackPressedCallback("SearchFragment") { searchViewModel.clearSuggestions() }
                 } else {
-                    // Reset to default focus target (history)
                     binding.tvtypesChipsScroll.tvtypesChips.root.nextFocusDownId = R.id.search_history_recycler
-                    // Detach back button callback when no suggestions
                     activity?.detachBackPressedCallback("SearchFragment")
                 }
             }
