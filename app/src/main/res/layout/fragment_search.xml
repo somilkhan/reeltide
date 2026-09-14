@@ -95,20 +95,10 @@
                 app:tint="?attr/textColor" />
         </LinearLayout>
 
-        <HorizontalScrollView
-            android:id="@+id/search_filter_row"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:clipToPadding="false"
-            android:fadingEdge="horizontal"
-            android:requiresFadingEdge="horizontal"
-            android:scrollbars="none">
-
-            <include
-                android:id="@+id/tvtypes_chips_scroll"
-                layout="@layout/tvtypes_chips" />
-        </HorizontalScrollView>
+        <include
+            android:id="@+id/tvtypes_chips_scroll"
+            layout="@layout/tvtypes_chips_scroll"
+            android:layout_marginTop="8dp" />
 
         <com.lagradost.cloudstream3.ui.AutofitRecyclerView
             android:id="@+id/search_autofit_results"
