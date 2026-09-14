@@ -198,41 +198,18 @@
         android:clipToPadding="false"
         android:descendantFocusability="afterDescendants"
         android:nextFocusLeft="@id/nav_rail_view"
-        android:paddingTop="72dp"
-        android:paddingBottom="96dp"
+        android:paddingTop="0dp"
+        android:paddingBottom="108dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/homepage_parent"
         tools:visibility="gone" />
 
-    <LinearLayout
+    <TextView
         android:id="@+id/home_brand_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:elevation="8dp"
-        android:orientation="vertical"
-        android:paddingStart="20dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="12dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:letterSpacing="0.08"
-            android:text="REELTIDE"
-            android:textColor="?attr/textColor"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:alpha="0.58"
-            android:text="HOME"
-            android:textColor="?attr/textColor"
-            android:textSize="10sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:visibility="gone"
+        tools:ignore="ContentDescription" />
 
     <TextClock
         android:id="@+id/home_clock"
@@ -258,13 +235,11 @@
         app:icon="@drawable/ic_baseline_play_arrow_24"
         tools:ignore="ContentDescription"
         tools:visibility="visible" />
-    <!-- Placeholder for TV layout random button - always hidden on phone -->
     <ImageView
         android:id="@+id/home_random_button_tv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone" />
-    <!-- Placeholder for TV layout settings button - always hidden on phone -->
     <ImageView
         android:id="@+id/home_preview_settings_button"
         android:layout_width="0dp"
