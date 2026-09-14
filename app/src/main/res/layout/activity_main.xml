@@ -26,25 +26,23 @@
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/bottom_nav_menu"
             app:menuGravity="center">
-
-            <include layout="@layout/rail_footer"/>
-
+            <include layout="@layout/rail_footer" />
         </com.google.android.material.navigationrail.NavigationRailView>
 
         <FrameLayout
             android:id="@+id/nav_surface"
             android:layout_width="0dp"
-            android:layout_height="76dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/liquid_glass_home_toolbar"
             android:clipChildren="false"
-            android:elevation="16dp"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
+            android:elevation="14dp"
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/nav_rail_view">
