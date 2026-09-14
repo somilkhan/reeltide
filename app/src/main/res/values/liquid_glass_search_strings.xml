@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="search_no_results_title">No results</string>
-    <string name="search_no_results_message">Try a different title, spelling, or filter.</string>
-    <string name="search_error_title">Search unavailable</string>
-    <string name="search_error_message">We couldn’t load results right now.</string>
-    <string name="search_retry">Try again</string>
-</resources>
