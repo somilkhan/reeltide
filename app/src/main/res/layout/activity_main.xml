@@ -53,7 +53,6 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:elevation="0dp"
-                app:itemActiveIndicatorColor="@color/transparent"
                 app:itemIconTint="@color/liquid_glass_nav_item_color"
                 app:itemTextColor="@color/liquid_glass_nav_item_color"
                 app:labelVisibilityMode="unlabeled"
