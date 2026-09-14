@@ -3,7 +3,7 @@
 **Last updated:** 2026-09-14
 **Active branch:** `ui/2026-liquid-glass-redesign`
 **Baseline:** `master`
-**Current head:** `834c1387ed2b49f03d92e74dcd61641715b99272`
+**Current head:** `e784c9c54a181ff60379608da7dc0b7485e8258e`
 
 > Live execution checkpoint. Repository/code/build/test evidence outranks stale documentation or conversation memory.
 
@@ -103,10 +103,10 @@
 
 ## VERIFICATION
 
-- Current branch/ref reconstructed directly from GitHub; branch head at the code checkpoint is `834c1387ed2b49f03d92e74dcd61641715b99272`.
+- Current branch/ref reconstructed directly from GitHub; latest state checkpoint is `e784c9c54a181ff60379608da7dc0b7485e8258e`, with the latest code checkpoint immediately before state documentation at `834c1387ed2b49f03d92e74dcd61641715b99272`.
 - Search architecture and owning state paths were inspected directly before changing presentation.
 - Compare against the previous Home checkpoint confirms the Search change set is isolated to Search resources/layouts plus project state documentation; no Search business Kotlin was modified.
-- GitHub Actions run #209 targets the Search checkpoint head and is currently in progress; checkout, JDK setup, Gradle setup and binary compatibility have completed successfully, while the Gradle step is still running. No green build is claimed.
+- GitHub Actions run #209 targets the Search code checkpoint `834c1387ed2b49f03d92e74dcd61641715b99272` and is currently in progress; checkout, JDK setup, Gradle setup and binary compatibility have completed successfully, while the Gradle step is still running. No green build is claimed.
 - No device/runtime visual verification is claimed.
 
 ## NEXT RESUME ACTION
