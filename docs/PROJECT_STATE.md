@@ -3,7 +3,7 @@
 **Last updated:** 2026-09-14
 **Active branch:** `ui/2026-liquid-glass-redesign`
 **Baseline:** `master`
-**Current head:** `30739997af6dcee03ccf15d6ff01dd4e3751e30f`
+**Current head:** `aae42b0e72e3d0335da8db4344c2173e9826fc3d`
 
 > Live execution checkpoint. Repository/code/build/test evidence outranks stale documentation or conversation memory.
 
@@ -13,57 +13,43 @@
 
 ## COMPLETED / RECONSTRUCTED
 
-- Active branch reconstructed directly from GitHub; current branch remains the Liquid Glass redesign branch based on `master`.
+- Active branch reconstructed directly from GitHub; it remains based on `master` and the old redesign branch is not being reused.
 - Shared Liquid Glass Compose foundation exists, but risky direct Compose launch-shell integration is retired.
-- Previous custom `LiquidGlassNavPillView` launch integration caused a user-reported launch regression and was removed; the shell remains a native View boundary.
-- Phone navigation remains owned by the existing `BottomNavigationView`, menu and navigation graph, presented inside a floating glass shell.
-- Settings presentation was replaced as a coherent XML/ViewBinding subsystem while preserving existing binding IDs and `SettingsFragment` navigation ownership.
-- Navigation selected-state treatment is monochrome; the Material active indicator is transparent.
-- Home phone hero presentation has now been rebuilt around the existing `ViewPager2`/`HomeScrollAdapter` architecture rather than replacing Home state/data logic.
-- The legacy duplicate `REELTIDE / HOME` overlay in `fragment_home.xml` is retired; the hero owns its own compact top chrome.
+- Previous custom Compose `LiquidGlassNavPillView` launch integration caused a user-reported launch regression and was removed; the shell remains at a native View boundary.
+- Phone navigation remains owned by the existing `BottomNavigationView`, menu and navigation graph, now presented inside a floating monochrome glass shell.
+- Settings presentation was replaced as a coherent XML/ViewBinding subsystem while preserving all navigation IDs used by `SettingsFragment`.
+- Home presentation is now treated as one subsystem: hero framing, floating header, action controls, section presentation, loading skeleton, error surface, and phone provider/random controls.
+- HomeFragment state/data/business logic remains untouched; the existing `HomeParentItemAdapterPreview`, `HomeScrollAdapter`, ViewPager2 and HomeViewModel ownership remain authoritative.
 
 ## CHANGED IN CURRENT EXECUTION
 
-- `app/src/main/res/layout/fragment_home_head.xml`
-  - rebuilt phone hero chrome with a floating glass top bar
-  - compact ReelTide wordmark
-  - search/account controls retained under existing IDs
-  - larger cinematic hero stage
-  - stronger bottom scrim and tighter action hierarchy
-  - preserved existing bookmark/play/info IDs and click ownership
-- `app/src/main/res/layout/home_scroll_view.xml`
-  - refined hero media treatment, scrims, title/logo hierarchy and metadata scale
-  - preserved all adapter-bound IDs
-- `app/src/main/res/layout/fragment_home.xml`
-  - removed the visually conflicting legacy brand header
-  - adjusted home content padding for the floating shell
-  - preserved Home loading/error/FAB/navigation IDs
-- `app/src/main/res/layout/activity_main.xml`
-  - tightened the floating phone navigation surface to a more compact 68dp functional layer
-  - retained the existing native navigation implementation
+- `activity_main.xml`: removed the unsupported `itemActiveIndicatorColor` attribute after tracing the first persistent CI regression to the navigation-shell commit; monochrome icon/text selector remains.
+- `fragment_home.xml`: replaced the legacy loading skeleton with a cinematic hero/content skeleton, replaced the raw centered error layout with a bounded glass state surface, and restyled phone provider/random actions as restrained glass pills.
+- Added `liquid_glass_state_surface.xml` for reusable Home state hierarchy.
+- Added `liquid_glass_fab.xml` for shared provider/random action material.
+- Preserved all existing Home IDs and click targets, including provider selection/reload, search, account switching, random playback and error actions.
+- `docs/PROJECT_STATE.md` updated to this checkpoint.
 
 ## IN PROGRESS
 
-- GitHub Actions verification is running/queued for the latest Home/shell commits.
-- No device/runtime verification is available in this execution environment.
-- Home loading/error/empty states still need a matching presentation pass.
-- Home provider/source control and random action still need integration-level visual verification.
+- Final CI verification for the current Home checkpoint.
+- Device/runtime visual verification is still unavailable in this execution environment.
+- Home visual quality still needs verification against real content and scrolling on-device.
 
 ## REMAINING
 
-1. Verify latest Home/shell CI.
-2. Complete Home loading/error/empty/provider states as one visual subsystem.
-3. Verify floating navigation, back behavior, insets and cast mini-controller coexistence.
-4. Replace Search presentation.
-5. Replace Details presentation.
-6. Replace Library and Downloads presentation.
-7. Finish Settings sub-screens/account presentation consistently.
-8. Audit player presentation without changing playback behavior.
-9. Replace remaining secondary legacy Material surfaces.
-10. Add bounded blur only where justified and measurable; do not fake backdrop blur with `Modifier.blur`.
-11. Accessibility, reduced-motion, contrast, dynamic text and performance verification.
-12. Functional + visual regression matrix.
-13. Remove obsolete presentation bridges/dead code after stable replacements.
+1. Verify current Home checkpoint with GitHub Actions and inspect any failure before adding more UI.
+2. Verify floating navigation, back behavior, insets and cast mini-controller coexistence.
+3. Replace Search presentation as a coherent subsystem.
+4. Replace Details presentation.
+5. Replace Library and Downloads presentation.
+6. Finish Settings sub-screens/account presentation consistently.
+7. Audit player presentation without changing playback behavior.
+8. Replace remaining secondary legacy Material surfaces.
+9. Add bounded blur only where justified and measurable; do not fake backdrop blur with `Modifier.blur`.
+10. Accessibility, reduced-motion, contrast, dynamic text and performance verification.
+11. Functional + visual regression matrix.
+12. Remove obsolete presentation bridges/dead code after stable replacements.
 
 ## BLOCKED
 
@@ -73,11 +59,11 @@
 
 ## REGRESSIONS / KNOWN RISKS
 
-- The prior Compose NavPill launch integration remains explicitly retired after the launch regression.
-- Current Home/shell source changes are not device-verified.
-- User-provided runtime screenshots showed the previous Home result below the intended quality bar; the current implementation specifically removes the duplicate legacy header and strengthens the hero/chrome hierarchy.
-- True backdrop blur is not being faked; current materials use bounded translucency, borders, shadow and hierarchy.
-- `home_brand_header` is retained only as a hidden compatibility ID; it has no visible presentation role.
+- Direct Compose launch-shell NavPill remains retired after the previous launch regression.
+- Source changes are not device-verified.
+- The supplied runtime screenshots remain evidence that the earlier installed checkpoint was below the intended visual quality bar; those screenshots predate the latest Home subsystem pass.
+- True backdrop blur is not being faked; current materials use bounded translucency, borders, shadows and hierarchy.
+- CI runs 175–184 failed after the navigation-shell change; chronology isolated the first failure to `59976113...`, whose semantic shell change introduced the active-indicator navigation attribute. That attribute has now been removed. A fresh CI run for the current Home checkpoint is in progress; its result is not yet claimed.
 
 ## FAILED APPROACHES
 
@@ -85,6 +71,7 @@
 - Treating small XML polish as sufficient redesign: rejected by runtime visual feedback.
 - Source-only confidence: not accepted as verification.
 - Search mutation using a stale blob SHA: rejected by GitHub; Search remains unchanged.
+- `itemActiveIndicatorColor` in the phone navigation shell: removed after CI regression tracing; native tint selector is retained for monochrome navigation without relying on that attribute.
 
 ## DECISIONS
 
@@ -93,17 +80,16 @@
 - Compose Liquid Glass primitives remain the reusable design-system foundation for future safe presentation boundaries.
 - Liquid Glass is a functional floating hierarchy, not universal decoration or blur.
 - Monochrome black/white/grey is the active redesign direction; theme-primary blue must not appear as an accidental navigation selection treatment.
-- Home presentation work should modify presentation XML and tightly scoped chrome only; HomeFragment/HomeViewModel data/state ownership remains unchanged unless a true interaction requirement requires otherwise.
+- Home content uses standard/content-layer treatment; glass is reserved for functional floating controls and transient state surfaces.
 
 ## VERIFICATION
 
-- Current branch/ref and affected source files inspected directly.
-- Current head is `30739997af6dcee03ccf15d6ff01dd4e3751e30f`.
-- GitHub Actions run `34843184116` for the Home-head checkpoint is still in progress at Gradle setup.
-- GitHub Actions run `34843209254` for the latest shell checkpoint is queued.
-- No successful current-head CI result is claimed.
+- Current branch/ref and implementation reconstructed directly from GitHub.
+- The previous successful checkpoint was CI run #174 (`4289619...`). Runs #175–184 failed; chronology isolated the first failure to the navigation-shell commit, and the active-indicator attribute was removed.
+- Current Home checkpoint head is `aae42b0e72e3d0335da8db4344c2173e9826fc3d`.
+- GitHub Actions run #189 targets the current head and is queued/in progress; no green result is claimed yet.
 - No device/runtime verification is claimed.
 
 ## NEXT RESUME ACTION
 
-Wait/check the current GitHub Actions runs. If green, continue Home state surfaces and then perform shell/inset/cast regression inspection. If any run fails, diagnose that failure before adding further UI work.
+Check run #189 to completion. If green, perform shell/inset/cast regression inspection and then begin the Search presentation replacement as one coherent subsystem. If CI fails, diagnose the exact failure before adding further UI work.
