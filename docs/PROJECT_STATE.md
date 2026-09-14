@@ -3,7 +3,7 @@
 **Last updated:** 2026-09-14
 **Active branch:** `ui/2026-liquid-glass-redesign`
 **Baseline:** `master`
-**Current head:** `59976113c9d055f122c190cb0be6f26ada0cd7ad`
+**Current head:** `0328c373cc2fa6a121f12276d5ad2d07b53a7b7e`
 
 > Live execution checkpoint. Repository/code/build/test evidence outranks stale documentation or conversation memory.
 
@@ -29,13 +29,14 @@
 - Added `app/src/main/res/color/liquid_glass_nav_item_color.xml`.
 - Rebuilt `app/src/main/res/layout/main_settings.xml` with a profile glass surface, grouped glass preference rows, hierarchy, summaries, focus/pressed states and version footer while preserving all existing navigation IDs.
 - Updated `app/src/main/res/layout/activity_main.xml` to use the monochrome navigation selector and transparent active indicator.
+- Removed an unused glass icon drawable before it became dead presentation code.
 
 ## IN PROGRESS
 
-- Current Settings/shell changes are awaiting final CI completion.
+- Current Settings/shell checkpoint is awaiting final CI completion.
 - No device/runtime verification is available in this execution environment.
 - Home loading/error/empty states still need a coherent visual pass.
-- Home shell/header/hero still needs a deeper replacement pass; the current screenshot evidence shows the previous build still reads as legacy UI plus glass decoration.
+- Home shell/header/hero still needs a deeper replacement pass; the supplied runtime screenshot shows the previous build still reads as legacy UI plus glass decoration.
 
 ## REMAINING
 
@@ -63,7 +64,7 @@
 
 - The prior Compose NavPill launch integration remains explicitly retired after the launch regression.
 - Current Settings and shell changes are source-inspected but not device-verified.
-- The current screenshots supplied by the user demonstrate that the installed build's visual result is still below the intended Liquid Glass quality bar, especially on Home.
+- The supplied screenshots demonstrate that the installed build's visual result is still below the intended Liquid Glass quality bar, especially on Home.
 - True backdrop blur is not being faked; current materials use bounded translucency, borders, shadow and hierarchy.
 
 ## FAILED APPROACHES
@@ -84,11 +85,11 @@
 ## VERIFICATION
 
 - Current branch/ref state inspected directly.
-- Current branch head is `59976113c9d055f122c190cb0be6f26ada0cd7ad`.
-- GitHub Actions run `34842719161` is in progress for the preceding navigation-color commit; run `34842752472` is queued for the Settings commit.
+- Current branch head is `0328c373cc2fa6a121f12276d5ad2d07b53a7b7e`.
+- Current GitHub Actions run `34842866611` targets the current head and is still in progress; setup has completed through checkout/JDK and is currently in Gradle setup.
 - No current successful CI result is claimed for the current head.
 - No device/runtime verification is claimed.
 
 ## NEXT RESUME ACTION
 
-Check the latest GitHub Actions runs. If the current checkpoint is green, continue the Home presentation replacement as a single coherent subsystem and then perform shell/inset/cast regression inspection. If CI fails, diagnose the build failure before adding further UI work.
+Check run `34842866611` to completion. If green, continue the Home presentation replacement as a single coherent subsystem and then perform shell/inset/cast regression inspection. If CI fails, diagnose the build failure before adding further UI work.
