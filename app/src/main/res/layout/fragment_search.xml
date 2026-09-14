@@ -152,6 +152,65 @@
             tools:listitem="@layout/search_history_item" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/search_state_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:background="@drawable/liquid_glass_state_surface"
+        android:gravity="center"
+        android:minHeight="180dp"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingTop="24dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="24dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/search_state_icon"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/liquid_glass_search_action"
+            android:padding="14dp"
+            android:src="@drawable/search_icon"
+            app:tint="?attr/textColor" />
+
+        <TextView
+            android:id="@+id/search_state_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="?attr/textColor"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/search_state_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:textColor="?attr/grayTextColor"
+            android:textSize="14sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/search_retry_button"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/liquid_glass_search_action"
+            android:text="@string/search_retry"
+            android:textColor="?attr/textColor"
+            android:visibility="gone"
+            app:backgroundTint="@color/transparent"
+            app:icon="@drawable/ic_baseline_autorenew_24"
+            app:iconTint="?attr/textColor" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_suggestions_recycler"
         android:layout_width="match_parent"
