@@ -1,33 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="16dp">
 
-    <TextView
-        android:id="@+id/home_child_more_info"
-        style="@style/WatchHeaderText"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="0dp"
-        android:padding="12dp"
-        tools:text="@string/continue_watching"
-        app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_24"
-        app:drawableTint="?attr/white"
-        android:background="?android:attr/selectableItemBackground"
-        android:contentDescription="@string/home_more_info"/>
+        android:layout_height="54dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="20dp">
+
+        <TextView
+            android:id="@+id/home_child_more_info"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|start"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/home_more_info"
+            android:gravity="center_vertical"
+            android:maxWidth="300dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/textColor"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            tools:text="Trending Right Now" />
+
+        <TextView
+            android:layout_width="112dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center_vertical|end"
+            android:background="@drawable/home_view_all_background"
+            android:gravity="center"
+            android:paddingStart="12dp"
+            android:paddingEnd="8dp"
+            android:text="View All"
+            android:textColor="@color/textColor"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_24"
+            app:drawableTint="@color/textColor" />
+
+    </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-            android:nextFocusUp="@id/home_child_more_info"
-            android:paddingHorizontal="5dp"
-            android:clipToPadding="false"
-            android:descendantFocusability="afterDescendants"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:id="@+id/home_child_recyclerview"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/home_result_grid" />
+        android:id="@+id/home_child_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:descendantFocusability="afterDescendants"
+        android:nextFocusUp="@id/home_child_more_info"
+        android:paddingStart="9dp"
+        android:paddingEnd="9dp"
+        android:paddingTop="3dp"
+        tools:listitem="@layout/home_result_grid"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 </LinearLayout>
