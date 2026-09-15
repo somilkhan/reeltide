@@ -16,6 +16,15 @@ import com.lagradost.cloudstream3.utils.UIHelper.fixSystemBarsPadding
 class SetupFragmentLayout : BaseFragment<FragmentSetupLayoutBinding>(
     BaseFragment.BindingCreator.Inflate(FragmentSetupLayoutBinding::inflate)
 ) {
+    override fun onResume() {
+        super.onResume()
+        setSetupNavigationVisible(false)
+    }
+
+    override fun onStop() {
+        setSetupNavigationVisible(true)
+        super.onStop()
+    }
 
     override fun fixLayout(view: View) {
         fixSystemBarsPadding(view)
