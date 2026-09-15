@@ -7,10 +7,8 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.os.Build
 import android.widget.Toast
-import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.preference.PreferenceManager
 import coil3.ImageLoader
 import coil3.PlatformContext
 import coil3.SingletonImageLoader
@@ -73,19 +71,6 @@ class CloudStreamApp : Application(), SingletonImageLoader.Factory {
 
     override fun onCreate() {
         super.onCreate()
-
-        // Preserve all existing theme choices, but make a fresh installation start
-        // with ReelTide's monochrome OLED presentation: pitch black + white.
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-        preferences.edit {
-            if (!contains(getString(R.string.app_theme_key))) {
-                putString(getString(R.string.app_theme_key), "Amoled")
-            }
-            if (!contains(getString(R.string.primary_color_key))) {
-                putString(getString(R.string.primary_color_key), "White")
-            }
-        }
-
         // If we want to initialize Coil as early as possible, maybe when
         // loading an image or GIF in a splash screen activity.
         // buildImageLoader(applicationContext)
