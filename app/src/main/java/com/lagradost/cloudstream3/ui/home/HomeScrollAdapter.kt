@@ -59,12 +59,32 @@ class HomeScrollAdapter(
         when (binding) {
             is HomeScrollViewBinding -> {
                 binding.homeScrollPreview.loadImage(posterUrl, item.posterHeaders)
+
                 binding.homeScrollPreviewTags.apply {
                     text = item.tags?.joinToString(" • ") ?: ""
                     isGone = item.tags.isNullOrEmpty()
-                    maxLines = 2
+                    maxLines = 1
                 }
+
                 binding.homeScrollPreviewTitle.text = item.name.html()
+
+                val score = item.score?.toStringNull(0.1, 10, 1, false)
+                binding.homePreviewScore.text = score?.let { "★ $it" } ?: ""
+                binding.homePreviewScore.isGone = score == null
+
+                binding.homePreviewYear.text = item.year?.toString() ?: ""
+                binding.homePreviewYear.isGone = item.year == null
+
+                val duration = item.duration
+                binding.homePreviewDuration.text = duration
+                    ?.takeIf { it > 0 }
+                    ?.let { "• ${binding.homePreviewDuration.context.getString(com.lagradost.cloudstream3.R.string.duration_format, it)}" }
+                    ?: ""
+                binding.homePreviewDuration.isGone = duration == null || duration <= 0
+
+                val plot = item.plot?.html()?.trim()
+                binding.homePreviewDescription.text = plot ?: ""
+                binding.homePreviewDescription.isGone = plot.isNullOrBlank()
 
                 bindLogo(
                     url = item.logoUrl,
