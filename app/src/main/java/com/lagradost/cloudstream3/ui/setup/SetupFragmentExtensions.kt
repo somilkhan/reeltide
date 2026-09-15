@@ -61,6 +61,12 @@ class SetupFragmentExtensions : BaseFragment<FragmentSetupExtensionsBinding>(
                     PluginsViewModel.downloadAll(activity, it, null)
                 }).apply { submitList(repositories.toList()) }
             }
+//            else {
+//                list_repositories?.setOnClickListener {
+//                    // Open webview on tv if browser fails
+//                    openBrowser(PUBLIC_REPOSITORIES_LIST, isTvSettings(), this)
+//                }
+//            }
         }
     }
 
@@ -74,15 +80,24 @@ class SetupFragmentExtensions : BaseFragment<FragmentSetupExtensionsBinding>(
                     nextBtt.setText(R.string.setup_done)
                 }
                 prevBtt.isVisible = isSetup
+
                 nextBtt.setOnClickListener {
-                    if (isSetup) {
-                        findNavController().navigate(R.id.navigation_setup_extensions_to_navigation_setup_provider_languages)
-                    } else {
+                    // Continue setup
+                    if (isSetup)
+                        if (
+                        // If any available languages
+                            apis.distinctBy { it.lang }.size > 1
+                        ) {
+                            findNavController().navigate(R.id.action_navigation_setup_extensions_to_navigation_setup_provider_languages)
+                        } else {
+                            findNavController().navigate(R.id.action_navigation_setup_extensions_to_navigation_setup_media)
+                        }
+                    else
                         findNavController().navigate(R.id.navigation_home)
-                    }
                 }
+
                 prevBtt.setOnClickListener {
-                    findNavController().popBackStack()
+                    findNavController().navigate(R.id.navigation_setup_language)
                 }
             }
         }
