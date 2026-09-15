@@ -78,11 +78,13 @@ class CloudStreamApp : Application(), SingletonImageLoader.Factory {
         // user selections are never overwritten, so all theme choices remain usable.
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         preferences.edit {
-            if (!contains(getString(R.string.app_theme_key))) {
-                putString(getString(R.string.app_theme_key), "Amoled")
+            val themeKey = getString(R.string.app_theme_key)
+            val primaryColorKey = getString(R.string.primary_color_key)
+            if (preferences.getString(themeKey, null) == null) {
+                putString(themeKey, "Amoled")
             }
-            if (!contains(getString(R.string.primary_color_key))) {
-                putString(getString(R.string.primary_color_key), "White")
+            if (preferences.getString(primaryColorKey, null) == null) {
+                putString(primaryColorKey, "White")
             }
         }
 
