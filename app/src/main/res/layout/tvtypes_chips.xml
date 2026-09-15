@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="@string/movies"
         app:chipBackgroundColor="@color/reeltide_filter_chip_background"
-        app:chipStrokeColor="@color/white_10"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
         app:chipStrokeWidth="1dp"
         app:checkedIconVisible="false" />
 
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:text="@string/tv_series"
         app:chipBackgroundColor="@color/reeltide_filter_chip_background"
-        app:chipStrokeColor="@color/white_10"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
         app:chipStrokeWidth="1dp"
         app:checkedIconVisible="false" />
 
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:text="@string/anime"
         app:chipBackgroundColor="@color/reeltide_filter_chip_background"
-        app:chipStrokeColor="@color/white_10"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
         app:chipStrokeWidth="1dp"
         app:checkedIconVisible="false" />
 
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:text="@string/asian_drama"
         app:chipBackgroundColor="@color/reeltide_filter_chip_background"
-        app:chipStrokeColor="@color/white_10"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
         app:chipStrokeWidth="1dp"
         app:checkedIconVisible="false" />
 
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:text="@string/cartoons"
         app:chipBackgroundColor="@color/reeltide_filter_chip_background"
-        app:chipStrokeColor="@color/white_10"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
         app:chipStrokeWidth="1dp"
         app:checkedIconVisible="false" />
 
@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:text="@string/documentaries"
         app:chipBackgroundColor="@color/reeltide_filter_chip_background"
-        app:chipStrokeColor="@color/white_10"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
         app:chipStrokeWidth="1dp"
         app:checkedIconVisible="false" />
 
@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:text="@string/livestreams"
         app:chipBackgroundColor="@color/reeltide_filter_chip_background"
-        app:chipStrokeColor="@color/white_10"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
         app:chipStrokeWidth="1dp"
         app:checkedIconVisible="false" />
 
@@ -94,7 +94,7 @@
         android:layout_height="wrap_content"
         android:text="@string/torrent"
         app:chipBackgroundColor="@color/reeltide_filter_chip_background"
-        app:chipStrokeColor="@color/white_10"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
         app:chipStrokeWidth="1dp"
         app:checkedIconVisible="false" />
 
@@ -105,7 +105,7 @@
         android:layout_height="wrap_content"
         android:text="@string/nsfw"
         app:chipBackgroundColor="@color/reeltide_filter_chip_background"
-        app:chipStrokeColor="@color/white_10"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
         app:chipStrokeWidth="1dp"
         app:checkedIconVisible="false" />
 
@@ -116,7 +116,7 @@
         android:layout_height="wrap_content"
         android:text="@string/others"
         app:chipBackgroundColor="@color/reeltide_filter_chip_background"
-        app:chipStrokeColor="@color/white_10"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
         app:chipStrokeWidth="1dp"
         app:checkedIconVisible="false" />
 </com.google.android.material.chip.ChipGroup>
