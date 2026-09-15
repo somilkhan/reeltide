@@ -71,9 +71,7 @@ class SettingsUI : BasePreferenceFragmentCompat() {
             val prefValues = keys.map {
                 settingsManager.getBoolean(it, true)
             }.mapIndexedNotNull { index, b ->
-                if (b) {
-                    index
-                } else null
+                if (b) index else null
             }
 
             activity?.showMultiDialog(
@@ -135,19 +133,23 @@ class SettingsUI : BasePreferenceFragmentCompat() {
                     offset += 1
                 }
             }
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) { // remove monet on android 11 and less
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
                 removeIncompatible("Monet")
             }
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) { // Remove system on android 9 and less
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
                 removeIncompatible("System")
             }
 
-            val currentLayout =
-                settingsManager.getString(getString(R.string.app_theme_key), prefValues.first())
+            // Keep every existing theme available, but make the new ReelTide
+            // monochrome OLED theme the default for users with no saved choice.
+            val currentTheme = settingsManager.getString(
+                getString(R.string.app_theme_key),
+                "Amoled"
+            )
 
             activity?.showBottomDialog(
                 prefNames.toList(),
-                prefValues.indexOf(currentLayout),
+                prefValues.indexOf(currentTheme).coerceAtLeast(0),
                 getString(R.string.app_theme_settings),
                 true,
                 {}
@@ -168,7 +170,7 @@ class SettingsUI : BasePreferenceFragmentCompat() {
             val prefValues =
                 resources.getStringArray(R.array.themes_overlay_names_values).toMutableList()
 
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) { // remove monet on android 11 and less
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
                 val toRemove = prefValues
                     .mapIndexed { idx, s -> if (s.startsWith("Monet")) idx else null }
                     .filterNotNull()
@@ -180,12 +182,14 @@ class SettingsUI : BasePreferenceFragmentCompat() {
                 }
             }
 
-            val currentLayout =
-                settingsManager.getString(getString(R.string.primary_color_key), prefValues.first())
+            val currentColor = settingsManager.getString(
+                getString(R.string.primary_color_key),
+                "White"
+            )
 
             activity?.showDialog(
                 prefNames.toList(),
-                prefValues.indexOf(currentLayout),
+                prefValues.indexOf(currentColor).coerceAtLeast(0),
                 getString(R.string.primary_color_settings),
                 true,
                 {}
@@ -207,9 +211,7 @@ class SettingsUI : BasePreferenceFragmentCompat() {
             val currentList = settingsManager.getStringSet(
                 getString(R.string.pref_filter_search_quality_key),
                 setOf()
-            )?.map {
-                it.toInt()
-            } ?: listOf()
+            )?.map { it.toInt() } ?: listOf()
 
             activity?.showMultiDialog(
                 names,
