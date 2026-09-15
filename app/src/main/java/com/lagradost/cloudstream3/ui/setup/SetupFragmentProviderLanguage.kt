@@ -20,6 +20,8 @@ import com.lagradost.cloudstream3.utils.UIHelper.fixSystemBarsPadding
 class SetupFragmentProviderLanguage : BaseFragment<FragmentSetupProviderLanguagesBinding>(
     BaseFragment.BindingCreator.Inflate(FragmentSetupProviderLanguagesBinding::inflate)
 ) {
+    override fun onResume() { super.onResume(); setSetupNavigationVisible(false) }
+    override fun onStop() { setSetupNavigationVisible(true); super.onStop() }
 
     override fun fixLayout(view: View) {
         fixSystemBarsPadding(view)
@@ -28,52 +30,31 @@ class SetupFragmentProviderLanguage : BaseFragment<FragmentSetupProviderLanguage
     override fun onBindingCreated(binding: FragmentSetupProviderLanguagesBinding) {
         safe {
             val ctx = context ?: return@safe
-
             val settingsManager = PreferenceManager.getDefaultSharedPreferences(ctx)
-
-            val arrayAdapter =
-                ArrayAdapter<String>(ctx, R.layout.sort_bottom_single_choice)
-
+            val arrayAdapter = ArrayAdapter<String>(ctx, R.layout.sort_bottom_single_choice)
             val currentLangTags = ctx.getApiProviderLangSettings()
-
             val languagesTagName = APIHolder.apis.withLock {
                 listOf(Pair(AllLanguagesName, getString(R.string.all_languages_preference))) +
                 APIHolder.apis.map { Pair(it.lang, getNameNextToFlagEmoji(it.lang) ?: it.lang) }
-                    .toSet().sortedBy { it.second.substringAfter("\u00a0").lowercase() } // name ignoring flag emoji
+                    .toSet().sortedBy { it.second.substringAfter("\u00a0").lowercase() }
             }
-
             val currentIndexList = currentLangTags.map { langTag ->
                 languagesTagName.indexOfFirst { lang -> lang.first == langTag }
             }.filter { it > -1 }
-
             arrayAdapter.addAll(languagesTagName.map { it.second })
             binding.apply {
                 listview1.adapter = arrayAdapter
                 listview1.choiceMode = AbsListView.CHOICE_MODE_MULTIPLE
-                currentIndexList.forEach {
-                    listview1.setItemChecked(it, true)
-                }
-
+                currentIndexList.forEach { listview1.setItemChecked(it, true) }
                 listview1.setOnItemClickListener { _, _, _, _ ->
                     val selectedLanguages = mutableSetOf<String>()
                     listview1.checkedItemPositions?.forEach { key, value ->
                         if (value) selectedLanguages.add(languagesTagName[key].first)
                     }
-                    settingsManager.edit {
-                        putStringSet(
-                            ctx.getString(R.string.provider_lang_key),
-                            selectedLanguages.toSet()
-                        )
-                    }
+                    settingsManager.edit { putStringSet(ctx.getString(R.string.provider_lang_key), selectedLanguages.toSet()) }
                 }
-
-                nextBtt.setOnClickListener {
-                    findNavController().navigate(R.id.navigation_setup_provider_languages_to_navigation_setup_media)
-                }
-
-                prevBtt.setOnClickListener {
-                    findNavController().popBackStack()
-                }
+                nextBtt.setOnClickListener { findNavController().navigate(R.id.navigation_setup_provider_languages_to_navigation_setup_media) }
+                prevBtt.setOnClickListener { findNavController().popBackStack() }
             }
         }
     }
