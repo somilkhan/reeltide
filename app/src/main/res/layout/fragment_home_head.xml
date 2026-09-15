@@ -21,7 +21,7 @@
     <FrameLayout
         android:id="@+id/home_preview_viewpager_text"
         android:layout_width="match_parent"
-        android:layout_height="728dp"
+        android:layout_height="628dp"
         android:clipChildren="false">
 
         <androidx.viewpager2.widget.ViewPager2
@@ -32,12 +32,12 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="210dp"
+            android:layout_height="180dp"
             android:layout_gravity="top"
             android:background="@drawable/background_shadow"
             android:rotation="180" />
 
-        <!-- Search remains in the layout as a behavior anchor, but is no longer shown in the hero header. -->
+        <!-- Search remains as a behavior anchor, but is not visible in the hero. -->
         <androidx.appcompat.widget.SearchView
             android:id="@+id/home_search"
             android:layout_width="1dp"
@@ -46,7 +46,7 @@
             android:importantForAccessibility="no"
             android:iconifiedByDefault="true" />
 
-        <!-- The profile is the only persistent floating glass control over the hero. -->
+        <!-- Single persistent glass control over the hero. -->
         <LinearLayout
             android:id="@+id/home_head_profile_padding"
             android:layout_width="52dp"
@@ -85,60 +85,57 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="360dp"
+            android:layout_height="390dp"
             android:layout_gravity="bottom"
             android:background="@drawable/background_shadow" />
-
-        <LinearLayout
-            android:id="@+id/home_preview_title_holder"
-            android:layout_width="match_parent"
-            android:layout_height="154dp"
-            android:layout_gravity="bottom|start"
-            android:gravity="bottom|start"
-            android:orientation="horizontal"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="18dp">
-
-            <TextView
-                android:id="@+id/home_preview_bookmark"
-                android:layout_width="58dp"
-                android:layout_height="58dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/home_action_circle"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@color/white"
-                app:drawableTint="@color/white"
-                app:drawableTopCompat="@drawable/ic_baseline_add_24"
-                app:tint="@color/white" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/home_preview_play"
-                style="@style/WhiteButton"
-                android:layout_width="170dp"
-                android:layout_height="54dp"
-                android:layout_marginEnd="10dp"
-                android:minHeight="0dp"
-                android:text="@string/home_play"
-                android:textSize="15sp"
-                app:cornerRadius="18dp"
-                app:icon="@drawable/ic_baseline_play_arrow_24" />
-
-            <TextView
-                android:id="@+id/home_preview_info"
-                android:layout_width="58dp"
-                android:layout_height="58dp"
-                android:background="@drawable/home_action_circle"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@color/white"
-                app:drawableTint="@color/white"
-                app:drawableTopCompat="@drawable/ic_outline_info_24"
-                app:tint="@color/white" />
-        </LinearLayout>
-
     </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/home_preview_title_holder"
+        android:layout_width="match_parent"
+        android:layout_height="94dp"
+        android:gravity="center_vertical|start"
+        android:orientation="horizontal"
+        android:paddingStart="50dp"
+        android:paddingEnd="24dp">
+
+        <TextView
+            android:id="@+id/home_preview_bookmark"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/home_action_circle"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/white"
+            app:drawableTint="@color/white"
+            app:drawableTopCompat="@drawable/ic_baseline_add_24"
+            app:tint="@color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/home_preview_play"
+            style="@style/WhiteButton"
+            android:layout_width="170dp"
+            android:layout_height="54dp"
+            android:layout_marginEnd="10dp"
+            android:minHeight="0dp"
+            android:text="@string/home_play"
+            android:textSize="15sp"
+            app:cornerRadius="18dp"
+            app:icon="@drawable/ic_baseline_play_arrow_24" />
+
+        <TextView
+            android:id="@+id/home_preview_info"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:background="@drawable/home_action_circle"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/white"
+            app:drawableTint="@color/white"
+            app:drawableTopCompat="@drawable/ic_outline_info_24"
+            app:tint="@color/white" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/alternative_account_padding"
