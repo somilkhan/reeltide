@@ -39,7 +39,6 @@
             android:background="@drawable/background_shadow"
             android:rotation="180" />
 
-        <!-- Search remains as a behavior anchor, but is not visible in the hero. -->
         <androidx.appcompat.widget.SearchView
             android:id="@+id/home_search"
             android:layout_width="1dp"
@@ -48,7 +47,6 @@
             android:importantForAccessibility="no"
             android:iconifiedByDefault="true" />
 
-        <!-- Single persistent glass control over the hero. -->
         <LinearLayout
             android:id="@+id/home_head_profile_padding"
             android:layout_width="52dp"
@@ -91,8 +89,7 @@
             android:layout_gravity="bottom"
             android:background="@drawable/background_shadow" />
 
-        <!-- Solid hero actions. They belong to the hero, not to a separate row below it. -->
-        <LinearLayout
+        <com.lagradost.cloudstream3.ui.home.HomeHeroActionBar
             android:id="@+id/home_preview_title_holder"
             android:layout_width="match_parent"
             android:layout_height="94dp"
@@ -140,7 +137,7 @@
                 app:drawableTint="@color/white"
                 app:drawableTopCompat="@drawable/ic_outline_info_24"
                 app:tint="@color/white" />
-        </LinearLayout>
+        </com.lagradost.cloudstream3.ui.home.HomeHeroActionBar>
     </FrameLayout>
 
     <LinearLayout
@@ -171,7 +168,6 @@
                 android:focusable="true"
                 android:foreground="@drawable/outline_big_15_gray"
                 app:cardCornerRadius="20dp">
-
                 <ImageView
                     android:id="@+id/alternate_home_head_profile_pic"
                     android:layout_width="match_parent"
@@ -190,7 +186,6 @@
         android:orientation="vertical"
         android:visibility="gone"
         tools:visibility="visible">
-
         <TextView
             android:id="@+id/home_watch_parent_item_title"
             style="@style/WatchHeaderText"
@@ -202,7 +197,6 @@
             android:text="@string/continue_watching"
             app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_24"
             app:drawableTint="?attr/white" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/home_watch_child_recyclerview"
             android:layout_width="wrap_content"
@@ -214,7 +208,6 @@
             android:paddingTop="6dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/home_result_grid" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -224,13 +217,11 @@
         android:orientation="vertical"
         android:visibility="gone"
         tools:visibility="visible">
-
         <FrameLayout
             android:id="@+id/home_bookmark_parent_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent">
-
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -244,12 +235,10 @@
                 android:paddingEnd="12dp"
                 android:paddingBottom="5dp"
                 android:requiresFadingEdge="horizontal">
-
                 <com.google.android.material.chip.ChipGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
                     <com.google.android.material.chip.Chip
                         android:id="@+id/home_type_watching_btt"
                         style="@style/ChipFilled"
@@ -291,7 +280,6 @@
                         android:text="@string/type_completed" />
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -301,7 +289,6 @@
                 android:src="@drawable/ic_baseline_arrow_forward_24"
                 app:drawableTint="?attr/white" />
         </FrameLayout>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/home_bookmarked_child_recyclerview"
             android:layout_width="wrap_content"
