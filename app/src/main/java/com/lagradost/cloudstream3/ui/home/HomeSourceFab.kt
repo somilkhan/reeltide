@@ -27,8 +27,4 @@ class HomeSourceFab @JvmOverloads constructor(
     override fun setText(text: CharSequence?, type: TextView.BufferType?) {
         super.setText(normalize(text), type)
     }
-
-    override fun setText(text: CharSequence?) {
-        super.setText(normalize(text))
-    }
 }
