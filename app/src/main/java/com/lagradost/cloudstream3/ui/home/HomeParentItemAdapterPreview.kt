@@ -75,33 +75,18 @@ class HomeParentItemAdapterPreview(
     override val headers = 1
     override fun onCreateHeader(parent: ViewGroup): ViewHolderState<Bundle> {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = if (isLayout(TV or EMULATOR)) FragmentHomeHeadTvBinding.inflate(
-            inflater,
-            parent,
-            false
-        ) else FragmentHomeHeadBinding.inflate(inflater, parent, false)
+        val binding = if (isLayout(TV or EMULATOR)) FragmentHomeHeadTvBinding.inflate(inflater, parent, false) else FragmentHomeHeadBinding.inflate(inflater, parent, false)
 
         if (binding is FragmentHomeHeadTvBinding && isLayout(EMULATOR)) {
             binding.homeBookmarkParentItemMoreInfo.isVisible = true
-
             val marginInDp = 50
             val density = binding.horizontalScrollChips.context.resources.displayMetrics.density
             val marginInPixels = (marginInDp * density).toInt()
-
             val params = binding.horizontalScrollChips.layoutParams as ViewGroup.MarginLayoutParams
             params.marginEnd = marginInPixels
             binding.horizontalScrollChips.layoutParams = params
-            binding.homeWatchParentItemTitle.setCompoundDrawablesWithIntrinsicBounds(
-                null,
-                null,
-                ContextCompat.getDrawable(
-                    parent.context,
-                    R.drawable.ic_baseline_arrow_forward_24
-                ),
-                null
-            )
+            binding.homeWatchParentItemTitle.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(parent.context, R.drawable.ic_baseline_arrow_forward_24), null)
         }
-
         return HeaderViewHolder(binding, viewModel, accountViewModel)
     }
 
@@ -126,7 +111,6 @@ class HomeParentItemAdapterPreview(
         val viewModel: HomeViewModel,
         accountViewModel: AccountViewModel,
     ) : ViewHolderState<Bundle>(binding) {
-
         override fun save(): Bundle = Bundle().apply {
             putParcelable("resumeRecyclerView", resumeRecyclerView.layoutManager?.onSaveInstanceState())
             putParcelable("bookmarkRecyclerView", bookmarkRecyclerView.layoutManager?.onSaveInstanceState())
@@ -147,10 +131,11 @@ class HomeParentItemAdapterPreview(
             removeCallback = { v ->
                 try {
                     val context = v.context ?: return@ResumeItemAdapter
-                    AlertDialog.Builder(context).apply {
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+                    builder.apply {
                         setTitle(R.string.clear_history)
                         setMessage(context.getString(R.string.delete_message).format(context.getString(R.string.continue_watching)))
-                        setNegativeButton(R.string.cancel) { _, _ -> }
+                        setNegativeButton(R.string.cancel) { _, _ -> /*NO-OP*/ }
                         setPositiveButton(R.string.delete) { _, _ ->
                             DataStoreHelper.deleteAllResumeStateIds()
                             viewModel.reloadStored()
@@ -212,8 +197,7 @@ class HomeParentItemAdapterPreview(
         private val homeNonePadding: View = itemView.findViewById(R.id.home_none_padding)
 
         private fun configurePhoneHeroActions(binding: FragmentHomeHeadBinding) {
-            // The hero has exactly two actions: primary play and navigation to details.
-            // Bookmark/save belongs to the details model and is intentionally absent here.
+            // Hero actions are intentionally limited to Play + Details. Save/bookmark belongs in Details.
             binding.homePreviewBookmark.isGone = true
 
             val density = binding.root.resources.displayMetrics.density
@@ -229,7 +213,7 @@ class HomeParentItemAdapterPreview(
                 iconPadding = 0
                 insetTop = 0
                 insetBottom = 0
-                cornerRadius = (circleSize / 2)
+                cornerRadius = circleSize / 2
                 backgroundTintList = ColorStateList.valueOf(Color.WHITE)
                 layoutParams = layoutParams.apply {
                     width = circleSize
@@ -244,13 +228,8 @@ class HomeParentItemAdapterPreview(
                 setTextColor(Color.WHITE)
                 gravity = android.view.Gravity.CENTER
                 compoundDrawablePadding = (8f * density).toInt()
-                setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(context, R.drawable.ic_outline_info_24),
-                    null,
-                    null,
-                    null
-                )
-                background = ContextCompat.getDrawable(context, R.drawable/home_action_pill)
+                setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, R.drawable.ic_outline_info_24), null, null, null)
+                background = ContextCompat.getDrawable(context, R.drawable.home_action_pill)
                 layoutParams = layoutParams.apply {
                     width = detailsWidth
                     height = circleSize
@@ -263,7 +242,6 @@ class HomeParentItemAdapterPreview(
             (binding as? FragmentHomeHeadTvBinding)?.apply {
                 homePreviewDescription.isGone = item.plot.isNullOrBlank()
                 homePreviewDescription.text = item.plot?.html() ?: ""
-
                 val scoreText = item.score?.toStringNull(0.1, 10, 1, false)
                 scoreText?.let { score ->
                     homePreviewScore.text = homePreviewScore.context.getString(R.string.extension_rating, score)
@@ -371,7 +349,6 @@ class HomeParentItemAdapterPreview(
                     true
                 } else false
             }
-
             alternateHeadProfilePicCard?.setOnLongClickListener { showAccountEditBox(it.context) }
             headProfilePicCard?.setOnLongClickListener { showAccountEditBox(it.context) }
             alternateHeadProfilePicCard?.setOnClickListener { activity?.showAccountSelectLinear() }
@@ -434,7 +411,6 @@ class HomeParentItemAdapterPreview(
                     previewViewpagerText.isVisible = hasHeroContent
                     alternativeAccountPadding?.isVisible = !hasHeroContent
                     (binding as? FragmentHomeHeadTvBinding)?.homePreviewInfoBtt?.isVisible = hasHeroContent
-
                     if (hasHeroContent) {
                         val currentPos = previewViewpager.currentItem.coerceIn(0, items.lastIndex)
                         previewViewpager.setCurrentItem(currentPos, false)
