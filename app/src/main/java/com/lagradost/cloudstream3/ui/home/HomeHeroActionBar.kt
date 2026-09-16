@@ -5,8 +5,9 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
-import androidx.viewpager2.widget.ViewPager2
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
+import com.lagradost.cloudstream3.R
 
 /**
  * Hero actions belong to the hero itself and should not remain floating on an
