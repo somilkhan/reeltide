@@ -96,13 +96,13 @@
             android:layout_gravity="bottom|start"
             android:gravity="center_vertical|start"
             android:orientation="horizontal"
-            android:paddingStart="50dp"
+            android:paddingStart="24dp"
             android:paddingEnd="24dp">
 
             <TextView
                 android:id="@+id/home_preview_bookmark"
-                android:layout_width="58dp"
-                android:layout_height="58dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/home_action_circle"
                 android:contentDescription="@string/action_add_to_bookmarks"
@@ -127,8 +127,8 @@
 
             <TextView
                 android:id="@+id/home_preview_info"
-                android:layout_width="58dp"
-                android:layout_height="58dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:background="@drawable/home_action_circle"
                 android:contentDescription="@string/home_more_info"
                 android:gravity="center"
