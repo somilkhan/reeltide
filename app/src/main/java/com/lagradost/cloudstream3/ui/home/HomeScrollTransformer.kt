@@ -8,13 +8,12 @@ class HomeScrollTransformer : ViewPager2.PageTransformer {
     override fun transformPage(page: View, position: Float) {
         val distance = abs(position).coerceIn(0f, 1f)
 
-        // Keep the hero genuinely full-bleed while giving adjacent pages a restrained,
-        // depth-based transition. The old padding-based transform exposed black gutters
-        // during swipes and visually broke the cinematic hero composition.
-        val scale = 1f - (0.04f * distance)
-        page.scaleX = scale
-        page.scaleY = scale
-        page.alpha = 1f - (0.35f * distance)
+        // The hero is intentionally edge-to-edge. Do not scale pages down: even a small
+        // scale exposes the black parent around the artwork during a swipe. Let ViewPager2
+        // handle the physical slide and use alpha only for restrained depth.
+        page.scaleX = 1f
+        page.scaleY = 1f
+        page.alpha = 1f - (0.25f * distance)
         page.translationX = 0f
     }
 }
