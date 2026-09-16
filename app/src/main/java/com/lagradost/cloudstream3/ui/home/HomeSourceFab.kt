@@ -71,6 +71,5 @@ class HomeSourceFab @JvmOverloads constructor(
         post {
             isVisible = hasSelectableProviders()
         }
-        super.onAttachedToWindow()
     }
 }
