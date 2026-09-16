@@ -90,56 +90,58 @@
             android:layout_height="300dp"
             android:layout_gravity="bottom"
             android:background="@drawable/background_shadow" />
+
+        <!-- Solid hero actions. They belong to the hero, not to a separate row below it. -->
+        <LinearLayout
+            android:id="@+id/home_preview_title_holder"
+            android:layout_width="match_parent"
+            android:layout_height="94dp"
+            android:layout_gravity="bottom|start"
+            android:gravity="center_vertical|start"
+            android:orientation="horizontal"
+            android:paddingStart="50dp"
+            android:paddingEnd="24dp">
+
+            <TextView
+                android:id="@+id/home_preview_bookmark"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/home_action_circle"
+                android:contentDescription="@string/action_add_to_bookmarks"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@android:color/transparent"
+                app:drawableTint="@color/white"
+                app:drawableTopCompat="@drawable/ic_baseline_add_24"
+                app:tint="@color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/home_preview_play"
+                style="@style/WhiteButton"
+                android:layout_width="170dp"
+                android:layout_height="54dp"
+                android:layout_marginEnd="10dp"
+                android:minHeight="0dp"
+                android:text="@string/home_play"
+                android:textSize="15sp"
+                app:cornerRadius="18dp"
+                app:icon="@drawable/ic_baseline_play_arrow_24" />
+
+            <TextView
+                android:id="@+id/home_preview_info"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:background="@drawable/home_action_circle"
+                android:contentDescription="@string/home_more_info"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/white"
+                app:drawableTint="@color/white"
+                app:drawableTopCompat="@drawable/ic_outline_info_24"
+                app:tint="@color/white" />
+        </LinearLayout>
     </FrameLayout>
-
-    <LinearLayout
-        android:id="@+id/home_preview_title_holder"
-        android:layout_width="match_parent"
-        android:layout_height="94dp"
-        android:gravity="center_vertical|start"
-        android:orientation="horizontal"
-        android:paddingStart="50dp"
-        android:paddingEnd="24dp">
-
-        <TextView
-            android:id="@+id/home_preview_bookmark"
-            android:layout_width="58dp"
-            android:layout_height="58dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/home_action_circle"
-            android:contentDescription="@string/action_add_to_bookmarks"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@android:color/transparent"
-            app:drawableTint="@color/white"
-            app:drawableTopCompat="@drawable/ic_baseline_add_24"
-            app:tint="@color/white" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/home_preview_play"
-            style="@style/WhiteButton"
-            android:layout_width="170dp"
-            android:layout_height="54dp"
-            android:layout_marginEnd="10dp"
-            android:minHeight="0dp"
-            android:text="@string/home_play"
-            android:textSize="15sp"
-            app:cornerRadius="18dp"
-            app:icon="@drawable/ic_baseline_play_arrow_24" />
-
-        <TextView
-            android:id="@+id/home_preview_info"
-            android:layout_width="58dp"
-            android:layout_height="58dp"
-            android:background="@drawable/home_action_circle"
-            android:contentDescription="@string/home_more_info"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@color/white"
-            app:drawableTint="@color/white"
-            app:drawableTopCompat="@drawable/ic_outline_info_24"
-            app:tint="@color/white" />
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/alternative_account_padding"
