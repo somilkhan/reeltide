@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import com.lagradost.cloudstream3.LoadResponse
 import com.lagradost.cloudstream3.databinding.HomeScrollViewBinding
 import com.lagradost.cloudstream3.databinding.HomeScrollViewTvBinding
@@ -68,12 +69,14 @@ class HomeScrollAdapter(
 
                 binding.homeScrollPreviewTitle.text = item.name.html()
 
-                val score = item.score?.toStringNull(0.1, 10, 1, false)
-                binding.homePreviewScore.text = score?.let { "★ $it" } ?: ""
-                binding.homePreviewScore.isGone = score == null
+                // The phone hero uses a compact year/metadata hierarchy rather than a
+                // rating-first presentation. Keep the old score binding intact for
+                // compatibility, but do not surface it in the redesigned hero.
+                binding.homePreviewScore.isGone = true
 
                 binding.homePreviewYear.text = item.year?.toString() ?: ""
                 binding.homePreviewYear.isGone = item.year == null
+                binding.homePreviewYearSeparator.isVisible = item.year != null
 
                 val duration = item.duration
                 binding.homePreviewDuration.text = duration
