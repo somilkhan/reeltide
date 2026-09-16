@@ -10,8 +10,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.lagradost.cloudstream3.R
 
 /**
- * Hero actions belong to the hero itself and should not remain floating on an
- * empty/loading hero. Visibility follows the hero ViewPager's item count.
+ * Hero actions belong to the hero itself. They and the hero shell disappear when the
+ * ViewPager has no content, preventing a blank 628dp hero from occupying the Home screen.
  */
 class HomeHeroActionBar @JvmOverloads constructor(
     context: Context,
@@ -51,7 +51,14 @@ class HomeHeroActionBar @JvmOverloads constructor(
     }
 
     private fun syncVisibility() {
-        val count = pager?.adapter?.itemCount ?: 0
-        isVisible = count > 0
+        val hasItems = (pager?.adapter?.itemCount ?: 0) > 0
+        isVisible = hasItems
+
+        // updatePreview() normally owns the hero shell visibility. If a successful provider
+        // response contains an empty hero list, however, there is no content callback to hide
+        // the shell. Collapse only that specific shell here; non-empty states remain untouched.
+        if (!hasItems) {
+            (parent as? View)?.takeIf { it.id == R.id.home_preview_viewpager_text }?.isVisible = false
+        }
     }
 }
