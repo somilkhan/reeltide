@@ -23,7 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="628dp"
         android:minHeight="628dp"
-        android:clipChildren="false">
+        android:clipChildren="false"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/home_preview_viewpager"
@@ -89,55 +91,46 @@
             android:layout_gravity="bottom"
             android:background="@drawable/background_shadow" />
 
-        <com.lagradost.cloudstream3.ui.home.HomeHeroActionBar
+        <LinearLayout
             android:id="@+id/home_preview_title_holder"
             android:layout_width="match_parent"
-            android:layout_height="94dp"
+            android:layout_height="76dp"
             android:layout_gravity="bottom|start"
             android:gravity="center_vertical|start"
             android:orientation="horizontal"
             android:paddingStart="24dp"
             android:paddingEnd="24dp">
 
-            <TextView
-                android:id="@+id/home_preview_bookmark"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/home_action_circle"
-                android:contentDescription="@string/action_add_to_bookmarks"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@android:color/transparent"
-                app:drawableTint="@color/white"
-                app:drawableTopCompat="@drawable/ic_baseline_add_24"
-                app:tint="@color/white" />
-
+            <!-- Save/bookmark intentionally does not live in the hero. It belongs to Details. -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/home_preview_play"
                 style="@style/WhiteButton"
-                android:layout_width="170dp"
-                android:layout_height="54dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:layout_marginEnd="10dp"
+                android:minWidth="0dp"
                 android:minHeight="0dp"
-                android:text="@string/home_play"
-                android:textSize="15sp"
-                app:cornerRadius="18dp"
+                android:contentDescription="@string/home_play"
+                android:text=""
+                app:cornerRadius="28dp"
                 app:icon="@drawable/ic_baseline_play_arrow_24" />
 
             <TextView
                 android:id="@+id/home_preview_info"
-                android:layout_width="56dp"
+                android:layout_width="116dp"
                 android:layout_height="56dp"
-                android:background="@drawable/home_action_circle"
+                android:background="@drawable/home_action_pill"
+                android:clickable="true"
+                android:focusable="true"
                 android:contentDescription="@string/home_more_info"
                 android:gravity="center"
-                android:text=""
+                android:text="@string/home_more_info"
                 android:textColor="@color/white"
-                app:drawableTint="@color/white"
-                app:drawableTopCompat="@drawable/ic_outline_info_24"
-                app:tint="@color/white" />
-        </com.lagradost.cloudstream3.ui.home.HomeHeroActionBar>
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:drawableLeftCompat="@drawable/ic_outline_info_24"
+                app:drawableTint="@color/white" />
+        </LinearLayout>
     </FrameLayout>
 
     <LinearLayout
