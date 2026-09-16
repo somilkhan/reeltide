@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -30,6 +31,7 @@ class HomeHeroActionBar @JvmOverloads constructor(
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        findViewById<View>(R.id.home_preview_bookmark)?.isGone = true
         pager = findPager()
         pager?.adapter?.registerAdapterDataObserver(adapterObserver)
         post { syncVisibility() }
@@ -53,10 +55,6 @@ class HomeHeroActionBar @JvmOverloads constructor(
     private fun syncVisibility() {
         val hasItems = (pager?.adapter?.itemCount ?: 0) > 0
         isVisible = hasItems
-
-        // updatePreview() normally owns the hero shell visibility. If a successful provider
-        // response contains an empty hero list, however, there is no content callback to hide
-        // the shell. Collapse only that specific shell here; non-empty states remain untouched.
         if (!hasItems) {
             (parent as? View)?.takeIf { it.id == R.id.home_preview_viewpager_text }?.isVisible = false
         }
