@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.Gravity
-import android.widget.FrameLayout
+import android.view.ViewGroup
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.lagradost.cloudstream3.R
 
@@ -43,7 +43,7 @@ class HomeSourceFab @JvmOverloads constructor(
         setStrokeColor(ColorStateList.valueOf(0x30FFFFFF))
         strokeWidth = dp(1f)
         iconTint = ColorStateList.valueOf(0xFFFFFFFF.toInt())
-        textColor = ColorStateList.valueOf(0xFFFFFFFF.toInt())
+        setTextColor(ColorStateList.valueOf(0xFFFFFFFF.toInt()))
         rippleColor = ColorStateList.valueOf(0x28FFFFFF)
         cornerRadius = dp(22f)
         elevation = dp(6f).toFloat()
@@ -51,9 +51,9 @@ class HomeSourceFab @JvmOverloads constructor(
         setPadding(dp(14f), 0, dp(14f), 0)
 
         layoutParams = layoutParams?.apply {
-            width = LayoutParams.WRAP_CONTENT
+            width = ViewGroup.LayoutParams.WRAP_CONTENT
             height = dp(44f)
-            if (this is FrameLayout.LayoutParams) {
+            if (this is ViewGroup.LayoutParams && this is android.widget.FrameLayout.LayoutParams) {
                 gravity = Gravity.BOTTOM or Gravity.END
                 marginStart = dp(16f)
                 marginEnd = dp(16f)
