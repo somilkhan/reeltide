@@ -3,6 +3,8 @@ package com.lagradost.cloudstream3.ui.home
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
+import android.view.Gravity
+import android.widget.FrameLayout
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.lagradost.cloudstream3.R
 
@@ -51,7 +53,8 @@ class HomeSourceFab @JvmOverloads constructor(
         layoutParams = layoutParams?.apply {
             width = LayoutParams.WRAP_CONTENT
             height = dp(44f)
-            if (this is MarginLayoutParams) {
+            if (this is FrameLayout.LayoutParams) {
+                gravity = Gravity.BOTTOM or Gravity.END
                 marginStart = dp(16f)
                 marginEnd = dp(16f)
                 bottomMargin = dp(92f)
