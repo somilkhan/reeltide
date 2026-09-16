@@ -1,9 +1,9 @@
 # ReelTide — Project State
 
-**Last updated:** 2026-09-16
+**Last updated:** 2026-09-17
 **Active branch:** `ui/2026-liquid-glass-redesign`
 **Baseline:** `master`
-**Current code checkpoint:** `f5c65f03398de94428d54e1513653f43e9464a90`
+**Current code checkpoint:** `63b6c6a7888f5a4d30a714a6b666caf40e7f7a15`
 
 > Live execution checkpoint. Repository/code/build/test evidence outranks stale documentation or conversation memory.
 
@@ -17,32 +17,30 @@
 - Shared Liquid Glass foundation and reusable presentation primitives exist.
 - Direct Compose launch-shell NavPill integration is retired; stable native shell remains in place.
 - Home hero presentation is incrementally reintroduced while preserving Home data/state/business ownership.
-- Home hero target is **628dp** rather than the previous 728dp treatment.
+- Home hero target is **628dp**.
 - Persistent top branding/header container was removed from the Home hero.
 - Profile remains the single persistent floating Liquid Glass control over the hero.
 - Home search remains hidden as a compatibility anchor.
 - Hero actions are left-aligned; Play is solid and bookmark/info use opaque solid dark circles.
-- Home section title and `View all` are separate visual affordances; `View all` uses a restrained opaque dark surface.
+- Hero action visibility is now wired to the real hero ViewPager adapter item count through `HomeHeroActionBar`, preventing Play/Save/Info from remaining visible when the hero adapter is empty.
+- Home section title and `View all` are separate visual affordances; `View all` uses a restrained opaque dark surface rather than Liquid Glass.
 - Home watch/bookmark containers no longer use one combined full-width glass background.
 - Fresh-install theme defaults to `Amoled` + `White` without overwriting existing selections.
 - Search filter chips use monochrome black/white/grey states instead of magenta.
 - Checked search/filter chip text explicitly switches to black for contrast on the white selected state.
 - Setup navigation shell is hidden during setup screens and restored when leaving setup; original setup Extensions flow was preserved.
-- GitHub Actions build/check for `b00655cf7dc59168d2894cbd591878043a87863b` completed successfully (run `35034416615`).
-- Home hero bounds were hardened with an explicit 628dp ViewPager height/minimum so nested RecyclerView/ViewPager measurement cannot collapse the hero frame and detach the action row.
-- Home bottom artwork fade was reduced from 390dp to 300dp to improve title/metadata/synopsis readability.
-- Home bookmark action no longer exposes the nullable `WatchType.NONE` label as visible `None`; the action remains icon-only while preserving the existing watch-state picker behavior.
-- Home source selector now uses a dedicated `HomeSourceFab` presentation wrapper so the internal `noneApi` sentinel is displayed as the deliberate `Source` label rather than raw `None`; provider selection/callback ownership remains in `HomeFragment`.
-- Corrected an intermediate duplicate XML attribute introduced while wiring `HomeSourceFab`; current `fragment_home.xml` is normalized.
+- GitHub Actions artifact build for `743c005d52487082e8e200255c2ad9ffce619b86` completed successfully (run #276).
+- Hero bottom artwork fade is now **300dp**, matching the intended cinematic readability treatment.
+- Home source-selector changes remain separate from hero action controls; the source FAB was not repurposed for hero behavior.
 
 ## IN PROGRESS
 
-- Home runtime refinement based on the latest user screenshots.
+- Home runtime refinement against the latest target hero structure.
 - Search visual/state cleanup.
 
 ## REMAINING
 
-1. Verify the latest Home hero/source/bookmark changes on-device.
+1. Verify the latest Home hero/action changes on-device.
 2. Finish Home poster/card spacing, section rhythm, profile treatment and navigation motion.
 3. Audit Search empty/loading/error states and reduce unnecessary visual surfaces.
 4. Replace Details presentation coherently.
@@ -62,11 +60,11 @@
 
 ## REGRESSIONS / KNOWN RISKS
 
-- Latest user screenshots show at least two Home runtime states: a loaded hero and a collapsed/blank hero state. The collapsed state remains the highest-priority runtime risk until verified on-device.
+- The latest Home screenshot is a loaded hero state. The previously observed collapsed/blank hero state remains a runtime case that must be checked on-device.
+- `HomeHeroActionBar` is now active in `fragment_home_head.xml`; its adapter-observer lifecycle must be covered by CI and on-device verification.
 - The 628dp hero must be checked across compact phones/tablets/landscape.
 - Setup lifecycle visibility must be checked for transient reappearance between setup destinations.
 - Search checked-chip text contrast required an explicit fix because white selected backgrounds otherwise inherit light text.
-- `HomeSourceFab` relies on TextView's `setText(CharSequence, BufferType)` override; CI must validate the custom view integration before it is treated as verified.
 
 ## FAILED APPROACHES
 
@@ -75,28 +73,29 @@
 - Source-only confidence without runtime evidence: rejected.
 - Excessive Liquid Glass treatment: rejected; target is restrained, approximately 25% or less of visible UI surfaces.
 - Rewriting setup extension flow while adding visibility hooks: caught by source comparison and restored to master behavior.
+- Leaving `HomeHeroActionBar` as dead code while using a native `LinearLayout`: corrected by wiring the existing presentation component into the actual hero layout.
 
 ## DESIGN DECISIONS
 
 - Liquid Glass is a functional floating hierarchy, not universal decoration.
-- Keep Liquid Glass restrained to high-value floating controls/navigation/selected section affordances; content remains dominant.
+- Keep Liquid Glass restrained to high-value floating controls/navigation; content remains dominant.
 - Monochrome black/white/grey remains the active redesign direction.
 - Home profile is the primary floating glass control; hero action buttons are solid.
-- Hero is 628dp with left-aligned title/metadata/synopsis hierarchy and a cinematic bottom fade.
+- Hero is **628dp** with left-aligned title/metadata/synopsis hierarchy and a cinematic **300dp** bottom fade.
+- Hero structure is: full-bleed artwork → floating profile → title → year/metadata → short synopsis → Play/Save/Info actions → next content section.
 - Section title and `View all` are separate visual affordances.
 - Preserve existing navigation IDs, graph, menu, state, adapters, ViewModels, repositories, player behavior and business ownership.
 
 ## VERIFICATION
 
-- User confirmed the stable diagnostic build launches successfully.
+- User previously confirmed the stable diagnostic build launches successfully.
 - Home refinement checkpoint `029bad1738c97158d23752ad5b5d0dc15509ee3b` passed GitHub Actions run #232.
 - CloudStreamApp preference fix `b00655cf7dc59168d2894cbd591878043a87863b` passed GitHub Actions run `35034416615`.
-- Home bounds/bookmark checkpoint commits `a550a758d20502742697cef36768a33f29c5e89e` and `097e4a6bca3fc856020928b924d0825ca37db3f5` are in the current branch history.
-- Latest source selector commits are `e9d29add249615198bbe4c559e8b90976397b496` and `f5c65f03398de94428d54e1513653f43e9464a90`.
-- GitHub Actions run `35082626449` (#267) is the current head verification run and was in progress at the last check.
+- Hero action visibility compile checkpoint `743c005d52487082e8e200255c2ad9ffce619b86` passed GitHub Actions artifact build run #276.
+- Hero header was wired to the existing `HomeHeroActionBar`; the subsequent 300dp fade change is on head `63b6c6a7888f5a4d30a714a6b666caf40e7f7a15` and its GitHub Actions run #279 was still in progress at the last check.
+- No device verification is claimed for the latest Home changes.
 - No ReelTide crash stacktrace has been captured from earlier logs.
-- No device verification is claimed for the latest source changes until the user installs the corresponding build.
 
 ## NEXT ACTION
 
-Poll the current head CI run. If green, continue the Home runtime polish and Search state cleanup; if it fails, diagnose the actual failure before proceeding.
+Poll head `63b6c6a7888f5a4d30a714a6b666caf40e7f7a15` CI. If green, continue the Home visual/state audit and then move into Search state cleanup; if it fails, diagnose the actual failure before proceeding.
