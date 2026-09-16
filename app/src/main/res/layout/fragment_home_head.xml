@@ -110,7 +110,7 @@
             android:contentDescription="@string/action_add_to_bookmarks"
             android:gravity="center"
             android:text=""
-            android:textColor="@color/white"
+            android:textColor="@android:color/transparent"
             app:drawableTint="@color/white"
             app:drawableTopCompat="@drawable/ic_baseline_add_24"
             app:tint="@color/white" />
