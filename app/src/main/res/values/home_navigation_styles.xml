@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="HomeBottomNavActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:width">@dimen/home_nav_active_size</item>
+        <item name="android:height">@dimen/home_nav_active_size</item>
+        <item name="android:color">@color/home_accent_dim</item>
+        <item name="marginHorizontal">0dp</item>
+    </style>
+</resources>
