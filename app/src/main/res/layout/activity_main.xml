@@ -33,13 +33,13 @@
         <FrameLayout
             android:id="@+id/liquid_glass_nav_container"
             android:layout_width="0dp"
-            android:layout_height="78dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="@dimen/home_nav_height"
+            android:layout_marginStart="@dimen/home_nav_side_margin"
+            android:layout_marginEnd="@dimen/home_nav_side_margin"
+            android:layout_marginBottom="@dimen/home_nav_bottom_margin"
             android:background="@drawable/liquid_glass_nav_surface"
             android:elevation="12dp"
-            android:padding="3dp"
+            android:padding="@dimen/home_nav_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -49,8 +49,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
+                app:itemActiveIndicatorStyle="@style/HomeBottomNavActiveIndicator"
+                app:itemIconSize="@dimen/home_nav_icon_size"
                 app:itemIconTint="@color/liquid_glass_nav_item_color"
                 app:itemTextColor="@color/liquid_glass_nav_item_color"
+                app:itemRippleColor="@color/home_border"
                 app:labelVisibilityMode="unlabeled"
                 app:menu="@menu/bottom_nav_menu" />
 
