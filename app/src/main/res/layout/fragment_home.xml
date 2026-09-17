@@ -139,7 +139,6 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_margin="0dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/account"
                 android:nextFocusLeft="@id/home_search"
