@@ -5,28 +5,28 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="10dp"
-    android:paddingBottom="16dp">
+    android:paddingTop="8dp"
+    android:paddingBottom="14dp">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp">
+        android:layout_height="50dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
 
         <TextView
             android:id="@+id/home_child_more_info"
             android:layout_width="wrap_content"
             android:layout_height="44dp"
             android:layout_gravity="center_vertical|start"
-            android:background="@drawable/liquid_glass_pill"
+            android:background="@android:color/transparent"
             android:contentDescription="@string/home_more_info"
             android:gravity="center_vertical"
             android:maxWidth="300dp"
             android:maxLines="1"
             android:ellipsize="end"
-            android:paddingStart="14dp"
-            android:paddingEnd="14dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="8dp"
             android:textColor="@color/textColor"
             android:textSize="19sp"
             android:textStyle="bold"
@@ -63,7 +63,7 @@
         android:nextFocusUp="@id/home_child_more_info"
         android:paddingStart="9dp"
         android:paddingEnd="9dp"
-        android:paddingTop="3dp"
+        android:paddingTop="1dp"
         tools:listitem="@layout/home_result_grid"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 </LinearLayout>
