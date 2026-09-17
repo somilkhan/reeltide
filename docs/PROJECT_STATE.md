@@ -3,7 +3,7 @@
 **Last updated:** 2026-09-18
 **Active branch:** `ui/2026-liquid-glass-redesign`
 **Baseline:** `master`
-**Current code checkpoint:** `cc8ae4de35ee23ebaf9cb921f736eb905df281`
+**Current code checkpoint:** `8d8a0dc4550d9f811d30271f7213189b9dbeb33f`
 
 ## Current Phase
 
@@ -13,16 +13,17 @@
 
 - Known-good master baseline preserved; old `ui/2026-modern-redesign` is not reused.
 - Native launch shell/NavPill remains stable; risky Compose shell injection remains rejected.
-- Home hero is now a responsive rounded presentation surface with 24dp corners and width-qualified heights: 517dp at 360dp, 575dp at 400dp, 560dp at the 390dp reference, and 617dp at 430dp.
+- Home hero is a responsive rounded presentation surface with 24dp corners and width-qualified heights: 517dp at 360dp, 575dp at 400dp, 560dp at the 390dp reference, and 617dp at 430dp.
 - Hero artwork remains full-bleed inside the rounded container with a strong bottom-anchored cinematic scrim.
 - Profile remains the persistent floating control over the hero.
-- Source selector remains functional, positioned below the profile, and now uses the restrained 55%-surface token with a strong border.
-- Hero hierarchy is now badge → title → metadata → synopsis → Play + Details → pagination.
+- Source selector remains functional, positioned below the profile, and uses the restrained 55%-surface token with a strong border.
+- Hero hierarchy is badge → title → metadata → synopsis → Play + Details → pagination.
 - Hero title uses 34sp/800 styling, tightened tracking and two-line clamping.
 - Hero metadata supports year, duration and rating with dot separators while preserving the existing LoadResponse data source.
 - Hero synopsis remains a two-line presentation clamp and uses secondary text styling.
-- Play and Details preserve their existing IDs/callbacks while the new action-button wrapper keeps the redesigned 48dp CTA geometry after legacy adapter binding.
-- Latest poster rail cards were resized to 118x168 with 14dp corners, restrained border, 12dp inter-item spacing and title text below the artwork.
+- Play and Details preserve their existing IDs/callbacks while the action-button wrapper keeps the redesigned 48dp CTA geometry after legacy adapter binding.
+- Latest release rails use 118x168 artwork, 14dp corners, restrained borders, 12dp inter-item spacing and title text below the artwork.
+- Latest release section headers now use 19sp primary hierarchy, 13sp secondary `View all`, 22dp screen padding and 26dp section rhythm.
 - Bottom navigation remains the existing 5-item menu/navigation graph, presented as a 64dp floating pill with 11dp side margins, 26dp bottom margin, 72%-surface fallback and compact active indicator styling.
 - Bottom navigation icons use outline-oriented assets with accent active-state color.
 - Existing navigation IDs, provider logic, adapters, ViewModels and business actions remain authoritative.
@@ -31,7 +32,7 @@
 
 - CI verification for the latest Home redesign checkpoint.
 - Runtime/device verification remains unavailable here.
-- Final visual audit of section header spacing, pagination state behavior, compact/landscape insets, and bottom-nav overlap.
+- Final visual audit of pagination state behavior, compact/landscape insets, bottom-nav overlap and poster rail geometry.
 
 ## REMAINING
 
@@ -59,7 +60,6 @@
 - Latest Home redesign is not device-verified.
 - Pagination dots are layout-present but still need runtime synchronization verification against variable ViewPager item counts.
 - Source FAB and bottom navigation need compact/landscape/system-inset verification.
-- Home section-header file remained on the prior compact implementation because the repository connector rejected its unchanged blob SHA during this pass; no functionality was altered.
 - Hidden zero-size `home_preview_bookmark` remains for adapter compatibility.
 - Search behavior still needs runtime verification.
 
@@ -84,11 +84,11 @@
 ## VERIFICATION
 
 - Active branch verified as `ui/2026-liquid-glass-redesign`.
-- Latest implementation checkpoint: `cc8ae4de35ee23ebaf9cb921f736eb905df281`.
-- CI Artifact Build run #366 (`35274506920`) is currently in progress; no success is claimed yet.
+- Latest implementation checkpoint: `8d8a0dc4550d9f811d30271f7213189b9dbeb33f`.
+- CI Artifact Build run #366 (`35274506920`) is in progress for the immediately preceding implementation checkpoint; no success is claimed for the latest checkpoint yet.
 - Previous verified Artifact Build run #334 (`35254760140`) passed all steps for its earlier checkpoint.
 - No device verification is claimed.
 
 ## NEXT ACTION
 
-Wait for CI result, fix any build errors at the root, then continue the Home interaction/inset audit before moving to Search.
+Obtain CI result, fix any build errors at the root, then complete the Home interaction/inset audit before moving to Search.
