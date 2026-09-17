@@ -32,4 +32,21 @@
     <dimen name="continue_watching_progress_size">25dp</dimen>
     <dimen name="circular_progress_thickness">2dp</dimen>
     <dimen name="download_header_progress_size">35dp</dimen>
+
+    <dimen name="home_hero_height">560dp</dimen>
+    <dimen name="home_hero_radius">24dp</dimen>
+    <dimen name="home_screen_padding">22dp</dimen>
+    <dimen name="home_hero_side_margin">14dp</dimen>
+    <dimen name="home_section_top_padding">26dp</dimen>
+    <dimen name="home_card_gap">12dp</dimen>
+    <dimen name="home_card_width">118dp</dimen>
+    <dimen name="home_card_height">168dp</dimen>
+    <dimen name="home_card_radius">14dp</dimen>
+    <dimen name="home_nav_height">64dp</dimen>
+    <dimen name="home_nav_side_margin">11dp</dimen>
+    <dimen name="home_nav_bottom_margin">26dp</dimen>
+    <dimen name="home_nav_radius">100dp</dimen>
+    <dimen name="home_nav_icon_size">22dp</dimen>
+    <dimen name="home_nav_active_size">36dp</dimen>
+    <dimen name="home_nav_padding">4dp</dimen>
 </resources>
