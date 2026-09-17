@@ -38,8 +38,8 @@ class HomeSourceFab @JvmOverloads constructor(
         val density = resources.displayMetrics.density
         fun dp(value: Float): Int = (value * density).toInt()
 
-        // Keep this as a stable, semi-opaque floating surface. It must remain legible
-        // over arbitrary poster artwork while avoiding another heavy glass layer.
+        // Stable semi-opaque surface: readable over poster artwork without becoming
+        // another dominant glass layer. Keep the same material through scroll states.
         backgroundTintList = ColorStateList.valueOf(0x00FFFFFF)
         background = androidx.core.content.ContextCompat.getDrawable(context, R.drawable.home_source_fab_background)
         setStrokeColor(ColorStateList.valueOf(0x00FFFFFF))
@@ -50,12 +50,12 @@ class HomeSourceFab @JvmOverloads constructor(
         cornerRadius = dp(22f)
         elevation = dp(4f).toFloat()
         stateListAnimator = null
-        iconSize = dp(18f)
-        iconPadding = dp(8f)
+        iconSize = dp(20f)
+        iconPadding = dp(7f)
         minHeight = dp(44f)
         minWidth = 0
         setPadding(dp(13f), 0, dp(14f), 0)
-        setIconResource(R.drawable.ic_home_source_24)
+        setIconResource(R.drawable.ic_baseline_filter_list_24)
         setExtended(true)
 
         val params = layoutParams as? FrameLayout.LayoutParams ?: return
