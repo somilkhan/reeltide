@@ -38,17 +38,25 @@ class HomeSourceFab @JvmOverloads constructor(
         val density = resources.displayMetrics.density
         fun dp(value: Float): Int = (value * density).toInt()
 
-        // Restrained liquid-glass treatment: one compact functional layer above content.
-        backgroundTintList = ColorStateList.valueOf(0x1AFFFFFF)
-        setStrokeColor(ColorStateList.valueOf(0x30FFFFFF))
-        strokeWidth = dp(1f)
+        // Keep this as a stable, semi-opaque floating surface. It must remain legible
+        // over arbitrary poster artwork while avoiding another heavy glass layer.
+        backgroundTintList = ColorStateList.valueOf(0x00FFFFFF)
+        background = androidx.core.content.ContextCompat.getDrawable(context, R.drawable.home_source_fab_background)
+        setStrokeColor(ColorStateList.valueOf(0x00FFFFFF))
+        strokeWidth = 0
         iconTint = ColorStateList.valueOf(0xFFFFFFFF.toInt())
         setTextColor(ColorStateList.valueOf(0xFFFFFFFF.toInt()))
-        rippleColor = ColorStateList.valueOf(0x28FFFFFF)
+        rippleColor = ColorStateList.valueOf(0x35FFFFFF)
         cornerRadius = dp(22f)
-        elevation = dp(6f).toFloat()
+        elevation = dp(4f).toFloat()
+        stateListAnimator = null
         iconSize = dp(18f)
-        setPadding(dp(14f), 0, dp(14f), 0)
+        iconPadding = dp(8f)
+        minHeight = dp(44f)
+        minWidth = 0
+        setPadding(dp(13f), 0, dp(14f), 0)
+        setIconResource(R.drawable.ic_home_source_24)
+        setExtended(true)
 
         val params = layoutParams as? FrameLayout.LayoutParams ?: return
         params.width = FrameLayout.LayoutParams.WRAP_CONTENT
@@ -59,4 +67,9 @@ class HomeSourceFab @JvmOverloads constructor(
         params.bottomMargin = dp(92f)
         layoutParams = params
     }
+
+    // Home intentionally keeps the source selector stable while the content rail scrolls.
+    // The source action remains available instead of morphing into an icon-only state.
+    override fun shrink() = setExtended(true)
+    override fun extend() = setExtended(true)
 }
