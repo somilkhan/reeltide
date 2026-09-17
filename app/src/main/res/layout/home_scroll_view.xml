@@ -15,9 +15,9 @@
     <View
         android:id="@+id/title_shadow_top"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_height="150dp"
         android:layout_gravity="top"
-        android:alpha="0.82"
+        android:alpha="0.72"
         android:background="@drawable/background_shadow"
         android:rotation="180"
         android:visibility="visible" />
@@ -25,8 +25,9 @@
     <View
         android:id="@+id/title_shadow"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="270dp"
         android:layout_gravity="bottom"
+        android:alpha="0.92"
         android:background="@drawable/background_shadow" />
 
     <LinearLayout
@@ -85,7 +86,7 @@
                 android:paddingHorizontal="8dp"
                 android:text="•"
                 android:textColor="@color/white"
-                android:alpha="0.55"
+                android:alpha="0.62"
                 android:textSize="14sp"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -95,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:alpha="0.92"
+                android:alpha="0.96"
                 android:textSize="14sp"
                 tools:text="2026" />
 
@@ -105,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="10dp"
                 android:textColor="@color/white"
-                android:alpha="0.72"
+                android:alpha="0.82"
                 android:textSize="14sp"
                 tools:text="• 2h 10m" />
         </LinearLayout>
@@ -119,7 +120,7 @@
             android:maxLines="1"
             android:paddingBottom="8dp"
             android:textColor="@color/white"
-            android:alpha="0.88"
+            android:alpha="0.92"
             android:textSize="14sp"
             tools:text="Drama • Horror" />
 
@@ -132,7 +133,7 @@
             android:maxLines="2"
             android:paddingBottom="4dp"
             android:textColor="@color/white"
-            android:alpha="0.84"
+            android:alpha="0.92"
             android:textSize="14sp"
             tools:text="After a mysterious cosmic event rips Oak Street from suburbia and transports their neighborhood to someplace unknown..." />
     </LinearLayout>
