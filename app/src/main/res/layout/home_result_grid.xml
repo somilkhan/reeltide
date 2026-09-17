@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="118dp"
+    android:layout_width="130dp"
     android:layout_height="wrap_content"
+    android:layout_marginEnd="12dp"
     android:orientation="vertical"
     android:clipChildren="false">
 
@@ -102,11 +103,10 @@
 
     <TextView
         android:id="@+id/imageText"
-        android:layout_width="match_parent"
+        android:layout_width="118dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="6dp"
         android:ellipsize="end"
         android:fontFamily="@font/google_sans"
         android:gravity="start"
@@ -119,11 +119,10 @@
     <TextView
         android:id="@+id/episode_text"
         style="@style/EpisodeTextButton"
-        android:layout_width="match_parent"
+        android:layout_width="118dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginTop="2dp"
-        android:layout_marginEnd="6dp"
         android:background="@android:color/transparent"
         android:ellipsize="end"
         android:gravity="start"
