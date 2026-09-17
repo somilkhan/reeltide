@@ -38,13 +38,8 @@ class HomeScrollAdapter(
 
     override fun onClearView(holder: ViewHolderState<Any>) {
         when (val binding = holder.view) {
-            is HomeScrollViewBinding -> {
-                clearImage(binding.homeScrollPreview)
-            }
-
-            is HomeScrollViewTvBinding -> {
-                clearImage(binding.homeScrollPreview)
-            }
+            is HomeScrollViewBinding -> clearImage(binding.homeScrollPreview)
+            is HomeScrollViewTvBinding -> clearImage(binding.homeScrollPreview)
         }
     }
 
@@ -54,7 +49,6 @@ class HomeScrollAdapter(
         position: Int,
     ) {
         val binding = holder.view
-
         val posterUrl = item.backgroundPosterUrl ?: item.posterUrl
 
         when (binding) {
@@ -69,21 +63,32 @@ class HomeScrollAdapter(
 
                 binding.homeScrollPreviewTitle.text = item.name.html()
 
-                // The phone hero uses a compact year/metadata hierarchy rather than a
-                // rating-first presentation. Keep the old score binding intact for
-                // compatibility, but do not surface it in the redesigned hero.
+                // Keep the legacy score view hidden on phone; the redesigned metadata row
+                // exposes the same score through the dedicated rating slot below.
                 binding.homePreviewScore.isGone = true
 
                 binding.homePreviewYear.text = item.year?.toString() ?: ""
                 binding.homePreviewYear.isGone = item.year == null
-                binding.homePreviewYearSeparator.isVisible = item.year != null
 
-                val duration = item.duration
-                binding.homePreviewDuration.text = duration
-                    ?.takeIf { it > 0 }
-                    ?.let { "• ${binding.homePreviewDuration.context.getString(com.lagradost.cloudstream3.R.string.duration_format, it)}" }
-                    ?: ""
-                binding.homePreviewDuration.isGone = duration == null || duration <= 0
+                val duration = item.duration?.takeIf { it > 0 }
+                binding.homePreviewDuration.text = duration?.let {
+                    binding.homePreviewDuration.context.getString(
+                        com.lagradost.cloudstream3.R.string.duration_format,
+                        it
+                    )
+                } ?: ""
+                binding.homePreviewDuration.isGone = duration == null
+
+                val rating = item.score?.toStringNull(0.1, 10, 1, false)
+                binding.homePreviewRating.text = rating ?: ""
+                binding.homePreviewRating.isGone = rating.isNullOrBlank()
+
+                val hasYear = item.year != null
+                val hasDuration = duration != null
+                val hasRating = !rating.isNullOrBlank()
+                binding.homePreviewYearSeparator.isVisible = hasYear && (hasDuration || hasRating)
+                binding.homePreviewDurationSeparator.isVisible = hasDuration && hasRating
+                binding.homePreviewRatingSeparator.isGone = true
 
                 val plot = item.plot?.html()?.trim()
                 binding.homePreviewDescription.text = plot ?: ""
