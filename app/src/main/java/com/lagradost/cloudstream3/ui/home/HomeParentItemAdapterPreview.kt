@@ -42,7 +42,7 @@ import com.lagradost.cloudstream3.ui.account.AccountHelper.showAccountSelectLine
 import com.lagradost.cloudstream3.ui.account.AccountViewModel
 import com.lagradost.cloudstream3.ui.result.FOCUS_SELF
 import com.lagradost.cloudstream3.ui.result.START_ACTION_RESUME_LATEST
-import com.lagradost.cloudstream3.ui.result.bindLogo
+import com.lagradost.cloudstream3.ui.result.ResultFragment.bindLogo
 import com.lagradost.cloudstream3.ui.result.setLinearListLayout
 import com.lagradost.cloudstream3.ui.search.SEARCH_ACTION_LOAD
 import com.lagradost.cloudstream3.ui.search.SEARCH_ACTION_SHOW_METADATA
@@ -171,7 +171,11 @@ class HomeParentItemAdapterPreview(
                 insetBottom = 0
                 cornerRadius = circleSize / 2
                 backgroundTintList = ColorStateList.valueOf(Color.WHITE)
-                layoutParams = layoutParams.apply { width = circleSize; height = circleSize; marginEnd = gap }
+                layoutParams = layoutParams.apply {
+                    width = circleSize
+                    height = circleSize
+                    if (this is ViewGroup.MarginLayoutParams) setMarginEnd(gap)
+                }
                 contentDescription = context.getString(R.string.home_play)
             }
             binding.homePreviewInfo.apply {
