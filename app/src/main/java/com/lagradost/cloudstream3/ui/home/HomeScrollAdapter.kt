@@ -62,9 +62,6 @@ class HomeScrollAdapter(
                 }
 
                 binding.homeScrollPreviewTitle.text = item.name.html()
-
-                // Keep the legacy score view hidden on phone; the redesigned metadata row
-                // exposes the same score through the dedicated rating slot below.
                 binding.homePreviewScore.isGone = true
 
                 binding.homePreviewYear.text = item.year?.toString() ?: ""
@@ -79,7 +76,7 @@ class HomeScrollAdapter(
                 } ?: ""
                 binding.homePreviewDuration.isGone = duration == null
 
-                val rating = item.score?.toStringNull(0.1, 10, 1, false)
+                val rating = item.score?.toString()
                 binding.homePreviewRating.text = rating ?: ""
                 binding.homePreviewRating.isGone = rating.isNullOrBlank()
 
