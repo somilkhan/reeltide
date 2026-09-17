@@ -3,7 +3,7 @@
 **Last updated:** 2026-09-17
 **Active branch:** `ui/2026-liquid-glass-redesign`
 **Baseline:** `master`
-**Current code checkpoint:** `d5f38110b7ecf20f0eb5009559d5e38990a5848a`
+**Current code checkpoint:** `ab926b3d2f444a4892d3ff8d27bab013eece54a3`
 
 > Live execution checkpoint. Repository/code/build/test evidence outranks stale documentation or conversation memory.
 
@@ -22,11 +22,13 @@
 - Hero Play is solid white; Details is a dark solid pill; Save/bookmark remains a Details concern.
 - Empty successful hero responses collapse the hero shell.
 - Home paging remains full-bleed without scale-down gutters.
-- Home Source FAB remains present, stable and extended during scroll/shrink transitions, with a restrained dark surface and monochrome filter icon.
+- Home Source FAB remains present, stable and extended during scroll/shrink transitions, with a deliberately opaque dark surface and monochrome tune icon.
+- Source selector is positioned in the hero below the profile instead of competing with section headers.
 - Source provider-count suppression remains removed; source selection behavior is preserved.
 - Standard Home section headers use compact title hierarchy with plain `View All` + arrow.
 - Continue Watching now follows the same compact section-header rhythm instead of the older full-width header treatment.
 - Home section spacing was tightened to reduce large vertical gaps between headers and poster rails while preserving RecyclerView behavior.
+- Hero Details action keeps the leading info icon while the label is visually centered within the pill via controlled content padding.
 - Search state presentation was simplified by removing the nested glass-looking state icon surface; the state container remains the single secondary surface.
 - Home metadata cleanup, monochrome search filter-chip treatment, and setup lifecycle preservation remain intact.
 
@@ -55,14 +57,15 @@
 
 - Local Gradle execution is unavailable because outbound repository/network resolution is unavailable.
 - No device/runtime automation is available in the execution environment.
-- No new GitHub Actions run is currently exposed for commits after `00cd5e...`; prior head `00cd5e...` is the last confirmed green build.
+- No new GitHub Actions run is currently exposed for the latest commits; prior head `00cd5e...` is the last confirmed green build.
 
 ## REGRESSIONS / KNOWN RISKS
 
 - Latest Home/Search layout changes are not device-verified.
-- Current Home Source FAB positioning must be checked on compact/landscape layouts.
+- Current Home Source FAB positioning must be checked on compact/landscape layouts and against system insets.
 - Hidden zero-size `home_preview_bookmark` remains intentionally non-visible for adapter compatibility.
 - Search still needs behavioral/state verification, not only visual review.
+- The latest Details alignment adjustment is implemented through existing ViewBinding and does not change click/business behavior.
 
 ## FAILED APPROACHES
 
@@ -78,14 +81,14 @@
 - Liquid Glass is functional hierarchy, not universal decoration.
 - Monochrome black/white/grey is the active visual direction.
 - Home profile and Source are floating controls; hero Play/Details are solid content actions.
-- Home structure is full-bleed artwork → profile → title → metadata → synopsis → Play + Details → content rails.
+- Home structure is full-bleed artwork → profile → source → title → metadata → synopsis → Play + Details → content rails.
 - Section headers use compact hierarchy; `View All` remains plain rather than another glass container.
 - Search state uses one restrained secondary surface instead of nested surfaces.
 - Existing navigation IDs, graph, menus, state, adapters, ViewModels, repositories, player behavior and business ownership remain authoritative.
 
 ## VERIFICATION
 
-- Branch head verified at `d5f38110b7ecf20f0eb5009559d5e38990a5848a`.
+- Branch head verified at `ab926b3d2f444a4892d3ff8d27bab013eece54a3`.
 - Prior head `00cd5eaba308ae5bb256e53c77bc48fd2cab49a1` had GitHub Actions Artifact Build run #322 (`35243496790`) completed successfully.
 - No CI result is claimed for the latest layout commits because no new run is currently exposed for them.
 - User previously confirmed a stable diagnostic build launched successfully; no new device verification is claimed here.
