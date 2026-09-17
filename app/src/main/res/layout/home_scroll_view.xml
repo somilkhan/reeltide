@@ -123,16 +123,6 @@
                 android:visibility="gone" />
 
             <TextView
-                android:id="@+id/home_preview_duration_separator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="7dp"
-                android:text="•"
-                android:textColor="@color/home_text_tertiary"
-                android:textSize="13sp"
-                android:visibility="gone" />
-
-            <TextView
                 android:id="@+id/home_preview_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -143,7 +133,7 @@
                 tools:text="2h 10m" />
 
             <TextView
-                android:id="@+id/home_preview_rating_separator"
+                android:id="@+id/home_preview_duration_separator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="7dp"
@@ -162,6 +152,12 @@
                 android:textFontWeight="500"
                 android:visibility="gone"
                 tools:text="8.4" />
+
+            <TextView
+                android:id="@+id/home_preview_rating_separator"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <TextView
