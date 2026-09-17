@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.ViewGroup
+import android.widget.FrameLayout
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.lagradost.cloudstream3.R
 
@@ -50,15 +50,13 @@ class HomeSourceFab @JvmOverloads constructor(
         iconSize = dp(18f)
         setPadding(dp(14f), 0, dp(14f), 0)
 
-        layoutParams = layoutParams?.apply {
-            width = ViewGroup.LayoutParams.WRAP_CONTENT
-            height = dp(44f)
-            if (this is ViewGroup.LayoutParams && this is android.widget.FrameLayout.LayoutParams) {
-                gravity = Gravity.BOTTOM or Gravity.END
-                marginStart = dp(16f)
-                marginEnd = dp(16f)
-                bottomMargin = dp(92f)
-            }
-        }
+        val params = layoutParams as? FrameLayout.LayoutParams ?: return
+        params.width = FrameLayout.LayoutParams.WRAP_CONTENT
+        params.height = dp(44f)
+        params.gravity = Gravity.BOTTOM or Gravity.END
+        params.marginStart = dp(16f)
+        params.marginEnd = dp(16f)
+        params.bottomMargin = dp(92f)
+        layoutParams = params
     }
 }
