@@ -158,39 +158,83 @@ class HomeParentItemAdapterPreview(
         private fun configurePhoneHeroActions(binding: FragmentHomeHeadBinding) {
             binding.homePreviewBookmark.isGone = true
             val density = binding.root.resources.displayMetrics.density
-            val circleSize = (56f * density).toInt()
+            val ctaHeight = (48f * density).toInt()
             val detailsWidth = (116f * density).toInt()
             val gap = (10f * density).toInt()
+
             binding.homePreviewPlay.apply {
-                text = ""
+                text = "Play"
                 icon = ContextCompat.getDrawable(context, R.drawable.ic_baseline_play_arrow_24)
                 iconTint = ColorStateList.valueOf(Color.BLACK)
-                iconSize = (24f * density).toInt()
-                iconPadding = 0
+                iconSize = (20f * density).toInt()
+                iconPadding = (8f * density).toInt()
                 insetTop = 0
                 insetBottom = 0
-                cornerRadius = circleSize / 2
+                cornerRadius = ctaHeight / 2
                 backgroundTintList = ColorStateList.valueOf(Color.WHITE)
                 layoutParams = layoutParams.apply {
-                    width = circleSize
-                    height = circleSize
-                    if (this is ViewGroup.MarginLayoutParams) setMarginEnd(gap)
+                    width = 0
+                    height = ctaHeight
+                    if (this is android.widget.LinearLayout.LayoutParams) {
+                        weight = 1f
+                        marginStart = 0
+                        marginEnd = gap
+                    }
                 }
                 contentDescription = context.getString(R.string.home_play)
             }
+
             binding.homePreviewInfo.apply {
                 text = "Details"
                 setTextColor(Color.WHITE)
                 gravity = android.view.Gravity.CENTER
                 compoundDrawablePadding = (8f * density).toInt()
-                setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, R.drawable.ic_outline_info_24), null, null, null)
+                setCompoundDrawablesWithIntrinsicBounds(
+                    ContextCompat.getDrawable(context, R.drawable.ic_outline_info_24),
+                    null,
+                    null,
+                    null
+                )
                 background = ContextCompat.getDrawable(context, R.drawable.home_action_pill)
-                layoutParams = layoutParams.apply { width = detailsWidth; height = circleSize }
+                layoutParams = layoutParams.apply {
+                    width = detailsWidth
+                    height = ctaHeight
+                    if (this is android.widget.LinearLayout.LayoutParams) {
+                        weight = 0f
+                        marginStart = gap
+                        marginEnd = 0
+                    }
+                }
                 contentDescription = context.getString(R.string.home_more_info)
             }
         }
 
+        private fun updatePagination(position: Int) {
+            val active = (position % 5).coerceIn(0, 4)
+            for (index in 0 until 5) {
+                val dot = itemView.findViewById<View>(
+                    when (index) {
+                        0 -> R.id.home_preview_dot_0
+                        1 -> R.id.home_preview_dot_1
+                        2 -> R.id.home_preview_dot_2
+                        3 -> R.id.home_preview_dot_3
+                        else -> R.id.home_preview_dot_4
+                    }
+                )
+                dot.isVisible = true
+                dot.setBackgroundResource(
+                    if (index == active) R.drawable.home_pagination_dot_active
+                    else R.drawable.home_pagination_dot
+                )
+                dot.layoutParams = dot.layoutParams.apply {
+                    width = ((if (index == active) 16 else 5) * dot.resources.displayMetrics.density).toInt()
+                    height = (5 * dot.resources.displayMetrics.density).toInt()
+                }
+            }
+        }
+
         fun onSelect(item: LoadResponse, position: Int) {
+            updatePagination(position)
             (binding as? FragmentHomeHeadTvBinding)?.apply {
                 homePreviewDescription.isGone = item.plot.isNullOrBlank()
                 homePreviewDescription.text = item.plot?.html() ?: ""
