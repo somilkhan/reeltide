@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.preference.PreferenceManager
 import androidx.viewbinding.ViewBinding
 import com.lagradost.cloudstream3.R
@@ -162,6 +163,10 @@ open class HomeChildItemAdapter(
             nextFocusUp,
             nextFocusDown
         )
+
+        holder.itemView.findViewById<TextView>(R.id.card_title)?.text = item.name
+        holder.itemView.findViewById<TextView>(R.id.card_subtitle)?.text =
+            if (item.type?.isMovieType() == true) "Movie" else "Series"
         holder.itemView.tag = position
     }
 }
