@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +20,7 @@ import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -87,13 +89,18 @@ class HomeHeroActionsView @JvmOverloads constructor(
         val visibleCount = minOf(5, itemCount)
         val active = (state.position % 5).coerceIn(0, visibleCount - 1)
 
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(68.dp),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            verticalAlignment = Alignment.Top,
         ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
             HeroActionButton(
                 modifier = Modifier.weight(1f),
                 text = "Play",
@@ -114,13 +121,15 @@ class HomeHeroActionsView @JvmOverloads constructor(
             )
         }
 
-        Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(4.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(16.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
             repeat(visibleCount) { index ->
                 Box(
                     modifier = Modifier
@@ -201,7 +210,7 @@ class HomeHeroActionsView @JvmOverloads constructor(
                 .background(containerColor)
                 .border(1.dp, borderColor, shape)
                 .clickable(
-                    interactionSource = MutableInteractionSource(),
+                    interactionSource = remember { MutableInteractionSource() },
                     indication = null,
                     onClick = onClick,
                 )
