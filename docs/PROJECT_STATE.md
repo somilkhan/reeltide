@@ -3,7 +3,7 @@
 **Last updated:** 2026-09-18
 **Active branch:** `ui/2026-liquid-glass-redesign`
 **Baseline:** `master`
-**Current code checkpoint:** `8d8a0dc4550d9f811d30271f7213189b9dbeb33f`
+**Current code checkpoint:** `49b49f5915d7e1022b1d05a1d7bcd026852eecb1`
 
 ## Current Phase
 
@@ -22,7 +22,7 @@
 - Hero metadata supports year, duration and rating with dot separators while preserving the existing LoadResponse data source.
 - Hero synopsis remains a two-line presentation clamp and uses secondary text styling.
 - Play and Details preserve their existing IDs/callbacks while the action-button wrapper keeps the redesigned 48dp CTA geometry after legacy adapter binding.
-- Latest release rails use 118x168 artwork, 14dp corners, restrained borders, 12dp inter-item spacing and title text below the artwork.
+- Latest release rails use 118x168 artwork, 14dp corners, restrained borders, 12dp inter-item spacing and title text below the artwork; the item root no longer adds a second 12dp margin, preventing doubled visual gaps.
 - Latest release section headers now use 19sp primary hierarchy, 13sp secondary `View all`, 22dp screen padding and 26dp section rhythm.
 - Bottom navigation remains the existing 5-item menu/navigation graph, presented as a 64dp floating pill with 11dp side margins, 26dp bottom margin, 72%-surface fallback and compact active indicator styling.
 - Bottom navigation icons use outline-oriented assets with accent active-state color.
@@ -30,7 +30,7 @@
 
 ## IN PROGRESS
 
-- Verify latest Home CTA/pagination/release-card changes via CI/device
+- Verify latest Home CTA/pagination/release-card spacing changes via CI/device
 - Finish Home hero clipping/profile/source/loading/error/empty audit
 - Finish Search visual/state cleanup and interaction verification
 
@@ -91,4 +91,4 @@
 
 ## NEXT ACTION
 
-- Wait for CI #378; if green, continue with runtime visual verification and remaining Home/Search audits. If red, inspect the failing Gradle step and fix the root cause.
+- Wait for CI #380; if green, continue with runtime visual verification and remaining Home/Search audits. If red, inspect the failing Gradle step and fix the root cause.
