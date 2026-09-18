@@ -178,7 +178,7 @@ class HomeParentItemAdapterPreview(
                     if (this is android.widget.LinearLayout.LayoutParams) {
                         weight = 1f
                         marginStart = 0
-                        marginEnd = gap
+                        marginEnd = 0
                     }
                 }
                 contentDescription = context.getString(R.string.home_play)
