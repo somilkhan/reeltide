@@ -101,8 +101,8 @@ class HomeHeroActionsView @JvmOverloads constructor(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-            HeroActionButton(
-                modifier = Modifier.weight(1f),
+                HeroActionButton(
+                    modifier = Modifier.weight(1f),
                 text = "Play",
                 icon = com.lagradost.cloudstream3.R.drawable.ic_baseline_play_arrow_24,
                 containerColor = HeroWhite,
@@ -110,16 +110,16 @@ class HomeHeroActionsView @JvmOverloads constructor(
                 onClick = { onPlay?.invoke() },
             )
 
-            HeroActionButton(
-                modifier = Modifier.width(116.dp),
+                HeroActionButton(
+                    modifier = Modifier.width(116.dp),
                 text = "Details",
                 icon = com.lagradost.cloudstream3.R.drawable.ic_outline_info_24,
                 containerColor = HeroGlass,
                 contentColor = HeroWhite,
                 borderColor = HeroGlassBorder,
-                onClick = { onDetails?.invoke() },
-            )
-        }
+                    onClick = { onDetails?.invoke() },
+                )
+            }
 
             Spacer(Modifier.height(4.dp))
 
@@ -130,7 +130,7 @@ class HomeHeroActionsView @JvmOverloads constructor(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-            repeat(visibleCount) { index ->
+                repeat(visibleCount) { index ->
                 Box(
                     modifier = Modifier
                         .padding(horizontal = 3.dp)
@@ -146,7 +146,8 @@ class HomeHeroActionsView @JvmOverloads constructor(
                                 if (index == active) "Current hero page"
                                 else "Hero page " + (index + 1)
                         },
-                )
+                    )
+                }
             }
         }
     }
