@@ -3,7 +3,7 @@
 **Last updated:** 2026-09-18
 **Active branch:** `ui/2026-liquid-glass-redesign`
 **Baseline:** `master`
-**Current code checkpoint:** `5d77015cf858c448ec84ba9faffce5eed1a7a4f1`
+**Current code checkpoint:** `7eb60ac928a604e834ad0267e930fbaa9e0f3636`
 
 ## Current Phase
 
@@ -21,17 +21,17 @@
 - Hero title uses 34sp/800 styling, tightened tracking and two-line clamping.
 - Hero metadata supports year, duration and rating with dot separators while preserving the existing LoadResponse data source.
 - Hero synopsis remains a two-line presentation clamp and uses secondary text styling.
-- Play and Details preserve their existing IDs/callbacks while the action-button wrapper keeps the redesigned 48dp CTA geometry after legacy adapter binding.
+- Home phone hero actions are now rendered by a dedicated Compose `HomeHeroActionsView`; the existing hero ViewPager/data callbacks remain authoritative while the XML CTA/pagination subtree is removed.
 - Latest release rails use 118x168 artwork, 14dp corners, restrained borders, 12dp inter-item spacing and title text below the artwork; the item root no longer adds a second 12dp margin, preventing doubled visual gaps.
 - Latest release section headers now use 19sp primary hierarchy, 13sp secondary `View all`, 22dp screen padding and 26dp section rhythm.
 - Bottom navigation remains the existing 5-item menu/navigation graph, presented as a 64dp floating pill with 22dp side margins, 26dp bottom margin, 72%-surface fallback, 8dp inner padding and compact active indicator styling.
 - Bottom navigation icons use outline-oriented assets with accent active-state color.
-- Existing navigation IDs, provider logic, adapters, ViewModels and business actions remain authoritative.
+- Existing navigation IDs, provider logic, adapters, ViewModels and business actions remain authoritative. Compose is being introduced incrementally at View boundaries rather than replacing the app shell.
 
 ## IN PROGRESS
 
-- Verify the latest Home hero CTA and bottom-navigation rendering via CI/device
-- Finish Home hero clipping/profile/source/pagination/loading/error/empty audit
+- Verify the first Compose Home hero migration slice via CI/device
+- Continue bottom-up Home migration: hero metadata/content → section rails/cards → Home screen shell
 - Finish Search visual/state cleanup and interaction verification
 
 ## REMAINING
@@ -85,10 +85,10 @@
 
 - Active branch verified as `ui/2026-liquid-glass-redesign`.
 - Latest implementation checkpoint before this state-ledger update: `5d77015cf858c448ec84ba9faffce5eed1a7a4f1`.
-- Artifact Build run #402 (`35371267726`) is in progress for that checkpoint; no success is claimed yet.
-- The preceding Artifact Build run #401 (`35359494840`) passed all steps and produced artifact `pull-request-build` for checkpoint `9a99b625455c770e5042ebbf9e16f645394b4082`.
+- Artifact Build run #406 (`35374321413`) is in progress for code checkpoint `7eb60ac928a604e834ad0267e930fbaa9e0f3636`; no success is claimed yet.
+- Artifact Build run #403 (`35371298514`) passed all steps for the prior documentation checkpoint.
 - No device verification is claimed.
 
 ## NEXT ACTION
 
-- Wait for CI #402; if green, continue with device/runtime verification and the remaining Home/Search audits. If red, inspect the failing Gradle step and fix the root cause.
+- Wait for CI #406; if green, continue the Home bottom-up Compose migration and runtime verification. If red, inspect the exact Gradle failure and fix the root cause before proceeding.
