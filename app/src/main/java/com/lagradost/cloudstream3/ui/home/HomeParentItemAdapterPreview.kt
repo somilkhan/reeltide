@@ -164,9 +164,7 @@ class HomeParentItemAdapterPreview(
         private fun configurePhoneHeroActions(binding: FragmentHomeHeadBinding) {
             binding.homePreviewBookmark.isGone = true
             val density = binding.root.resources.displayMetrics.density
-            val ctaHeight = (48f * density).toInt()
-            val detailsWidth = (116f * density).toInt()
-            val gap = (10f * density).toInt()
+            // Layout geometry is owned by fragment_home_head.xml.
 
             binding.homePreviewPlay.apply {
                 text = "Play"
@@ -176,7 +174,7 @@ class HomeParentItemAdapterPreview(
                 iconPadding = (8f * density).toInt()
                 insetTop = 0
                 insetBottom = 0
-                cornerRadius = ctaHeight / 2
+                cornerRadius = (48f * density / 2f).toInt()
                 backgroundTintList = ColorStateList.valueOf(Color.WHITE)
                 contentDescription = context.getString(R.string.home_play)
             }
@@ -193,15 +191,6 @@ class HomeParentItemAdapterPreview(
                     null
                 )
                 background = ContextCompat.getDrawable(context, R.drawable.home_action_pill)
-                layoutParams = layoutParams.apply {
-                    width = detailsWidth
-                    height = ctaHeight
-                    if (this is android.widget.LinearLayout.LayoutParams) {
-                        weight = 0f
-                        marginStart = gap
-                        marginEnd = 0
-                    }
-                }
                 contentDescription = context.getString(R.string.home_more_info)
             }
         }
