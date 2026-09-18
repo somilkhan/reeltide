@@ -4,10 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
 import kotlin.math.max
 import kotlin.math.min
 
@@ -45,8 +43,10 @@ class LiquidGlassBottomNavigationMenuView(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val availableWidth = MeasureSpec.getSize(widthMeasureSpec)
-        val parentHeight = MeasureSpec.getSize(heightMeasureSpec)
-        val childHeightSpec = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.AT_MOST)
+        val childHeightSpec = MeasureSpec.makeMeasureSpec(
+            inactiveItemWidth,
+            MeasureSpec.EXACTLY
+        )
 
         val visibleChildren = (0 until childCount)
             .map { getChildAt(it) }
@@ -58,7 +58,9 @@ class LiquidGlassBottomNavigationMenuView(
         }
 
         val selectedPosition = getSelectedItemPosition()
-        val selectedChild = visibleChildren.getOrNull(selectedPosition)
+        val selectedChild = getChildAt(selectedPosition).takeIf {
+            selectedPosition in 0 until childCount && it.visibility != View.GONE
+        }
 
         var activeWidth = inactiveItemWidth
         if (selectedChild != null) {
