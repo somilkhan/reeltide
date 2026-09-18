@@ -50,6 +50,7 @@ Finish the Home liquid-glass visual redesign without changing provider/data-load
 ## Verification state
 - Static runtime-trace verification: **DONE**
 - Code/layout consistency checks: **DONE**
-- Clean Gradle build: **PENDING**
-- APK install/runtime screenshot verification: **PENDING**
+- Clean Gradle build: **BLOCKED — repository has no existing CI workflow exposed for this branch, and this execution environment has no Android build/ADB workspace**
+- Temporary CI workflow was created to attempt validation, but GitHub returned no workflow run for the commit; it was removed and is not part of the project.
+- APK install/runtime screenshot verification: **BLOCKED for the same environment limitation**
 - Final project completion: **NOT YET VERIFIED**
