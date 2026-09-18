@@ -131,8 +131,11 @@
                     android:textColor="@color/home_text_primary"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    app:drawableLeftCompat="@drawable/ic_outline_info_24"
-                    app:drawableTint="@color/home_text_primary" />
+                    app:backgroundTint="@null"
+                    app:icon="@drawable/ic_outline_info_24"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp"
+                    app:iconTint="@color/home_text_primary" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/home_preview_pagination"
