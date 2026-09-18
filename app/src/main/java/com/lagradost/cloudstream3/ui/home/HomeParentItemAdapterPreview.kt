@@ -142,6 +142,12 @@ class HomeParentItemAdapterPreview(
             (callback.view.context?.getActivity() as? MainActivity)?.loadPopup(callback.card, load = false)
         }
         private val previewViewpager: ViewPager2 = itemView.findViewById(R.id.home_preview_viewpager)
+        private val previewAdapterObserver = object : RecyclerView.AdapterDataObserver() {
+            override fun onChanged() = updatePagination(previewViewpager.currentItem)
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) = updatePagination(previewViewpager.currentItem)
+            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) = updatePagination(previewViewpager.currentItem)
+        }
+
         private val previewViewpagerText: ViewGroup = itemView.findViewById(R.id.home_preview_viewpager_text)
         private val resumeHolder: View = itemView.findViewById(R.id.home_watch_holder)
         private val resumeRecyclerView: RecyclerView = itemView.findViewById(R.id.home_watch_child_recyclerview)
@@ -210,26 +216,41 @@ class HomeParentItemAdapterPreview(
         }
 
         private fun updatePagination(position: Int) {
-            val active = (position % 5).coerceIn(0, 4)
-            for (index in 0 until 5) {
-                val dot = itemView.findViewById<View>(
-                    when (index) {
-                        0 -> R.id.home_preview_dot_0
-                        1 -> R.id.home_preview_dot_1
-                        2 -> R.id.home_preview_dot_2
-                        3 -> R.id.home_preview_dot_3
-                        else -> R.id.home_preview_dot_4
-                    }
-                )
-                dot.isVisible = true
-                dot.setBackgroundResource(
-                    if (index == active) R.drawable.home_pagination_dot_active
-                    else R.drawable.home_pagination_dot
-                )
-                dot.layoutParams = dot.layoutParams.apply {
-                    width = ((if (index == active) 16 else 5) * dot.resources.displayMetrics.density).toInt()
-                    height = (5 * dot.resources.displayMetrics.density).toInt()
+            val itemCount = previewAdapter.itemCount
+            val container = itemView.findViewById<ViewGroup>(R.id.home_preview_pagination) ?: return
+            container.removeAllViews()
+
+            if (itemCount <= 1) {
+                container.isGone = true
+                return
+            }
+
+            container.isVisible = true
+            val density = container.resources.displayMetrics.density
+            val pageWindowStart = (position.coerceAtLeast(0) / 5) * 5
+            val visibleCount = minOf(5, itemCount - pageWindowStart)
+            val active = (position - pageWindowStart).coerceIn(0, visibleCount - 1)
+
+            repeat(visibleCount) { index ->
+                val dot = View(container.context).apply {
+                    background = ContextCompat.getDrawable(
+                        context,
+                        if (index == active) R.drawable.home_pagination_dot_active
+                        else R.drawable.home_pagination_dot
+                    )
+                    contentDescription = context.getString(
+                        if (index == active) R.string.home_play else R.string.home_more_info
+                    )
                 }
+                val size = if (index == active) 16 else 5
+                val params = LinearLayout.LayoutParams(
+                    (size * density).toInt(),
+                    (5 * density).toInt()
+                ).apply {
+                    marginStart = (3 * density).toInt()
+                    marginEnd = (3 * density).toInt()
+                }
+                container.addView(dot, params)
             }
         }
 
@@ -272,7 +293,10 @@ class HomeParentItemAdapterPreview(
                 previewAdapter.getItemOrNull(position)?.let { onSelect(it, position) }
             }
         }
-        fun onViewDetachedFromWindow() { previewViewpager.unregisterOnPageChangeCallback(previewCallback) }
+        fun onViewDetachedFromWindow() {
+            previewViewpager.unregisterOnPageChangeCallback(previewCallback)
+            previewAdapter.unregisterAdapterDataObserver(previewAdapterObserver)
+        }
         private val toggleList = listOf(
             Pair(itemView.findViewById<Chip>(R.id.home_type_watching_btt), WatchType.WATCHING),
             Pair(itemView.findViewById<Chip>(R.id.home_type_completed_btt), WatchType.COMPLETED),
@@ -285,6 +309,7 @@ class HomeParentItemAdapterPreview(
         init {
             previewViewpager.setPageTransformer(HomeScrollTransformer())
             previewViewpager.adapter = previewAdapter
+            previewAdapter.registerAdapterDataObserver(previewAdapterObserver)
             resumeRecyclerView.adapter = resumeAdapter
             bookmarkRecyclerView.setRecycledViewPool(HomeChildItemAdapter.sharedPool)
             bookmarkRecyclerView.adapter = bookmarkAdapter
