@@ -30,9 +30,9 @@
 
 ## IN PROGRESS
 
-- CI verification for the latest Home redesign checkpoint.
-- Runtime/device verification remains unavailable here.
-- Final visual audit of pagination state behavior, compact/landscape insets, bottom-nav overlap and poster rail geometry.
+- Verify latest Home CTA/pagination/release-card changes via CI/device
+- Finish Home hero clipping/profile/source/loading/error/empty audit
+- Finish Search visual/state cleanup and interaction verification
 
 ## REMAINING
 
@@ -91,4 +91,4 @@
 
 ## NEXT ACTION
 
-Obtain CI result, fix any build errors at the root, then complete the Home interaction/inset audit before moving to Search.
+- Wait for CI #378; if green, continue with runtime visual verification and remaining Home/Search audits. If red, inspect the failing Gradle step and fix the root cause.
