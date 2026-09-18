@@ -1,9 +1,9 @@
 package com.lagradost.cloudstream3.ui.navigation
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlin.math.max
@@ -21,6 +21,7 @@ import kotlin.math.min
  * NavigationBarMenuView already wraps selection changes in a ChangeBounds-capable transition,
  * so these width/position changes animate together with the selected label.
  */
+@SuppressLint("RestrictedApi")
 class LiquidGlassBottomNavigationView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -58,8 +59,10 @@ class LiquidGlassBottomNavigationMenuView(
         }
 
         val selectedPosition = getSelectedItemPosition()
-        val selectedChild = getChildAt(selectedPosition).takeIf {
-            selectedPosition in 0 until childCount && it.visibility != View.GONE
+        val selectedChild = if (selectedPosition in 0 until childCount) {
+            getChildAt(selectedPosition)?.takeIf { it.visibility != View.GONE }
+        } else {
+            null
         }
 
         var activeWidth = inactiveItemWidth
