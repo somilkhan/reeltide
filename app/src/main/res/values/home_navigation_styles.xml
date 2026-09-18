@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Material's indicator is disabled visually; the item background below owns the pill. -->
     <style name="HomeBottomNavActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:width">@dimen/home_nav_item_width</item>
-        <item name="android:height">@dimen/home_nav_item_width</item>
+        <item name="android:width">0dp</item>
+        <item name="android:height">0dp</item>
         <item name="android:color">@color/transparent</item>
         <item name="marginHorizontal">0dp</item>
-        <item name="expandedWidth">wrap_content</item>
-        <item name="expandedHeight">@dimen/home_nav_item_width</item>
-        <item name="expandedActiveIndicatorPaddingStart">12dp</item>
-        <item name="expandedActiveIndicatorPaddingEnd">12dp</item>
+        <item name="expandedWidth">0dp</item>
+        <item name="expandedHeight">0dp</item>
+        <item name="expandedActiveIndicatorPaddingStart">0dp</item>
+        <item name="expandedActiveIndicatorPaddingEnd">0dp</item>
         <item name="expandedActiveIndicatorPaddingTop">0dp</item>
         <item name="expandedActiveIndicatorPaddingBottom">0dp</item>
     </style>
