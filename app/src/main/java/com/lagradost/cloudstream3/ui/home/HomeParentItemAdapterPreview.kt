@@ -1,8 +1,6 @@
 package com.lagradost.cloudstream3.ui.home
 
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -59,7 +57,6 @@ import com.lagradost.cloudstream3.utils.UIHelper.fixPaddingStatusbarMargin
 import com.lagradost.cloudstream3.utils.UIHelper.fixPaddingStatusbarView
 import com.lagradost.cloudstream3.utils.UIHelper.populateChips
 import com.lagradost.cloudstream3.ui.setRecycledViewPool
-import androidx.core.graphics.toColorInt
 
 class HomeParentItemAdapterPreview(
     private val viewModel: HomeViewModel,
@@ -149,6 +146,7 @@ class HomeParentItemAdapterPreview(
         }
 
         private val previewViewpagerText: ViewGroup = itemView.findViewById(R.id.home_preview_viewpager_text)
+        private val heroActions: HomeHeroActionsView = itemView.findViewById(R.id.home_hero_actions)
         private val resumeHolder: View = itemView.findViewById(R.id.home_watch_holder)
         private val resumeRecyclerView: RecyclerView = itemView.findViewById(R.id.home_watch_child_recyclerview)
         private val bookmarkHolder: View = itemView.findViewById(R.id.home_bookmarked_holder)
@@ -160,72 +158,6 @@ class HomeParentItemAdapterPreview(
         private val topPadding: View? = itemView.findViewById(R.id.home_padding)
         private val alternativeAccountPadding: View? = itemView.findViewById(R.id.alternative_account_padding)
         private val homeNonePadding: View = itemView.findViewById(R.id.home_none_padding)
-
-        private fun configurePhoneHeroActions(binding: FragmentHomeHeadBinding) {
-            binding.homePreviewBookmark.isGone = true
-            val density = binding.root.resources.displayMetrics.density
-            // Layout geometry is owned by fragment_home_head.xml.
-
-            binding.homePreviewPlay.apply {
-                text = "Play"
-                icon = ContextCompat.getDrawable(context, R.drawable.ic_baseline_play_arrow_24)
-                iconTint = ColorStateList.valueOf(Color.BLACK)
-                iconSize = (20f * density).toInt()
-                iconPadding = (8f * density).toInt()
-                insetTop = 0
-                insetBottom = 0
-                cornerRadius = (48f * density / 2f).toInt()
-                backgroundTintList = ColorStateList.valueOf(Color.WHITE)
-                contentDescription = context.getString(R.string.home_play)
-            }
-
-            binding.homePreviewInfo.apply {
-                // XML owns the static geometry/background. Runtime binding only refreshes
-                // dynamic content and clears MaterialButton's theme tint from the custom surface.
-                text = "Details"
-                setTextColor(ContextCompat.getColor(context, R.color.home_text_primary))
-                backgroundTintList = null
-                contentDescription = context.getString(R.string.home_more_info)
-            }
-        }
-
-        private fun updatePagination(position: Int) {
-            val itemCount = previewAdapter.itemCount
-            val container = itemView.findViewById<ViewGroup>(R.id.home_preview_pagination) ?: return
-            val dots = intArrayOf(
-                R.id.home_preview_dot_0,
-                R.id.home_preview_dot_1,
-                R.id.home_preview_dot_2,
-                R.id.home_preview_dot_3,
-                R.id.home_preview_dot_4
-            )
-
-            if (itemCount <= 1) {
-                container.isGone = true
-                dots.forEach { id -> itemView.findViewById<View>(id)?.isGone = true }
-                return
-            }
-
-            container.isVisible = true
-            val pageWindowStart = (position.coerceAtLeast(0) / 5) * 5
-            val visibleCount = minOf(5, itemCount - pageWindowStart)
-            val active = (position - pageWindowStart).coerceIn(0, visibleCount - 1)
-
-            dots.forEachIndexed { index, id ->
-                val dot = itemView.findViewById<View>(id) ?: return@forEachIndexed
-                dot.isVisible = index < visibleCount
-                if (index < visibleCount) {
-                    dot.background = ContextCompat.getDrawable(
-                        dot.context,
-                        if (index == active) R.drawable.home_pagination_dot_active
-                        else R.drawable.home_pagination_dot
-                    )
-                    dot.contentDescription = dot.context.getString(
-                        if (index == active) R.string.home_play else R.string.home_more_info
-                    )
-                }
-            }
-        }
 
         fun onSelect(item: LoadResponse, position: Int) {
             updatePagination(position)
@@ -254,9 +186,16 @@ class HomeParentItemAdapterPreview(
                 homePreviewInfoBtt.setOnClickListener { view -> viewModel.click(LoadClickCallback(0, view, position, item)) }
             }
             (binding as? FragmentHomeHeadBinding)?.apply {
-                configurePhoneHeroActions(this)
-                homePreviewPlay.setOnClickListener { view -> viewModel.click(LoadClickCallback(START_ACTION_RESUME_LATEST, view, position, item)) }
-                homePreviewInfo.setOnClickListener { view -> viewModel.click(LoadClickCallback(0, view, position, item)) }
+                heroActions.bind(
+                    itemCount = previewAdapter.itemCount,
+                    position = position,
+                    onPlay = {
+                        viewModel.click(LoadClickCallback(START_ACTION_RESUME_LATEST, heroActions, position, item))
+                    },
+                    onDetails = {
+                        viewModel.click(LoadClickCallback(0, heroActions, position, item))
+                    },
+                )
             }
         }
 
