@@ -47,17 +47,27 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
+            <com.lagradost.cloudstream3.ui.navigation.LiquidGlassBottomNavigationView
                 android:id="@+id/nav_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
+                app:activeIndicatorLabelPadding="0dp"
+                app:horizontalItemTextAppearanceActive="@style/HomeBottomNavItemTextActive"
+                app:horizontalItemTextAppearanceInactive="@style/HomeBottomNavItemTextInactive"
+                app:iconLabelHorizontalSpacing="6dp"
                 app:itemActiveIndicatorStyle="@style/HomeBottomNavActiveIndicator"
+                app:itemBackground="@drawable/liquid_glass_nav_item_background"
+                app:itemGravity="center"
+                app:itemHorizontalTranslationEnabled="false"
+                app:itemIconGravity="start"
                 app:itemIconSize="@dimen/home_nav_icon_size"
                 app:itemIconTint="@color/liquid_glass_nav_item_color"
-                app:itemTextColor="@color/liquid_glass_nav_item_color"
                 app:itemRippleColor="@color/home_border"
-                app:labelVisibilityMode="unlabeled"
+                app:itemTextAppearanceActive="@style/HomeBottomNavItemTextActive"
+                app:itemTextAppearanceInactive="@style/HomeBottomNavItemTextInactive"
+                app:itemTextColor="@color/liquid_glass_nav_item_color"
+                app:labelVisibilityMode="selected"
                 app:menu="@menu/bottom_nav_menu" />
 
         </FrameLayout>
