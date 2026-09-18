@@ -2,7 +2,6 @@ package com.lagradost.cloudstream3.ui.home
 
 import android.content.Context
 import android.util.AttributeSet
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -16,7 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,13 +24,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -145,6 +143,47 @@ class HomeHeroActionsView @JvmOverloads constructor(
     }
 
     @Composable
+    private fun HeroActionIcon(
+        icon: Int,
+        color: Color,
+    ) {
+        androidx.compose.foundation.Canvas(
+            modifier = Modifier.width(20.dp).height(20.dp),
+        ) {
+            val strokeWidth = 2.dp.toPx()
+            when (icon) {
+                com.lagradost.cloudstream3.R.drawable.ic_baseline_play_arrow_24 -> {
+                    val path = androidx.compose.ui.graphics.Path().apply {
+                        moveTo(size.width * 0.34f, size.height * 0.22f)
+                        lineTo(size.width * 0.78f, size.height * 0.5f)
+                        lineTo(size.width * 0.34f, size.height * 0.78f)
+                        close()
+                    }
+                    drawPath(path, color)
+                }
+                else -> {
+                    drawCircle(
+                        color = color,
+                        radius = size.minDimension * 0.39f,
+                        style = Stroke(width = strokeWidth),
+                    )
+                    drawLine(
+                        color = color,
+                        start = androidx.compose.ui.geometry.Offset(size.width * 0.5f, size.height * 0.47f),
+                        end = androidx.compose.ui.geometry.Offset(size.width * 0.5f, size.height * 0.72f),
+                        strokeWidth = strokeWidth,
+                    )
+                    drawCircle(
+                        color = color,
+                        radius = strokeWidth * 0.72f,
+                        center = androidx.compose.ui.geometry.Offset(size.width * 0.5f, size.height * 0.31f),
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
     private fun HeroActionButton(
         modifier: Modifier,
         text: String,
@@ -170,19 +209,19 @@ class HomeHeroActionsView @JvmOverloads constructor(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Image(
-                painter = painterResource(icon),
-                contentDescription = null,
-                modifier = Modifier.width(20.dp).height(20.dp),
-                colorFilter = ColorFilter.tint(contentColor),
+            HeroActionIcon(
+                icon = icon,
+                color = contentColor,
             )
             Spacer(Modifier.width(8.dp))
-            Text(
+            BasicText(
                 text = text,
-                color = contentColor,
-                fontSize = 15.sp,
-                lineHeight = 20.sp,
-                fontWeight = FontWeight.Bold,
+                style = androidx.compose.ui.text.TextStyle(
+                    color = contentColor,
+                    fontSize = 15.sp,
+                    lineHeight = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                ),
             )
         }
     }
