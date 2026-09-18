@@ -178,15 +178,6 @@ class HomeParentItemAdapterPreview(
                 insetBottom = 0
                 cornerRadius = ctaHeight / 2
                 backgroundTintList = ColorStateList.valueOf(Color.WHITE)
-                layoutParams = layoutParams.apply {
-                    width = 0
-                    height = ctaHeight
-                    if (this is android.widget.LinearLayout.LayoutParams) {
-                        weight = 1f
-                        marginStart = 0
-                        marginEnd = 0
-                    }
-                }
                 contentDescription = context.getString(R.string.home_play)
             }
 
@@ -218,39 +209,38 @@ class HomeParentItemAdapterPreview(
         private fun updatePagination(position: Int) {
             val itemCount = previewAdapter.itemCount
             val container = itemView.findViewById<ViewGroup>(R.id.home_preview_pagination) ?: return
-            container.removeAllViews()
+            val dots = intArrayOf(
+                R.id.home_preview_dot_0,
+                R.id.home_preview_dot_1,
+                R.id.home_preview_dot_2,
+                R.id.home_preview_dot_3,
+                R.id.home_preview_dot_4
+            )
 
             if (itemCount <= 1) {
                 container.isGone = true
+                dots.forEach { id -> itemView.findViewById<View>(id)?.isGone = true }
                 return
             }
 
             container.isVisible = true
-            val density = container.resources.displayMetrics.density
             val pageWindowStart = (position.coerceAtLeast(0) / 5) * 5
             val visibleCount = minOf(5, itemCount - pageWindowStart)
             val active = (position - pageWindowStart).coerceIn(0, visibleCount - 1)
 
-            repeat(visibleCount) { index ->
-                val dot = View(container.context).apply {
-                    background = ContextCompat.getDrawable(
-                        context,
+            dots.forEachIndexed { index, id ->
+                val dot = itemView.findViewById<View>(id) ?: return@forEachIndexed
+                dot.isVisible = index < visibleCount
+                if (index < visibleCount) {
+                    dot.background = ContextCompat.getDrawable(
+                        dot.context,
                         if (index == active) R.drawable.home_pagination_dot_active
                         else R.drawable.home_pagination_dot
                     )
-                    contentDescription = context.getString(
+                    dot.contentDescription = dot.context.getString(
                         if (index == active) R.string.home_play else R.string.home_more_info
                     )
                 }
-                val size = if (index == active) 16 else 5
-                val params = LinearLayout.LayoutParams(
-                    (size * density).toInt(),
-                    (5 * density).toInt()
-                ).apply {
-                    marginStart = (3 * density).toInt()
-                    marginEnd = (3 * density).toInt()
-                }
-                container.addView(dot, params)
             }
         }
 
