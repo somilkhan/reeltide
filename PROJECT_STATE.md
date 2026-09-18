@@ -54,3 +54,26 @@ Finish the Home liquid-glass visual redesign without changing provider/data-load
 - Temporary CI workflow was created to attempt validation, but GitHub returned no workflow run for the commit; it was removed and is not part of the project.
 - APK install/runtime screenshot verification: **BLOCKED for the same environment limitation**
 - Final project completion: **NOT YET VERIFIED**
+
+## 2026 liquid-glass navA
+
+### Bottom-nav implementation
+- Kept `bottom_nav_menu.xml` IDs/order/destinations unchanged.
+- Replaced only the phone bottom-nav renderer with `LiquidGlassBottomNavigationView`.
+- Inactive items are fixed 40dp icon-only items.
+- Selected item uses the existing Material selection state, horizontal icon+label layout, content-width sizing, and the existing Material transition pipeline.
+- Active background is the new gradient/border island drawable.
+- Active/inactive icon and label colors use `#7BA6FF` / `#585F6E`.
+- Outer surface remains `liquid_glass_nav_surface.xml`; side margin is now 22dp and inner padding 8dp per the requested spec.
+- 4dp item gap is applied by the custom visual menu renderer.
+- The active width is capped by available width after reserving four 40dp inactive items, so the active island cannot push an item outside the 360dp bar. At 360dp the requested label set fits without abbreviation under the current 40dp + 4dp gap geometry.
+- `home_nav_active_size` was removed because the old fixed active-circle dimension is no longer used.
+- No Home hero/card/provider/navigation destination code was changed for this nav task.
+
+### Verification
+- Menu IDs/order statically verified: Home, Search, Library, Downloads, Settings.
+- Runtime routing implementation remains Material `BottomNavigationView`-based; the custom class only overrides menu rendering/measurement.
+- Material 1.14.0 already performs delayed layout transitions around selection changes; the custom renderer changes only child widths/positions, so the existing transition animates the island expansion/shrink together with label state.
+- Full `./gradlew clean assembleDebug`: **NOT EXECUTED** in this environment because the repository cannot be cloned into the build workspace (network/DNS access to GitHub is unavailable).
+- APK installation and 360dp/430dp physical-device verification: **NOT EXECUTED**.
+- Therefore this branch is **NOT declared PROJECT COMPLETE** and no APK download link is claimed.
