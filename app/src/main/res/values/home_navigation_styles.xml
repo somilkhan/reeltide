@@ -5,7 +5,7 @@
         <item name="android:height">@dimen/home_nav_item_width</item>
         <item name="android:color">@color/transparent</item>
         <item name="marginHorizontal">0dp</item>
-        <item name="expandedWidth">-2</item>
+        <item name="expandedWidth">wrap_content</item>
         <item name="expandedHeight">@dimen/home_nav_item_width</item>
         <item name="expandedActiveIndicatorPaddingStart">12dp</item>
         <item name="expandedActiveIndicatorPaddingEnd">12dp</item>
