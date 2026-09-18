@@ -33,6 +33,7 @@ class LiquidGlassBottomNavigationView @JvmOverloads constructor(
     }
 }
 
+@SuppressLint("RestrictedApi")
 class LiquidGlassBottomNavigationMenuView(
     context: Context,
 ) : BottomNavigationMenuView(context) {
