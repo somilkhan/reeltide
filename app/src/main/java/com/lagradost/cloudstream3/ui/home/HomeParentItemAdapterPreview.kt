@@ -1,6 +1,7 @@
 package com.lagradost.cloudstream3.ui.home
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.core.graphics.toColorInt
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
@@ -140,9 +142,9 @@ class HomeParentItemAdapterPreview(
         }
         private val previewViewpager: ViewPager2 = itemView.findViewById(R.id.home_preview_viewpager)
         private val previewAdapterObserver = object : RecyclerView.AdapterDataObserver() {
-            override fun onChanged() = updatePagination(previewViewpager.currentItem)
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) = updatePagination(previewViewpager.currentItem)
-            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) = updatePagination(previewViewpager.currentItem)
+            override fun onChanged() = updateHeroPagination(previewViewpager.currentItem)
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) = updateHeroPagination(previewViewpager.currentItem)
+            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) = updateHeroPagination(previewViewpager.currentItem)
         }
 
         private val previewViewpagerText: ViewGroup = itemView.findViewById(R.id.home_preview_viewpager_text)
@@ -159,8 +161,11 @@ class HomeParentItemAdapterPreview(
         private val alternativeAccountPadding: View? = itemView.findViewById(R.id.alternative_account_padding)
         private val homeNonePadding: View = itemView.findViewById(R.id.home_none_padding)
 
+        private fun updateHeroPagination(position: Int) {
+            heroActions.updatePosition(previewAdapter.itemCount, position)
+        }
+
         fun onSelect(item: LoadResponse, position: Int) {
-            updatePagination(position)
             (binding as? FragmentHomeHeadTvBinding)?.apply {
                 homePreviewDescription.isGone = item.plot.isNullOrBlank()
                 homePreviewDescription.text = item.plot?.html() ?: ""
