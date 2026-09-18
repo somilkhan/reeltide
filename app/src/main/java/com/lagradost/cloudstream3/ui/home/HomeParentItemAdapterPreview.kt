@@ -180,17 +180,11 @@ class HomeParentItemAdapterPreview(
             }
 
             binding.homePreviewInfo.apply {
+                // XML owns the static geometry/background. Runtime binding only refreshes
+                // dynamic content and clears MaterialButton's theme tint from the custom surface.
                 text = "Details"
-                setTextColor(Color.WHITE)
-                gravity = android.view.Gravity.CENTER
-                compoundDrawablePadding = (8f * density).toInt()
-                setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(context, R.drawable.ic_outline_info_24),
-                    null,
-                    null,
-                    null
-                )
-                background = ContextCompat.getDrawable(context, R.drawable.home_action_pill)
+                setTextColor(ContextCompat.getColor(context, R.color.home_text_primary))
+                backgroundTintList = null
                 contentDescription = context.getString(R.string.home_more_info)
             }
         }
