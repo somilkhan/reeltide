@@ -75,6 +75,13 @@ class HomeHeroActionsView @JvmOverloads constructor(
         this.onDetails = onDetails
     }
 
+    fun updatePosition(position: Int) {
+        state = state.copy(
+            itemCount = state.itemCount,
+            position = position.coerceAtLeast(0),
+        )
+    }
+
     fun clearActions() {
         onPlay = null
         onDetails = null
