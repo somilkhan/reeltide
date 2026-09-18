@@ -3,7 +3,7 @@
 **Last updated:** 2026-09-18
 **Active branch:** `ui/2026-liquid-glass-redesign`
 **Baseline:** `master`
-**Current code checkpoint:** `49b49f5915d7e1022b1d05a1d7bcd026852eecb1`
+**Current code checkpoint:** `5d77015cf858c448ec84ba9faffce5eed1a7a4f1`
 
 ## Current Phase
 
@@ -16,7 +16,7 @@
 - Home hero is a responsive rounded presentation surface with 24dp corners and width-qualified heights: 517dp at 360dp, 575dp at 400dp, 560dp at the 390dp reference, and 617dp at 430dp.
 - Hero artwork remains full-bleed inside the rounded container with a strong bottom-anchored cinematic scrim.
 - Profile remains the persistent floating control over the hero.
-- Source selector remains functional, positioned below the profile, and uses the restrained 55%-surface token with a strong border.
+- Source selector remains functional as a persistent bottom-right floating control, positioned above the bottom navigation island, and uses the restrained 55%-surface token with a strong border.
 - Hero hierarchy is badge → title → metadata → synopsis → Play + Details → pagination.
 - Hero title uses 34sp/800 styling, tightened tracking and two-line clamping.
 - Hero metadata supports year, duration and rating with dot separators while preserving the existing LoadResponse data source.
@@ -24,14 +24,14 @@
 - Play and Details preserve their existing IDs/callbacks while the action-button wrapper keeps the redesigned 48dp CTA geometry after legacy adapter binding.
 - Latest release rails use 118x168 artwork, 14dp corners, restrained borders, 12dp inter-item spacing and title text below the artwork; the item root no longer adds a second 12dp margin, preventing doubled visual gaps.
 - Latest release section headers now use 19sp primary hierarchy, 13sp secondary `View all`, 22dp screen padding and 26dp section rhythm.
-- Bottom navigation remains the existing 5-item menu/navigation graph, presented as a 64dp floating pill with 11dp side margins, 26dp bottom margin, 72%-surface fallback and compact active indicator styling.
+- Bottom navigation remains the existing 5-item menu/navigation graph, presented as a 64dp floating pill with 22dp side margins, 26dp bottom margin, 72%-surface fallback, 8dp inner padding and compact active indicator styling.
 - Bottom navigation icons use outline-oriented assets with accent active-state color.
 - Existing navigation IDs, provider logic, adapters, ViewModels and business actions remain authoritative.
 
 ## IN PROGRESS
 
-- Verify latest Home CTA/pagination/release-card spacing changes via CI/device
-- Finish Home hero clipping/profile/source/loading/error/empty audit
+- Verify the latest Home hero CTA and bottom-navigation rendering via CI/device
+- Finish Home hero clipping/profile/source/pagination/loading/error/empty audit
 - Finish Search visual/state cleanup and interaction verification
 
 ## REMAINING
@@ -84,11 +84,11 @@
 ## VERIFICATION
 
 - Active branch verified as `ui/2026-liquid-glass-redesign`.
-- Latest implementation checkpoint: `8d8a0dc4550d9f811d30271f7213189b9dbeb33f`.
-- CI Artifact Build run #366 (`35274506920`) is in progress for the immediately preceding implementation checkpoint; no success is claimed for the latest checkpoint yet.
-- Previous verified Artifact Build run #334 (`35254760140`) passed all steps for its earlier checkpoint.
+- Latest implementation checkpoint before this state-ledger update: `5d77015cf858c448ec84ba9faffce5eed1a7a4f1`.
+- Artifact Build run #402 (`35371267726`) is in progress for that checkpoint; no success is claimed yet.
+- The preceding Artifact Build run #401 (`35359494840`) passed all steps and produced artifact `pull-request-build` for checkpoint `9a99b625455c770e5042ebbf9e16f645394b4082`.
 - No device verification is claimed.
 
 ## NEXT ACTION
 
-- Wait for CI #380; if green, continue with runtime visual verification and remaining Home/Search audits. If red, inspect the failing Gradle step and fix the root cause.
+- Wait for CI #402; if green, continue with device/runtime verification and the remaining Home/Search audits. If red, inspect the failing Gradle step and fix the root cause.
