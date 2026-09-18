@@ -26,6 +26,16 @@ class SetupFragmentLanguage : BaseFragment<FragmentSetupLanguageBinding>(
     BaseFragment.BindingCreator.Inflate(FragmentSetupLanguageBinding::inflate)
 ) {
 
+    override fun onResume() {
+        super.onResume()
+        setSetupNavigationVisible(false)
+    }
+
+    override fun onStop() {
+        setSetupNavigationVisible(true)
+        super.onStop()
+    }
+
     override fun fixLayout(view: View) {
         fixSystemBarsPadding(view)
     }
@@ -69,11 +79,9 @@ class SetupFragmentLanguage : BaseFragment<FragmentSetupLanguageBinding>(
                 }
 
                 nextBtt.setOnClickListener {
-                    // If no plugins go to plugins page
                     val nextDestination = if (
                         PluginManager.getPluginsOnline().isEmpty()
                         && PluginManager.getPluginsLocal().isEmpty()
-                    //&& PREBUILT_REPOSITORIES.isNotEmpty()
                     ) R.id.action_navigation_global_to_navigation_setup_extensions
                     else R.id.action_navigation_setup_language_to_navigation_setup_provider_languages
 

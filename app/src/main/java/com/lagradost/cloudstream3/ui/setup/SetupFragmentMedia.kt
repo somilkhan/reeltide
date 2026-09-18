@@ -18,6 +18,8 @@ import com.lagradost.cloudstream3.utils.UIHelper.fixSystemBarsPadding
 class SetupFragmentMedia : BaseFragment<FragmentSetupMediaBinding>(
     BaseFragment.BindingCreator.Inflate(FragmentSetupMediaBinding::inflate)
 ) {
+    override fun onResume() { super.onResume(); setSetupNavigationVisible(false) }
+    override fun onStop() { setSetupNavigationVisible(true); super.onStop() }
 
     override fun fixLayout(view: View) {
         fixSystemBarsPadding(view)
@@ -27,49 +29,28 @@ class SetupFragmentMedia : BaseFragment<FragmentSetupMediaBinding>(
         safe {
             val ctx = context ?: return@safe
             val settingsManager = PreferenceManager.getDefaultSharedPreferences(ctx)
-
-            val arrayAdapter =
-                ArrayAdapter<String>(ctx, R.layout.sort_bottom_single_choice)
-
+            val arrayAdapter = ArrayAdapter<String>(ctx, R.layout.sort_bottom_single_choice)
             val names = enumValues<TvType>().sorted().map { it.name }
             val selected = mutableListOf<Int>()
-
             arrayAdapter.addAll(names)
             binding.apply {
                 listview1.let {
                     it.adapter = arrayAdapter
                     it.choiceMode = AbsListView.CHOICE_MODE_MULTIPLE
-
                     it.setOnItemClickListener { _, _, _, _ ->
                         it.checkedItemPositions?.forEach { key, value ->
-                            if (value) {
-                                selected.add(key)
-                            } else {
-                                selected.remove(key)
-                            }
+                            if (value) selected.add(key) else selected.remove(key)
                         }
                         val prefValues = selected.mapNotNull { pos ->
-                            val item =
-                                it.getItemAtPosition(pos)?.toString() ?: return@mapNotNull null
-                            val itemVal = TvType.valueOf(item)
-                            itemVal.ordinal.toString()
+                            val item = it.getItemAtPosition(pos)?.toString() ?: return@mapNotNull null
+                            TvType.valueOf(item).ordinal.toString()
                         }.toSet()
-                        settingsManager.edit {
-                            putStringSet(getString(R.string.prefer_media_type_key), prefValues)
-                        }
-
-                        // Regenerate set homepage
+                        settingsManager.edit { putStringSet(getString(R.string.prefer_media_type_key), prefValues) }
                         DataStoreHelper.currentHomePage = null
                     }
                 }
-
-                nextBtt.setOnClickListener {
-                    findNavController().navigate(R.id.navigation_setup_media_to_navigation_setup_layout)
-                }
-
-                prevBtt.setOnClickListener {
-                    findNavController().popBackStack()
-                }
+                nextBtt.setOnClickListener { findNavController().navigate(R.id.navigation_setup_media_to_navigation_setup_layout) }
+                prevBtt.setOnClickListener { findNavController().popBackStack() }
             }
         }
     }

@@ -35,10 +35,12 @@ class SetupFragmentExtensions : BaseFragment<FragmentSetupExtensionsBinding>(
 
     override fun onResume() {
         super.onResume()
+        setSetupNavigationVisible(false)
         afterRepositoryLoadedEvent += ::setRepositories
     }
 
     override fun onStop() {
+        setSetupNavigationVisible(true)
         super.onStop()
         afterRepositoryLoadedEvent -= ::setRepositories
     }

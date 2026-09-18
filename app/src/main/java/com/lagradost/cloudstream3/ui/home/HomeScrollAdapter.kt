@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import com.lagradost.cloudstream3.LoadResponse
 import com.lagradost.cloudstream3.databinding.HomeScrollViewBinding
 import com.lagradost.cloudstream3.databinding.HomeScrollViewTvBinding
@@ -37,13 +38,8 @@ class HomeScrollAdapter(
 
     override fun onClearView(holder: ViewHolderState<Any>) {
         when (val binding = holder.view) {
-            is HomeScrollViewBinding -> {
-                clearImage(binding.homeScrollPreview)
-            }
-
-            is HomeScrollViewTvBinding -> {
-                clearImage(binding.homeScrollPreview)
-            }
+            is HomeScrollViewBinding -> clearImage(binding.homeScrollPreview)
+            is HomeScrollViewTvBinding -> clearImage(binding.homeScrollPreview)
         }
     }
 
@@ -53,18 +49,47 @@ class HomeScrollAdapter(
         position: Int,
     ) {
         val binding = holder.view
-
         val posterUrl = item.backgroundPosterUrl ?: item.posterUrl
 
         when (binding) {
             is HomeScrollViewBinding -> {
                 binding.homeScrollPreview.loadImage(posterUrl, item.posterHeaders)
+
                 binding.homeScrollPreviewTags.apply {
                     text = item.tags?.joinToString(" • ") ?: ""
                     isGone = item.tags.isNullOrEmpty()
-                    maxLines = 2
+                    maxLines = 1
                 }
+
                 binding.homeScrollPreviewTitle.text = item.name.html()
+                binding.homePreviewScore.isGone = true
+
+                binding.homePreviewYear.text = item.year?.toString() ?: ""
+                binding.homePreviewYear.isGone = item.year == null
+
+                val duration = item.duration?.takeIf { it > 0 }
+                binding.homePreviewDuration.text = duration?.let {
+                    binding.homePreviewDuration.context.getString(
+                        com.lagradost.cloudstream3.R.string.duration_format,
+                        it
+                    )
+                } ?: ""
+                binding.homePreviewDuration.isGone = duration == null
+
+                val rating = item.score?.toString()
+                binding.homePreviewRating.text = rating ?: ""
+                binding.homePreviewRating.isGone = rating.isNullOrBlank()
+
+                val hasYear = item.year != null
+                val hasDuration = duration != null
+                val hasRating = !rating.isNullOrBlank()
+                binding.homePreviewYearSeparator.isVisible = hasYear && (hasDuration || hasRating)
+                binding.homePreviewDurationSeparator.isVisible = hasDuration && hasRating
+                binding.homePreviewRatingSeparator.isGone = true
+
+                val plot = item.plot?.html()?.trim()
+                binding.homePreviewDescription.text = plot ?: ""
+                binding.homePreviewDescription.isGone = plot.isNullOrBlank()
 
                 bindLogo(
                     url = item.logoUrl,

@@ -107,7 +107,7 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = libs.versions.versionCode.get().toInt()
-        versionName = libs.versions.versionName.get()
+        versionName = "2026-liquid-glass-navA"
 
         manifestPlaceholders["target_sdk_version"] = libs.versions.targetSdk.get()
 

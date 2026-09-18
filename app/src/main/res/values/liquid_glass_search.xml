@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="LiquidGlassFilterChip" parent="@style/ChipFilled">
+        <item name="chipBackgroundColor">@color/liquid_glass_chip_background</item>
+        <item name="chipStrokeColor">@color/liquid_glass_chip_stroke</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="textColor">?attr/textColor</item>
+        <item name="android:textColor">?attr/textColor</item>
+        <item name="checkedIconTint">?attr/textColor</item>
+        <item name="chipIconTint">?attr/textColor</item>
+        <item name="chipMinHeight">36dp</item>
+        <item name="chipMinTouchTargetSize">48dp</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="fontFamily">@font/google_sans</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+    </style>
+</resources>

@@ -8,7 +8,8 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="@drawable/outline_drawable"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,11 +19,10 @@
             android:id="@+id/background_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:layout_marginBottom="2dp"
-            android:elevation="10dp"
-            app:cardBackgroundColor="?attr/primaryGrayBackground"
-            app:cardCornerRadius="@dimen/rounded_image_radius"
+            android:elevation="2dp"
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="18dp"
+            app:cardPreventCornerOverlap="true"
             app:layout_constraintDimensionRatio="1:1.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +58,6 @@
                     style="@style/SubButton"
                     android:layout_gravity="end" />
 
-
                 <TextView
                     android:id="@+id/text_rating"
                     style="@style/RatingButton"
@@ -77,38 +76,40 @@
             </LinearLayout>
 
             <ImageView
-                android:focusable="false"
-                android:visibility="gone"
-                android:clickable="false"
-                android:focusableInTouchMode="false"
                 android:id="@+id/title_shadow"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:visibility="gone"
                 tools:ignore="ContentDescription" />
 
             <androidx.core.widget.ContentLoadingProgressBar
                 android:id="@+id/watchProgress"
                 style="@android:style/Widget.Material.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="5dp"
+                android:layout_height="4dp"
                 android:layout_gravity="bottom"
-                android:layout_marginBottom="-1.5dp"
-                android:progressBackgroundTint="?attr/white"
+                android:layout_marginBottom="-1dp"
+                android:progressBackgroundTint="#55FFFFFF"
                 android:progressTint="?attr/white"
                 android:visibility="gone"
                 tools:progress="50"
                 tools:visibility="visible" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:orientation="vertical"
                 android:paddingBottom="7dp">
+
                 <TextView
                     android:id="@+id/episode_text"
                     android:layout_width="wrap_content"
-                    style="@style/EpisodeTextButton"
-                    android:layout_gravity="center"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    style="@style/EpisodeTextButton" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -122,9 +123,9 @@
         android:gravity="center"
         android:maxLines="2"
         android:minLines="2"
-        android:paddingStart="5dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="5dp"
+        android:paddingStart="6dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="6dp"
         android:paddingBottom="5dp"
         android:textColor="?attr/textColor"
         android:textSize="13sp"

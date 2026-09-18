@@ -5,170 +5,207 @@
     android:id="@+id/searchRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/navbar_height"
-    android:background="?attr/primaryGrayBackground"
+    android:background="?attr/primaryBlackBackground"
     tools:context=".ui.search.SearchFragment">
-
     <LinearLayout
+        android:id="@+id/search_content_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="10dp"
-        android:background="?attr/primaryGrayBackground">
-
+        android:paddingTop="12dp">
         <LinearLayout
+            android:id="@+id/search_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_scrollFlags="scroll|enterAlways">
-
-            <ImageView
-                android:id="@+id/voice_search"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginStart="10dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:contentDescription="@string/change_providers_img_des"
-                android:src="@drawable/ic_mic"
-                app:tint="?attr/textColor" />
-
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/search_background"
-                android:visibility="visible">
-
-                <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_weight="1"
+                android:background="@drawable/liquid_glass_search_field"
+                android:clipToPadding="false">
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/main_search"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="30dp">
-
-                    <androidx.appcompat.widget.SearchView
-                        android:id="@+id/main_search"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-
-                        android:iconifiedByDefault="false"
-                        android:imeOptions="actionSearch"
-
-                        android:inputType="text"
-                        android:nextFocusLeft="@id/nav_rail_view"
-
-                        android:nextFocusRight="@id/search_filter"
-                        android:nextFocusUp="@id/nav_rail_view"
-                        android:nextFocusDown="@id/search_autofit_results"
-                        android:paddingStart="-10dp"
-                        app:iconifiedByDefault="false"
-                        app:queryBackground="@color/transparent"
-                        app:queryHint="@string/search_hint"
-                        app:searchIcon="@drawable/search_icon"
-                        app:closeIcon="@drawable/ic_baseline_close_24"
-                        tools:ignore="RtlSymmetry">
-
-                        <requestFocus />
-
-                        <androidx.core.widget.ContentLoadingProgressBar
-                            android:id="@+id/search_loading_bar"
-                            style="@style/Widget.AppCompat.ProgressBar"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="-35dp"
-                            android:foregroundTint="@color/white"
-                            android:progressTint="@color/white">
-
-                        </androidx.core.widget.ContentLoadingProgressBar>
-                        <!--app:queryHint="@string/search_hint"
-                        android:background="@color/grayBackground" @color/itemBackground
-                                    app:searchHintIcon="@drawable/search_white"
-                                    -->
-                    </androidx.appcompat.widget.SearchView>
-                </FrameLayout>
-
-                <ImageView
-                    android:id="@+id/search_filter"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="end|center_vertical"
-
-                    android:layout_margin="10dp"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/change_providers_img_des"
-                    android:nextFocusLeft="@id/main_search"
-                    android:nextFocusRight="@id/main_search"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:iconifiedByDefault="false"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:nextFocusLeft="@id/nav_rail_view"
+                    android:nextFocusRight="@id/voice_search"
                     android:nextFocusUp="@id/nav_rail_view"
                     android:nextFocusDown="@id/search_autofit_results"
-                    android:src="@drawable/ic_baseline_tune_24"
-                    app:tint="?attr/textColor" />
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    app:iconifiedByDefault="false"
+                    app:queryBackground="@color/transparent"
+                    app:queryHint="@string/search_hint"
+                    app:searchIcon="@drawable/search_icon"
+                    app:closeIcon="@drawable/ic_baseline_close_24"
+                    tools:ignore="RtlSymmetry">
+                    <requestFocus />
+                    <androidx.core.widget.ContentLoadingProgressBar
+                        android:id="@+id/search_loading_bar"
+                        style="@style/Widget.AppCompat.ProgressBar"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="-35dp"
+                        android:foregroundTint="@color/white"
+                        android:progressTint="@color/white" />
+                </androidx.appcompat.widget.SearchView>
             </FrameLayout>
+            <ImageView
+                android:id="@+id/voice_search"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/liquid_glass_search_action"
+                android:contentDescription="@string/change_providers_img_des"
+                android:focusable="true"
+                android:nextFocusLeft="@id/main_search"
+                android:nextFocusRight="@id/search_filter"
+                android:padding="12dp"
+                android:src="@drawable/ic_mic"
+                app:tint="?attr/textColor" />
+            <ImageView
+                android:id="@+id/search_filter"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/liquid_glass_search_action"
+                android:contentDescription="@string/change_providers_img_des"
+                android:focusable="true"
+                android:nextFocusLeft="@id/voice_search"
+                android:nextFocusRight="@id/main_search"
+                android:nextFocusUp="@id/nav_rail_view"
+                android:nextFocusDown="@id/search_autofit_results"
+                android:padding="12dp"
+                android:src="@drawable/ic_baseline_tune_24"
+                app:tint="?attr/textColor" />
         </LinearLayout>
-
         <include
             android:id="@+id/tvtypes_chips_scroll"
-            layout="@layout/tvtypes_chips_scroll" />
+            layout="@layout/tvtypes_chips_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+        <com.lagradost.cloudstream3.ui.AutofitRecyclerView
+            android:id="@+id/search_autofit_results"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="?attr/primaryBlackBackground"
+            android:clipToPadding="false"
+            android:descendantFocusability="afterDescendants"
+            android:nextFocusLeft="@id/nav_rail_view"
+            android:orientation="vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="120dp"
+            android:visibility="gone"
+            app:spanCount="3"
+            tools:listitem="@layout/search_result_grid" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_master_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="?attr/primaryBlackBackground"
+            android:clipToPadding="false"
+            android:descendantFocusability="afterDescendants"
+            android:nextFocusLeft="@id/nav_rail_view"
+            android:nextFocusUp="@id/tvtypes_chips"
+            android:paddingBottom="120dp"
+            android:visibility="gone"
+            tools:listitem="@layout/homepage_parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_history_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="?attr/primaryBlackBackground"
+            android:clipToPadding="false"
+            android:descendantFocusability="afterDescendants"
+            android:nextFocusLeft="@id/nav_rail_view"
+            android:nextFocusUp="@id/tvtypes_chips"
+            android:paddingStart="12dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="120dp"
+            android:visibility="visible"
+            tools:listitem="@layout/search_history_item" />
     </LinearLayout>
-
-
-    <com.lagradost.cloudstream3.ui.AutofitRecyclerView
-        android:id="@+id/search_autofit_results"
+    <LinearLayout
+        android:id="@+id/search_state_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:background="?attr/primaryBlackBackground"
-        android:clipToPadding="false"
-        android:descendantFocusability="afterDescendants"
-        android:nextFocusLeft="@id/nav_rail_view"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:background="@drawable/reeltide_search_secondary_surface"
+        android:gravity="center"
+        android:minHeight="180dp"
         android:orientation="vertical"
-        android:paddingStart="8dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="8dp"
-        android:visibility="gone"
-        app:spanCount="3"
-        tools:listitem="@layout/search_result_grid" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_master_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:background="?attr/primaryBlackBackground"
-        android:descendantFocusability="afterDescendants"
-
-        android:nextFocusLeft="@id/nav_rail_view"
-        android:nextFocusUp="@id/tvtypes_chips"
-        android:visibility="gone"
-        tools:listitem="@layout/homepage_parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_history_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/primaryBlackBackground"
-        android:descendantFocusability="afterDescendants"
-        android:nextFocusLeft="@id/nav_rail_view"
-        android:nextFocusUp="@id/tvtypes_chips"
-        android:visibility="visible"
-        tools:listitem="@layout/search_history_item" />
+        android:paddingStart="24dp"
+        android:paddingTop="24dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="24dp"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/search_state_icon"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginBottom="12dp"
+            android:background="@android:color/transparent"
+            android:padding="14dp"
+            android:src="@drawable/search_icon"
+            app:tint="?attr/textColor" />
+        <TextView
+            android:id="@+id/search_state_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="?attr/textColor"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/search_state_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:textColor="?attr/grayTextColor"
+            android:textSize="14sp" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/search_retry_button"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/reeltide_search_secondary_surface"
+            android:text="@string/search_retry"
+            android:textColor="?attr/textColor"
+            android:visibility="gone"
+            app:backgroundTint="@color/transparent"
+            app:icon="@drawable/ic_baseline_autorenew_24"
+            app:iconTint="?attr/textColor" />
     </LinearLayout>
-
-    <!-- Suggestions overlay - appears on top of content -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_suggestions_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:background="?attr/primaryGrayBackground"
-        android:elevation="8dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="78dp"
+        android:layout_marginEnd="124dp"
+        android:background="@drawable/reeltide_search_secondary_surface"
+        android:clipToPadding="false"
+        android:elevation="12dp"
+        android:padding="4dp"
         android:visibility="gone"
         tools:listitem="@layout/search_suggestion_item" />
-
 </FrameLayout>

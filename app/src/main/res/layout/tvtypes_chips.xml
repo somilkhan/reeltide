@@ -1,76 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.chip.ChipGroup android:layout_width="match_parent"
-    style="@style/ChipParent"
-    android:layout_height="wrap_content"
+<com.google.android.material.chip.ChipGroup xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_select_group"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="afterDescendants"
     android:paddingStart="8dp"
     android:paddingEnd="8dp"
-    android:id="@+id/home_select_group"
-    android:descendantFocusability="afterDescendants"
-    app:singleSelection="false"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    style="@style/ChipParent"
+    app:singleSelection="false">
 
     <com.google.android.material.chip.Chip
         android:id="@+id/home_select_movies"
-        style="@style/ChipFilled"
+        style="@style/LiquidGlassFilterChip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/movies" />
+        android:text="@string/movies"
+        android:textColor="@color/reeltide_filter_chip_text"
+        app:chipBackgroundColor="@color/reeltide_filter_chip_background"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
+        app:chipStrokeWidth="1dp"
+        app:checkedIconVisible="false" />
 
     <com.google.android.material.chip.Chip
         android:id="@+id/home_select_tv_series"
-        style="@style/ChipFilled"
+        style="@style/LiquidGlassFilterChip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tv_series" />
+        android:text="@string/tv_series"
+        android:textColor="@color/reeltide_filter_chip_text"
+        app:chipBackgroundColor="@color/reeltide_filter_chip_background"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
+        app:chipStrokeWidth="1dp"
+        app:checkedIconVisible="false" />
 
     <com.google.android.material.chip.Chip
         android:id="@+id/home_select_anime"
-        style="@style/ChipFilled"
+        style="@style/LiquidGlassFilterChip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/anime" />
+        android:text="@string/anime"
+        android:textColor="@color/reeltide_filter_chip_text"
+        app:chipBackgroundColor="@color/reeltide_filter_chip_background"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
+        app:chipStrokeWidth="1dp"
+        app:checkedIconVisible="false" />
 
     <com.google.android.material.chip.Chip
         android:id="@+id/home_select_asian"
-        style="@style/ChipFilled"
+        style="@style/LiquidGlassFilterChip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/asian_drama" />
+        android:text="@string/asian_drama"
+        android:textColor="@color/reeltide_filter_chip_text"
+        app:chipBackgroundColor="@color/reeltide_filter_chip_background"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
+        app:chipStrokeWidth="1dp"
+        app:checkedIconVisible="false" />
+
     <com.google.android.material.chip.Chip
         android:id="@+id/home_select_cartoons"
-        style="@style/ChipFilled"
+        style="@style/LiquidGlassFilterChip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cartoons" />
+        android:text="@string/cartoons"
+        android:textColor="@color/reeltide_filter_chip_text"
+        app:chipBackgroundColor="@color/reeltide_filter_chip_background"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
+        app:chipStrokeWidth="1dp"
+        app:checkedIconVisible="false" />
+
     <com.google.android.material.chip.Chip
         android:id="@+id/home_select_documentaries"
-        style="@style/ChipFilled"
+        style="@style/LiquidGlassFilterChip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/documentaries" />
+        android:text="@string/documentaries"
+        android:textColor="@color/reeltide_filter_chip_text"
+        app:chipBackgroundColor="@color/reeltide_filter_chip_background"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
+        app:chipStrokeWidth="1dp"
+        app:checkedIconVisible="false" />
+
     <com.google.android.material.chip.Chip
         android:id="@+id/home_select_livestreams"
-        style="@style/ChipFilled"
+        style="@style/LiquidGlassFilterChip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/livestreams" />
+        android:text="@string/livestreams"
+        android:textColor="@color/reeltide_filter_chip_text"
+        app:chipBackgroundColor="@color/reeltide_filter_chip_background"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
+        app:chipStrokeWidth="1dp"
+        app:checkedIconVisible="false" />
+
     <com.google.android.material.chip.Chip
         android:id="@+id/home_select_torrents"
-        style="@style/ChipFilled"
+        style="@style/LiquidGlassFilterChip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/torrent" />
+        android:text="@string/torrent"
+        android:textColor="@color/reeltide_filter_chip_text"
+        app:chipBackgroundColor="@color/reeltide_filter_chip_background"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
+        app:chipStrokeWidth="1dp"
+        app:checkedIconVisible="false" />
+
     <com.google.android.material.chip.Chip
         android:id="@+id/home_select_nsfw"
-        style="@style/ChipFilled"
+        style="@style/LiquidGlassFilterChip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nsfw" />
+        android:text="@string/nsfw"
+        android:textColor="@color/reeltide_filter_chip_text"
+        app:chipBackgroundColor="@color/reeltide_filter_chip_background"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
+        app:chipStrokeWidth="1dp"
+        app:checkedIconVisible="false" />
+
     <com.google.android.material.chip.Chip
         android:id="@+id/home_select_others"
-        style="@style/ChipFilled"
+        style="@style/LiquidGlassFilterChip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/others" />
+        android:text="@string/others"
+        android:textColor="@color/reeltide_filter_chip_text"
+        app:chipBackgroundColor="@color/reeltide_filter_chip_background"
+        app:chipStrokeColor="@color/reeltide_filter_chip_stroke"
+        app:chipStrokeWidth="1dp"
+        app:checkedIconVisible="false" />
 </com.google.android.material.chip.ChipGroup>
