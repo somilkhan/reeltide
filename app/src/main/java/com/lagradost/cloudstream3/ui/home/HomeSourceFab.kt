@@ -40,7 +40,7 @@ class HomeSourceFab @JvmOverloads constructor(
 
         // Do not let the Material FAB theme tint this drawable away. The source
         // selector intentionally uses an opaque dark surface so its label remains
-        // readable over any hero artwork or section content.
+        // readable above the bottom navigation island.
         backgroundTintList = null
         setBackgroundResource(R.drawable.home_source_fab_background)
         setStrokeColor(ColorStateList.valueOf(0x00FFFFFF))
@@ -62,13 +62,13 @@ class HomeSourceFab @JvmOverloads constructor(
         val params = layoutParams as? FrameLayout.LayoutParams ?: return
         params.width = FrameLayout.LayoutParams.WRAP_CONTENT
         params.height = dp(44f)
-        // Keep the source selector in the hero instead of floating over section
-        // headers. Profile remains above it, leaving a deliberate vertical rhythm.
-        params.gravity = Gravity.TOP or Gravity.END
+        // Keep the source selector at the bottom-right, above the glass navigation
+        // island instead of floating over the hero artwork.
+        params.gravity = Gravity.BOTTOM or Gravity.END
         params.marginStart = dp(16f)
-        params.marginEnd = dp(16f)
-        params.topMargin = dp(84f)
-        params.bottomMargin = 0
+        params.marginEnd = dp(22f)
+        params.topMargin = 0
+        params.bottomMargin = dp(110f)
         layoutParams = params
     }
 
